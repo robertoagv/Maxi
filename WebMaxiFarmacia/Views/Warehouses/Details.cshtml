@@ -1,0 +1,50 @@
+﻿@model WebMaxiFarmacia.Models.Warehouse
+
+@{
+    ViewBag.Title = "Detalle-Bodega";
+}
+
+<h2>Detalle</h2>
+
+<div>
+    <h4>Bodega</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Company.nombresuc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company.nombresuc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefono)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Direccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Direccion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.WarehouseId }) |
+    @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default" })
+</p>

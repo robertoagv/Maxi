@@ -1,0 +1,51 @@
+﻿@model IEnumerable<WebMaxiFarmacia.Models.Company>
+
+@{
+    ViewBag.Title = "Sucursal";
+}
+
+<h2>Sucursal</h2>
+
+<p>
+    @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary" })
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nombresuc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.telefono)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.direccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombresuc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.telefono)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.direccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.CompanyId }, new { @class = "btn btn-primary"}) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.CompanyId }, new { @class = "btn btn-info" }) |
+            @Html.ActionLink("eliminar", "Delete", new { id=item.CompanyId }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>

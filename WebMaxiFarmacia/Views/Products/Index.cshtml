@@ -1,0 +1,101 @@
+﻿@model IEnumerable<WebMaxiFarmacia.Models.Product>
+
+@{
+    ViewBag.Title = "Producto";
+}
+
+<h2>Producto</h2>
+
+<p>
+    @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary"})
+</p>
+
+@using (Ajax.BeginForm("Index", new AjaxOptions
+{
+    HttpMethod = "POST",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "target"
+}))
+{
+
+    <div class="form-group form-inline">
+        <div>
+            <input type="text" name="barcodigo" id="barcodigo" class="form-control" required placeholder="Buscar"/>
+            <input type="submit" value="Buscar" class="btn btn-primary" />
+        </div>
+
+    </div>
+}
+
+<br />  
+<div class="table table-responsive">
+    <table class="table table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Category.Descripcion)
+            </th>
+            <th>Sucursal</th>
+            <th>Proveedor</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Codigobarra)
+            </th>
+            <th>Producto</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Existencia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Preciocompra)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precioventa)
+            </th>
+            <th></th>
+        </tr>
+        <br />
+
+        @if (Model.Count() == 0)
+        {
+            <div class="alert alert-danger">
+                No se encontro el Producto
+            </div>
+        }
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Company.nombresuc)
+                </td>
+                <td>
+                    prov1
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Codigobarra)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombreproducto)
+                </td>
+                <td align="right">
+                    @Html.DisplayFor(modelItem => item.Existencia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Preciocompra)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precioventa)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.ProductId }, new { @class = "btn btn-primary btn-xs" }) |
+                    @Html.ActionLink("Detalles", "Details", new { id = item.ProductId }, new { @class = "btn btn-info btn-xs" }) |
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.ProductId }, new { @class = "btn btn-danger btn-xs" })
+                   
+                </td>
+            </tr>
+        }
+
+    </table>
+    @Html.ActionLink("Ver Todo", "Index", new { }, new { @class = "btn btn-info btn-xs" })
+</div>
