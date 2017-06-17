@@ -6,10 +6,11 @@ using System.Web;
 
 namespace WebMaxiFarmacia.Models
 {
-    public class Product
+    public class User
     {
         [Key]
-        public int ProductId { get; set; }
+        public int UserId { get; set; }
+
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [Display(Name = "Codigo Barra")]
@@ -47,23 +48,7 @@ namespace WebMaxiFarmacia.Models
         public int SupplierId { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        [Range(1, double.MaxValue, ErrorMessage = "Debe Seleccionar un {0}")]
         [Display(Name = "Sucursal")]
         public int CompanyId { get; set; }
-
-
-        //propiedades solo de lectura, para el inventario.
-        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
-        public double? Existencia { get { return Inventories.Sum(i => i.Existencia); } }
-
-
-
-        //Relaciones
-        public virtual Category Category { get; set; }
-        public virtual Supplier Supplier { get; set; }
-        public virtual Company Company { get; set; }
-
-        public virtual ICollection<Inventory> Inventories { get; set; }
-
     }
 }
