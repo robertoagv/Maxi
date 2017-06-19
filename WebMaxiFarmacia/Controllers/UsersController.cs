@@ -94,8 +94,17 @@ namespace WebMaxiFarmacia.Controllers
         {
             if (ModelState.IsValid)
             {
+                var dbBuscarEmailOld = new maxifarmaciabdContext();
+                var oldUser = dbBuscarEmailOld.Users.Find(user.UserId);
+                if (oldUser.NombreUser != user.NombreUser)
+                {
+                    UserHelper.UpdateUser(oldUser.NombreUser, user.NombreUser);
+                }
+                dbBuscarEmailOld.Dispose();
+
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
             ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc", user.CompanyId);
@@ -126,6 +135,7 @@ namespace WebMaxiFarmacia.Controllers
             User user = db.Users.Find(id);
             db.Users.Remove(user);
             db.SaveChanges();
+            UserHelper.DeleteUser(user.NombreUser);//lo borra o no.
             return RedirectToAction("Index");
         }
 

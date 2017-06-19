@@ -16,6 +16,40 @@ namespace WebMaxiFarmacia.classHelper
 
         private static maxifarmaciabdContext db = new maxifarmaciabdContext();
 
+        public static bool DeleteUser(string NombreUser)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
+            var userAsp = userManager.FindByEmail(NombreUser);
+
+            if (NombreUser == null)
+            {
+                return false;
+            }
+
+            var response =  userManager.Delete(userAsp);
+
+            return response.Succeeded;
+        }
+
+        public static bool UpdateUser(string oldUser, string newUser)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
+            var userAsp = userManager.FindByEmail(oldUser);
+
+            if (oldUser == null)
+            {
+                return false;
+            }
+
+            userAsp.UserName = newUser;
+            userAsp.Email = newUser;
+
+            var response = userManager.Update(userAsp);
+
+            return response.Succeeded;
+
+        }
+
         public static void CheckRole(string roleName)
 
         {
