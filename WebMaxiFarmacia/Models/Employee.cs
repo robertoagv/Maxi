@@ -36,9 +36,14 @@ namespace WebMaxiFarmacia.Models
         [Display(Name = "Sucursal")]
         public int CompanyId { get; set; }
 
+        //no mapeados.
+        
+
 
         //Relaciones
         public virtual Company Company { get; set; }
+        public virtual ICollection<User> Users { get; set; }
+        
 
     }
 }

@@ -35,6 +35,8 @@ namespace WebMaxiFarmacia.Models
         }
 
         public System.Data.Entity.DbSet<WebMaxiFarmacia.Models.Employee> Employees { get; set; }
+
+        public System.Data.Entity.DbSet<WebMaxiFarmacia.Models.User> Users { get; set; }
     }
 
     

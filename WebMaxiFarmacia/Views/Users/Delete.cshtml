@@ -1,0 +1,48 @@
+﻿@model WebMaxiFarmacia.Models.User
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Company.nombresuc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company.nombresuc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee.Nombreemp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee.Nombreemp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NombreUser)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NombreUser)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
