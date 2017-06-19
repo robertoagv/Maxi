@@ -9,26 +9,27 @@
 <p>
     @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary"})
 </p>
+<div class="table table-responsive">
+    <table class="table table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th></th>
+        </tr>
 
-<table class="table table-striped">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </th>
-        <th></th>
-    </tr>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id=item.CategoryId }, new { @class = "btn btn-primary btn-xs" }) |
+                @Html.ActionLink("Detalle", "Details", new { id=item.CategoryId }, new { @class = "btn btn-info btn-xs" }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id=item.CategoryId }, new { @class = "btn btn-danger btn-xs" })
+            </td>
+        </tr>
+    }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descripcion)
-        </td>
-        <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.CategoryId }, new { @class = "btn btn-primary btn-xs") |
-            @Html.ActionLink("Detalle", "Details", new { id=item.CategoryId }, new { @class = "btn btn-info btn-xs" }) |
-            @Html.ActionLink("Eliminar", "Delete", new { id=item.CategoryId }, new { @class = "btn btn-danger btn-xs" })
-        </td>
-    </tr>
-}
-
-</table>
+    </table>
+</div>

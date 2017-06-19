@@ -1,12 +1,5 @@
 ﻿@model WebMaxiFarmacia.Models.Inventory
 
-@{
-    ViewBag.Title = "Editar";
-}
-
-<h2>Comprar</h2>
-
-
 @ViewBag.inventario.WarehouseId
 
 @ViewBag.inventario.inventoryId
@@ -27,15 +20,15 @@
     <input type="hidden" name="idproducto" value="@ViewBag.inventario.ProductId" />
     <div class="form-group">
         <label>Cantidad</label>
-        <div class="col-md-10">
+        <div class="col-md-10 form-inline">
             <input type="text" value="" class="form-control" placeholder="Cantidad" name="newcant" />
             <input type="submit" value="Agregar" class="btn btn-primary" />
-            @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Cancelar", "Index", new { }, new { @class = "btn btn-default" })
+            <hr />
         </div>
     </div>
 
 
-   
 }
 
 

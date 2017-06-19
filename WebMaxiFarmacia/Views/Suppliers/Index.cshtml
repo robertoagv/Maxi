@@ -9,43 +9,46 @@
 <p>
     @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary"})
 </p>
-<table class="table table-striped">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Telefono)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Direccion)
-        </th>
-        <th></th>
-    </tr>
+<div class="table table-responsive">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Telefono)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Direccion)
-        </td>
-        <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.SupplierId }, new { @class = "btn btn-primary btn-xs"}) |
-            @Html.ActionLink("Detalles", "Details", new { id=item.SupplierId }, new { @class = "btn btn-info btn-xs" }) |
-            @Html.ActionLink("Eliminar", "Delete", new { id=item.SupplierId }, new { @class = "btn btn-danger btn-xs" })
-        </td>
-    </tr>
-}
+    <table class="table table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Direccion)
+            </th>
+            <th></th>
+        </tr>
 
-</table>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id=item.SupplierId }, new { @class = "btn btn-primary btn-xs"}) |
+                @Html.ActionLink("Detalles", "Details", new { id=item.SupplierId }, new { @class = "btn btn-info btn-xs" }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id=item.SupplierId }, new { @class = "btn btn-danger btn-xs" })
+            </td>
+        </tr>
+    }
+
+    </table>
+</div>

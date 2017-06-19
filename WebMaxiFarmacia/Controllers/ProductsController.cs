@@ -47,7 +47,7 @@ namespace WebMaxiFarmacia.Controllers
   
             ViewBag.inventario = inventario;
            
-            return View(inventario);
+            return PartialView(inventario);
         }
 
         [HttpPost]
@@ -64,7 +64,9 @@ namespace WebMaxiFarmacia.Controllers
             inventario.Existencia = newexist;
             db.SaveChanges();
 
-            return RedirectToAction("index");
+            ViewBag.inventario = inventario;
+
+            return RedirectToAction("Index");
         }
 
 

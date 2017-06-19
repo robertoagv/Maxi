@@ -14,7 +14,7 @@
 {
     HttpMethod = "POST",
     InsertionMode = InsertionMode.Replace,
-    UpdateTargetId = "target"
+    UpdateTargetId = "buscarid"
 }))
 {
 
@@ -29,7 +29,7 @@
 
 <br />  
 <div class="table table-responsive">
-    <table class="table table-striped">
+    <table id="buscarid" class="table table-striped">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Category.Descripcion)
@@ -97,5 +97,5 @@
         }
 
     </table>
-    @Html.ActionLink("Ver Todo", "Index", new { }, new { @class = "btn btn-info btn-xs" })
 </div>
+    @Html.ActionLink("Ver Todo", "Index", new { }, new { @class = "btn btn-info btn-xs" })

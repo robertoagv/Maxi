@@ -7,7 +7,6 @@
 <h2>Detalles</h2>
 
 
-
 <div class="row">
     <div class="col-md-6">
         <div>
@@ -82,7 +81,7 @@
         </div>
         <p>
             @Html.ActionLink("Editar", "Edit", new { id = Model.ProductId }, new { @class = "btn btn-primary" }) |
-           @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default" })
         </p>
     </div>
     <div class="col-md-6">
@@ -113,8 +112,9 @@
                         <td align="right">
                             @Html.DisplayFor(modelItem => item.Existencia)
                         </td>
-                        <td>@Html.ActionLink("Comprar", "Comprar", new {id = item.inventoryId}, new { @class = "btn btn-info  btn-xs" })</td>
-                    </tr>  
+                        <td>@Html.ActionLink("Comprar", "Comprar", new { id = item.inventoryId }, new { @class = "btn btn-info  btn-xs" })</td>
+                        <td>@Html.ActionLink("Comprar", "Comprar", "Products", new { id = item.inventoryId }, new { @class = "dialog-window btn btn-info btn-xs" })</td>
+                    </tr>
                 }
                 <tr>
                     <td><strong>Total</strong></td>
@@ -127,5 +127,80 @@
 
         }
     </div>
-    
+
 </div>
+
+
+<div class="modal fade" id="Comprar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                <h2 class="modal-title"></h2>
+
+            </div>
+
+            <div class="modal-body">
+                <div class="te">Espere Porfavor...</div>
+            </div>
+
+            <div>
+                <br />
+                <br />
+                
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+@section Scripts{
+
+    <script>
+        $(document).ready(function () {
+
+            $("body").on("click", "a.dialog-window", null, function (e) {
+
+                e.preventDefault();
+
+                var $link = $(this);
+
+                var title = $link.text();
+
+                $('#Comprar .modal-title').html(title);
+
+                var url = $(this).attr('href');
+
+                if (url.indexOf('#') == 0) {
+
+                    $('#Comprar').modal('show');
+
+                }
+
+                else {
+
+                    $.get(url, function (data) {
+
+                        $('#Comprar .te').html(data);
+
+                        $('#Comprar').modal();
+
+                    }).success(function () { $('input:text:visible:first').focus(); });
+
+                }
+
+            });
+
+        });
+    </script>
+
+}
