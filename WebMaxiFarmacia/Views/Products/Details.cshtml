@@ -60,14 +60,16 @@
                 <dd>
                     @Html.DisplayFor(model => model.Descripcion)
                 </dd>
+                @if (User.IsInRole("SuperAdmin"))
+                {
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Preciocompra)
+                    </dt>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Preciocompra)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Preciocompra)
-                </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Preciocompra)
+                    </dd>
+                }
 
                 <dt>
                     @Html.DisplayNameFor(model => model.Precioventa)
@@ -112,8 +114,12 @@
                         <td align="right">
                             @Html.DisplayFor(modelItem => item.Existencia)
                         </td>
-                        <td>@Html.ActionLink("Comprar", "Comprar", new { id = item.inventoryId }, new { @class = "btn btn-info  btn-xs" })</td>
-                        <td>@Html.ActionLink("Comprar", "Comprar", "Products", new { id = item.inventoryId }, new { @class = "dialog-window btn btn-info btn-xs" })</td>
+                        @*<td>@Html.ActionLink("Comprar", "Comprar", new { id = item.inventoryId }, new { @class = "btn btn-info  btn-xs" })</td>*@
+                        @if (User.IsInRole("SuperAdmin"))
+                        {
+
+                            <td>@Html.ActionLink("Comprar", "Comprar", "Products", new { id = item.inventoryId }, new { @class = "dialog-window btn btn-info btn-xs" })</td>
+                        }
                     </tr>
                 }
                 <tr>

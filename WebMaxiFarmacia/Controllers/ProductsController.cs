@@ -11,6 +11,7 @@ using WebMaxiFarmacia.classHelper;
 
 namespace WebMaxiFarmacia.Controllers
 {
+    [Authorize(Roles = "SuperAdmin, User")]
     public class ProductsController : Controller
     {
         private maxifarmaciabdContext db = new maxifarmaciabdContext();

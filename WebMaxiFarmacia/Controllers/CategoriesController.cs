@@ -10,6 +10,7 @@ using WebMaxiFarmacia.Models;
 
 namespace WebMaxiFarmacia.Controllers
 {
+    [Authorize(Roles = "SuperAdmin")]
     public class CategoriesController : Controller
     {
         private maxifarmaciabdContext db = new maxifarmaciabdContext();
@@ -46,7 +47,7 @@ namespace WebMaxiFarmacia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CategoryId,Descripcion")] Category category)
+        public ActionResult Create(Category category)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +79,7 @@ namespace WebMaxiFarmacia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CategoryId,Descripcion")] Category category)
+        public ActionResult Edit(Category category)
         {
             if (ModelState.IsValid)
             {

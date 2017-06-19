@@ -6,9 +6,12 @@
 
 <h2>Producto</h2>
 
-<p>
-    @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary"})
-</p>
+    @if(User.IsInRole("SuperAdmin"))
+    {
+        <p>
+         @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary"})
+        </p>
+    }
 
 @using (Ajax.BeginForm("Index", new AjaxOptions
 {
@@ -43,9 +46,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.Existencia)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Preciocompra)
-            </th>
+                @if(User.IsInRole("SuperAdmin")){
+                <th>
+                    @Html.DisplayNameFor(model => model.Preciocompra)
+                </th>
+                }
             <th>
                 @Html.DisplayNameFor(model => model.Precioventa)
             </th>
@@ -81,18 +86,32 @@
                 <td align="right">
                     @Html.DisplayFor(modelItem => item.Existencia)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Preciocompra)
-                </td>
+                @if (User.IsInRole("SuperAdmin"))
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Preciocompra)
+                    </td>
+
+                }
                 <td>
                     @Html.DisplayFor(modelItem => item.Precioventa)
                 </td>
-                <td>
-                    @Html.ActionLink("Editar", "Edit", new { id = item.ProductId }, new { @class = "btn btn-primary btn-xs" }) |
-                    @Html.ActionLink("Detalles", "Details", new { id = item.ProductId }, new { @class = "btn btn-info btn-xs" }) |
-                    @Html.ActionLink("Eliminar", "Delete", new { id = item.ProductId }, new { @class = "btn btn-danger btn-xs" })
-                   
-                </td>
+                @if (User.IsInRole("SuperAdmin"))
+                {
+                    <td>
+                        @Html.ActionLink("Editar", "Edit", new { id = item.ProductId }, new { @class = "btn btn-primary btn-xs" }) |
+                        @Html.ActionLink("Detalles", "Details", new { id = item.ProductId }, new { @class = "btn btn-info btn-xs" }) |
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.ProductId }, new { @class = "btn btn-danger btn-xs" })
+
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        @Html.ActionLink("Detalles", "Details", new { id = item.ProductId }, new { @class = "btn btn-info btn-xs" })
+                    </td>
+                }
+
             </tr>
         }
 

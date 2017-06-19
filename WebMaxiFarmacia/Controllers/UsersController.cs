@@ -11,6 +11,7 @@ using WebMaxiFarmacia.classHelper;
 
 namespace WebMaxiFarmacia.Controllers
 {
+    [Authorize(Roles = "SuperAdmin")]
     public class UsersController : Controller
     {
         private maxifarmaciabdContext db = new maxifarmaciabdContext();
@@ -80,8 +81,8 @@ namespace WebMaxiFarmacia.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "nombresuc", user.CompanyId);
-            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "Nombreemp", user.EmployeeId);
+            ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc", user.CompanyId);
+            ViewBag.EmployeeId = new SelectList(cboAll.getEmpleado(), "EmployeeId", "Nombreemp", user.EmployeeId);
             return View(user);
         }
 
