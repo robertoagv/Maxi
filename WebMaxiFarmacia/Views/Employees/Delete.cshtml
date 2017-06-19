@@ -1,0 +1,64 @@
+﻿@model WebMaxiFarmacia.Models.Employee
+
+@{
+    ViewBag.Title = "Eliminar";
+}
+
+<h2>Delete</h2>
+
+<h3>Esta Seguro de Eliminar este Elemento?</h3>
+<div>
+    <h4>Empleado</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Company.nombresuc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company.nombresuc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombreemp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombreemp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Apellidoemp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Apellidoemp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefonoemp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefonoemp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Direccionemp)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Direccionemp)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Back to List", "Index", new { }, new { @class = "btn btn-default"})
+        </div>
+    }
+</div>

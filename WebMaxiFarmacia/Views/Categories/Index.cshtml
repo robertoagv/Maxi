@@ -9,6 +9,7 @@
 <p>
     @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary"})
 </p>
+
 <table class="table table-striped">
     <tr>
         <th>
@@ -23,9 +24,9 @@
             @Html.DisplayFor(modelItem => item.Descripcion)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.CategoryId }, new { @class = "btn btn-primary" }) |
-            @Html.ActionLink("Detalle", "Details", new { id=item.CategoryId }, new { @class = "btn btn-info" }) |
-            @Html.ActionLink("Eliminar", "Delete", new { id=item.CategoryId }, new { @class = "btn btn-danger" })
+            @Html.ActionLink("Editar", "Edit", new { id=item.CategoryId }, new { @class = "btn btn-primary btn-xs") |
+            @Html.ActionLink("Detalle", "Details", new { id=item.CategoryId }, new { @class = "btn btn-info btn-xs" }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.CategoryId }, new { @class = "btn btn-danger btn-xs" })
         </td>
     </tr>
 }

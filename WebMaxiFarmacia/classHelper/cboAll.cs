@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -54,5 +55,22 @@ namespace WebMaxiFarmacia.classHelper
                 return sucursalCbo.OrderBy(s => s.nombresuc).ToList();
             }
         }
+
+        public List<Employee> getEmpleado()
+        {
+            using (var db = new maxifarmaciabdContext())
+            {
+                var empleadoCbo = db.Employees.ToList();
+                empleadoCbo.Add(new Employee()
+                {
+                    EmployeeId = 0,
+                    Nombreemp = "[Seccione un Empleado]"
+                });
+
+                return empleadoCbo.OrderBy(e => e.Nombreemp).ToList();
+            }
+        }
+
+
     }
 }

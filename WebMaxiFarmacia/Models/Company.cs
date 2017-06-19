@@ -23,12 +23,14 @@ namespace WebMaxiFarmacia.Models
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [Display(Name = "Nombre")]
         public string direccion { get; set; }
+
+        [EmailAddress(ErrorMessage = "Debe ingresar un correo valido")]
         public string email { get; set; }
 
         //Relaciones
         public virtual ICollection<Product> Products { get; set; }
         public virtual ICollection<Warehouse> Warehouses { get; set; }
-
+        public virtual ICollection<Employee> Employees { get; set; }
 
     }
 }

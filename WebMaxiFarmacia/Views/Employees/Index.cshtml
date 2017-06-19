@@ -1,0 +1,57 @@
+﻿@model IEnumerable<WebMaxiFarmacia.Models.Employee>
+
+@{
+    ViewBag.Title = "Empleado";
+}
+
+<h2>Empleado</h2>
+
+<p>
+    @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary"})
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Company.nombresuc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombreemp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Apellidoemp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Telefonoemp)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Direccionemp)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Company.nombresuc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombreemp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Apellidoemp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Telefonoemp)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Direccionemp)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.EmployeeId }, new { @class = "btn btn-primary btn-xs"}) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.EmployeeId }, new { @class = "btn btn-info btn-xs" }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.EmployeeId }, new { @class = "btn btn-danger btn-xs" })
+        </td>
+    </tr>
+}
+
+</table>

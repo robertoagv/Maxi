@@ -33,6 +33,8 @@ namespace WebMaxiFarmacia.Models
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
         }
+
+        public System.Data.Entity.DbSet<WebMaxiFarmacia.Models.Employee> Employees { get; set; }
     }
 
     
