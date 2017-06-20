@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using WebMaxiFarmacia.Models;
+using System.Web.Mvc;
 
 namespace WebMaxiFarmacia.classHelper
 {
-    public class cboAll
+    public class cboAll : Controller
     {
+        
       
         public List<Supplier> getProveedor()
         {
@@ -44,8 +46,10 @@ namespace WebMaxiFarmacia.classHelper
         {
             using (var db = new maxifarmaciabdContext())
             {
-                var sucursalCbo = db.Companies.ToList();
+                //var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+                //var sucursalCbo = db.Companies.Where(s => s.CompanyId == usuario.CompanyId).ToList();
 
+                var sucursalCbo = db.Companies.ToList();
                 sucursalCbo.Add(new Company()
                 {
                     CompanyId = 0,
