@@ -10,7 +10,7 @@ using WebMaxiFarmacia.Models;
 
 namespace WebMaxiFarmacia.Controllers
 {
-    [Authorize(Roles = "SuperAdmin")]
+    [Authorize(Roles = "SuperAdmin, Admin")]
     public class CategoriesController : Controller
     {
         private maxifarmaciabdContext db = new maxifarmaciabdContext();

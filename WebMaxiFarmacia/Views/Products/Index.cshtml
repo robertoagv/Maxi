@@ -6,7 +6,7 @@
 
 <h2>Producto</h2>
 
-    @if(User.IsInRole("SuperAdmin"))
+    @if(User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
     {
         <p>
          @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary"})
@@ -46,7 +46,8 @@
             <th>
                 @Html.DisplayNameFor(model => model.Existencia)
             </th>
-                @if(User.IsInRole("SuperAdmin")){
+                @if(User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+                {
                 <th>
                     @Html.DisplayNameFor(model => model.Preciocompra)
                 </th>
@@ -86,7 +87,7 @@
                 <td align="right">
                     @Html.DisplayFor(modelItem => item.Existencia)
                 </td>
-                @if (User.IsInRole("SuperAdmin"))
+                @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
                 {
                     <td>
                         @Html.DisplayFor(modelItem => item.Preciocompra)
@@ -96,7 +97,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Precioventa)
                 </td>
-                @if (User.IsInRole("SuperAdmin"))
+                @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
                 {
                     <td>
                         @Html.ActionLink("Editar", "Edit", new { id = item.ProductId }, new { @class = "btn btn-primary btn-xs" }) |

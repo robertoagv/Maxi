@@ -11,7 +11,7 @@ using WebMaxiFarmacia.classHelper;
 
 namespace WebMaxiFarmacia.Controllers
 {
-    [Authorize(Roles = "SuperAdmin")]
+    [Authorize(Roles = "SuperAdmin, Admin")]
     public class EmployeesController : Controller
     {
         private maxifarmaciabdContext db = new maxifarmaciabdContext();
@@ -20,7 +20,15 @@ namespace WebMaxiFarmacia.Controllers
         // GET: Employees
         public ActionResult Index()
         {
-            var employees = db.Employees.Include(e => e.Company);
+
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            if (usuario == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var employees = db.Employees.Where(e => e.CompanyId == usuario.CompanyId).Include(e => e.Company);
+
             return View(employees.ToList());
         }
 

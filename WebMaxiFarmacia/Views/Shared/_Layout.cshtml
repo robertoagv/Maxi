@@ -40,6 +40,20 @@
                                 <li>@Html.ActionLink("Usuarios", "Index", "Users")</li>
 
                     }
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Archivo<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Bodega", "Index", "Warehouses")</li>
+                                <li>@Html.ActionLink("Categoria", "Index", "Categories")</li>
+                                <li>@Html.ActionLink("Empleado", "Index", "Employees")</li>
+                            </ul>
+                        </li>
+                                <li>@Html.ActionLink("Producto", "Index", "Products")</li>
+                                <li>@Html.ActionLink("Usuarios", "Index", "Users")</li>
+
+                    }
                     @if (User.IsInRole("User"))
                     {
                         <li>@Html.ActionLink("Producto", "Index", "Products")</li>

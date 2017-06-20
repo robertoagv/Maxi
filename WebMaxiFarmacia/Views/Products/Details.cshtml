@@ -22,7 +22,7 @@
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.Company.nombresuc)
+                    Sucursal
                 </dt>
 
                 <dd>
@@ -30,7 +30,7 @@
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.Supplier.Nombre)
+                    Proveedor
                 </dt>
 
                 <dd>
@@ -46,7 +46,7 @@
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.Nombreproducto)
+                    Producto
                 </dt>
 
                 <dd>
@@ -60,7 +60,7 @@
                 <dd>
                     @Html.DisplayFor(model => model.Descripcion)
                 </dd>
-                @if (User.IsInRole("SuperAdmin"))
+                @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
                 {
                     <dt>
                         @Html.DisplayNameFor(model => model.Preciocompra)
@@ -82,7 +82,7 @@
             </dl>
         </div>
         <p>
-            @if (User.IsInRole("SuperAdmin"))
+            @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
             {
                  @Html.ActionLink("Editar", "Edit", new { id = Model.ProductId }, new { @class = "btn btn-primary" }) 
             }
@@ -118,7 +118,7 @@
                             @Html.DisplayFor(modelItem => item.Existencia)
                         </td>
                         @*<td>@Html.ActionLink("Comprar", "Comprar", new { id = item.inventoryId }, new { @class = "btn btn-info  btn-xs" })</td>*@
-                        @if (User.IsInRole("SuperAdmin"))
+                        @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
                         {
 
                             <td>@Html.ActionLink("Comprar", "Comprar", "Products", new { id = item.inventoryId }, new { @class = "dialog-window btn btn-info btn-xs" })</td>

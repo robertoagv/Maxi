@@ -60,21 +60,7 @@ namespace WebMaxiFarmacia.classHelper
             }
         }
 
-        public List<Employee> getEmpleado()
-        {
-            using (var db = new maxifarmaciabdContext())
-            {
-                var empleadoCbo = db.Employees.ToList();
-                empleadoCbo.Add(new Employee()
-                {
-                    EmployeeId = 0,
-                    Nombreemp = "[Seccione un Empleado]"
-                });
-
-                return empleadoCbo.OrderBy(e => e.Nombreemp).ToList();
-            }
-        }
-
+        
 
     }
 }

@@ -11,7 +11,7 @@ using WebMaxiFarmacia.classHelper;
 
 namespace WebMaxiFarmacia.Controllers
 {
-    [Authorize(Roles = "SuperAdmin")]
+    [Authorize(Roles = "SuperAdmin, Admin")]
     public class UsersController : Controller
     {
         private maxifarmaciabdContext db = new maxifarmaciabdContext();
@@ -20,7 +20,13 @@ namespace WebMaxiFarmacia.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            var users = db.Users.Include(u => u.Company).Include(u => u.Employee);
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            if (usuario == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var users = db.Users.Where(ua => ua.CompanyId == usuario.CompanyId).Include(u => u.Company).Include(u => u.Employee);
             return View(users.ToList());
         }
 
@@ -41,9 +47,20 @@ namespace WebMaxiFarmacia.Controllers
 
         // GET: Users/Create
         public ActionResult Create()
-        {
+        {      
+                var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+
+                var empleadoCbo = db.Employees.Where(e => e.CompanyId == usuario.CompanyId).ToList();
+                empleadoCbo.Add(new Employee()
+                {
+                    EmployeeId = 0,
+                    Nombreemp = "[Seccione un Empleado]"
+                });
+
+                 empleadoCbo.OrderBy(e => e.Nombreemp).ToList();
+
             ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc");
-            ViewBag.EmployeeId = new SelectList(cboAll.getEmpleado(), "EmployeeId", "Nombreemp");
+            ViewBag.EmployeeId = new SelectList(empleadoCbo.OrderBy(e => e.Nombreemp).ToList(), "EmployeeId", "Nombreemp");
             return View();
         }
 
@@ -52,20 +69,31 @@ namespace WebMaxiFarmacia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(User user)
+        public ActionResult Create(User user, string role)
         {
             if (ModelState.IsValid)
             {
                 db.Users.Add(user);
                 db.SaveChanges();
 
-                UserHelper.CreateUserASP(user.NombreUser, "User");
+                UserHelper.CreateUserASP(user.NombreUser, role);
 
                 return RedirectToAction("Index");
             }
+            
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+
+            var empleadoCbo = db.Employees.Where(e => e.CompanyId == usuario.CompanyId).ToList();
+            empleadoCbo.Add(new Employee()
+            {
+                EmployeeId = 0,
+                Nombreemp = "[Seccione un Empleado]"
+            });
+
+            
 
             ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc", user.CompanyId);
-            ViewBag.EmployeeId = new SelectList(cboAll.getEmpleado(), "EmployeeId", "Nombreemp", user.EmployeeId);
+            ViewBag.EmployeeId = new SelectList(empleadoCbo.OrderBy(e => e.Nombreemp).ToList(), "EmployeeId", "Nombreemp", user.EmployeeId);
             return View(user);
         }
 
@@ -81,8 +109,19 @@ namespace WebMaxiFarmacia.Controllers
             {
                 return HttpNotFound();
             }
+
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+
+            var empleadoCbo = db.Employees.Where(e => e.CompanyId == usuario.CompanyId).ToList();
+            empleadoCbo.Add(new Employee()
+            {
+                EmployeeId = 0,
+                Nombreemp = "[Seccione un Empleado]"
+            });
+
+
             ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc", user.CompanyId);
-            ViewBag.EmployeeId = new SelectList(cboAll.getEmpleado(), "EmployeeId", "Nombreemp", user.EmployeeId);
+            ViewBag.EmployeeId = new SelectList(empleadoCbo.OrderBy(e => e.Nombreemp).ToList(), "EmployeeId", "Nombreemp", user.EmployeeId);
             return View(user);
         }
 
@@ -108,8 +147,18 @@ namespace WebMaxiFarmacia.Controllers
                 
                 return RedirectToAction("Index");
             }
+
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+
+            var empleadoCbo = db.Employees.Where(e => e.CompanyId == usuario.CompanyId).ToList();
+            empleadoCbo.Add(new Employee()
+            {
+                EmployeeId = 0,
+                Nombreemp = "[Seccione un Empleado]"
+            });
+
             ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc", user.CompanyId);
-            ViewBag.EmployeeId = new SelectList(cboAll.getEmpleado(), "EmployeeId", "Nombreemp", user.EmployeeId);
+            ViewBag.EmployeeId = new SelectList(empleadoCbo.OrderBy(e => e.Nombreemp).ToList(), "EmployeeId", "Nombreemp", user.EmployeeId);
             return View(user);
         }
 

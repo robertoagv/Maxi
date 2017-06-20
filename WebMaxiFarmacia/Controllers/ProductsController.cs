@@ -11,7 +11,7 @@ using WebMaxiFarmacia.classHelper;
 
 namespace WebMaxiFarmacia.Controllers
 {
-    [Authorize(Roles = "SuperAdmin, User")]
+    [Authorize(Roles = "SuperAdmin, Admin, User")]
     public class ProductsController : Controller
     {
         private maxifarmaciabdContext db = new maxifarmaciabdContext();
@@ -25,6 +25,7 @@ namespace WebMaxiFarmacia.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+
             var products = db.Products.Where(p => p.CompanyId == usuario.CompanyId).Include(p => p.Category).Include(p => p.Company).Include(p => p.Supplier);
             return View(products.ToList());
         }
