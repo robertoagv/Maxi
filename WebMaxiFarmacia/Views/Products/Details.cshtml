@@ -82,7 +82,10 @@
             </dl>
         </div>
         <p>
-            @Html.ActionLink("Editar", "Edit", new { id = Model.ProductId }, new { @class = "btn btn-primary" }) |
+            @if (User.IsInRole("SuperAdmin"))
+            {
+                 @Html.ActionLink("Editar", "Edit", new { id = Model.ProductId }, new { @class = "btn btn-primary" }) 
+            }
             @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default" })
         </p>
     </div>
@@ -155,10 +158,13 @@
                 <div class="te">Espere Porfavor...</div>
             </div>
 
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+               
+            </div>
+
             <div>
-                <br />
-                <br />
-                
+               
             </div>
 
         </div>

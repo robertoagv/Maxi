@@ -10,7 +10,12 @@ namespace WebMaxiFarmacia.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+
+            return RedirectToAction("Login", "Account");
         }
 
         public ActionResult About()

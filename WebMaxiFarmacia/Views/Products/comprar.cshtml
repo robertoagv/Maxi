@@ -1,10 +1,10 @@
 ﻿@model WebMaxiFarmacia.Models.Inventory
 
-@ViewBag.inventario.WarehouseId
+@*@ViewBag.inventario.WarehouseId
 
 @ViewBag.inventario.inventoryId
 
-@ViewBag.inventario.ProductId
+@ViewBag.inventario.ProductId*@
 
 
 @using (Ajax.BeginForm("comprar", new AjaxOptions
@@ -18,13 +18,19 @@
     <input type="hidden" name="idbodega" value="@ViewBag.inventario.WarehouseId" />
     <input type="hidden" name="idinventario" value="@ViewBag.inventario.inventoryId" />
     <input type="hidden" name="idproducto" value="@ViewBag.inventario.ProductId" />
-    <div class="form-group">
-        <label>Cantidad</label>
-        <div class="col-md-10 form-inline">
-            <input type="text" value="" class="form-control" placeholder="Cantidad" name="newcant" />
+
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+
+    <div class="form-group form-inline">
+        <div class="">
+            <label class="control-label">Cantidad</label>
+            <input type="text" value="" class="form-control" placeholder="Cantidad" name="newcant" required/>
             <input type="submit" value="Agregar" class="btn btn-primary" />
-            @Html.ActionLink("Cancelar", "Index", new { }, new { @class = "btn btn-default" })
-            <hr />
+            @*@Html.ActionLink("Cancelar", "Index", new { }, new { @class = "btn btn-default" })*@
+        </div>
+    </div>
+
         </div>
     </div>
 
