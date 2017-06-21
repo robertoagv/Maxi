@@ -26,6 +26,13 @@ namespace WebMaxiFarmacia.Models
 
         public DbSet<Inventory> Inventories { get; set; }
 
+        public DbSet<Sale> Sales { get; set; }
+
+        public DbSet<SaleDetail> SaleDetails { get; set; }
+
+        public DbSet<SaleDatilsTmp> SaleDetailTmps { get; set; }
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
 
         {

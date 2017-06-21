@@ -1,0 +1,75 @@
+﻿@model WebMaxiFarmacia.Models.NewSaleView
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Sale</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @* ************** *@
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Nombrecte, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Nombrecte, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Nombrecte, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Fechavta, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Fechavta, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Fechavta, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+               
+                        <input type="text"  value="@ViewBag.UserId"  class="form-control"/>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                         @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default"})
+                         @Html.ActionLink("Agregar Prodcto", "AgregarProducto", new { }, new { @class = "btn btn-info" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<h4>Detalles</h4>
+<hr />
+@if (Model.Detalles.Count == 0)
+{
+    <div class="alert alert-info">
+        No se ha agregado Producto.
+    </div>
+}
+else
+{
+    <strong> Ha Funcionado........</strong >
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

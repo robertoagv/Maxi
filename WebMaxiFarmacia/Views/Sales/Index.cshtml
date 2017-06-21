@@ -1,0 +1,45 @@
+﻿@model IEnumerable<WebMaxiFarmacia.Models.Sale>
+
+@{
+    ViewBag.Title = "Venta";
+}
+
+<h2>Venta</h2>
+
+<p>
+    @Html.ActionLink("Nueva", "Create")
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Users.NombreUser)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombrecte)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fechavta)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Users.NombreUser)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombrecte)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fechavta)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.SaleID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.SaleID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.SaleID })
+        </td>
+    </tr>
+}
+
+</table>

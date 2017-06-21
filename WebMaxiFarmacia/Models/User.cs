@@ -28,7 +28,10 @@ namespace WebMaxiFarmacia.Models
 
         public virtual Employee Employee { get; set; }
         public virtual Company Company { get; set; }
-        
+
+        public virtual ICollection<Sale> Sales { get; set; }
+
+
 
     }
 }

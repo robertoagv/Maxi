@@ -64,6 +64,10 @@ namespace WebMaxiFarmacia.Models
         public virtual Company Company { get; set; }
 
         public virtual ICollection<Inventory> Inventories { get; set; }
+        public virtual ICollection<SaleDetail> SaleDetails { get; set; }
 
+        public virtual ICollection<SaleDatilsTmp>  SaleDatailTmps { get; set; }
+
+    
     }
 }

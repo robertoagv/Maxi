@@ -1,0 +1,42 @@
+﻿@model WebMaxiFarmacia.Models.Sale
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Sale</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Users.NombreUser)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Users.NombreUser)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombrecte)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombrecte)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fechavta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fechavta)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SaleID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -34,9 +34,11 @@
                                 <li>@Html.ActionLink("Empleado", "Index", "Employees")</li>
                                 <li>@Html.ActionLink("Proveedor", "Index", "Suppliers")</li>
                                 <li>@Html.ActionLink("Sucursal", "Index", "Companies")</li>
+                                
                             </ul>
                         </li>
                                 <li>@Html.ActionLink("Producto", "Index", "Products")</li>
+                                <li>@Html.ActionLink("Ventas", "Index", "Sales")</li>
                                 <li>@Html.ActionLink("Usuarios", "Index", "Users")</li>
 
                     }
@@ -51,12 +53,14 @@
                             </ul>
                         </li>
                                 <li>@Html.ActionLink("Producto", "Index", "Products")</li>
+                                <li>@Html.ActionLink("Ventas", "Index", "Sales")</li>
                                 <li>@Html.ActionLink("Usuarios", "Index", "Users")</li>
 
                     }
                     @if (User.IsInRole("User"))
                     {
                         <li>@Html.ActionLink("Producto", "Index", "Products")</li>
+                        <li>@Html.ActionLink("Ventas", "Index", "Sales")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
