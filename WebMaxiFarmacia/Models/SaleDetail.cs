@@ -25,6 +25,7 @@ namespace WebMaxiFarmacia.Models
         [Required(ErrorMessage = "El campo {0} es Obligatorio")]
         [DataType(DataType.Currency)]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        [Display(Name = "Precio")]
         public decimal Price { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es Obligatorio")]

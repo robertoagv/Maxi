@@ -9,7 +9,7 @@ namespace WebMaxiFarmacia.Models
     public class NewSaleView
     {
 
-        [MaxLength(100, ErrorMessage = "El campo {0} es obligatorio.")]
+        [MaxLength(100, ErrorMessage = "El campo {0} debe contener maximo {1} caracteres.")]
         public string Nombrecte { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es Obligatorio")]
@@ -17,13 +17,13 @@ namespace WebMaxiFarmacia.Models
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Fechavta { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        //[Required(ErrorMessage = "El campo {0} es obligatorio")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe Seleccionar un {0}")]
         [Display(Name = "Usuario")]
         public int UserId { get; set; }
 
        
-
+        
         public List<SaleDatilsTmp> Detalles { get; set; }
 
         

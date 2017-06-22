@@ -15,6 +15,7 @@ namespace WebMaxiFarmacia.Models
 
         [Required(ErrorMessage = "El campo {0} es Obligatorio")]
         public long Codigobarra { get; set; }
+
         public string Nombreproducto  { get; set; }
         public decimal Precioventa { get; set; }
         public double? Existencia { get; set; }

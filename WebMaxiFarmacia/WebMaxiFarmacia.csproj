@@ -196,6 +196,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="classHelper\cboAll.cs" />
+    <Compile Include="classHelper\MovementsHelper.cs" />
     <Compile Include="classHelper\UserHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
@@ -225,6 +226,7 @@
     <Compile Include="Models\NewSaleView.cs" />
     <Compile Include="Models\producInventory.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\Response.cs" />
     <Compile Include="Models\Sale.cs" />
     <Compile Include="Models\SaleDatilsTmp.cs" />
     <Compile Include="Models\SaleDetail.cs" />

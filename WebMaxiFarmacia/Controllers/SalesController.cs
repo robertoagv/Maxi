@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using WebMaxiFarmacia.classHelper;
 using WebMaxiFarmacia.Models;
 
 namespace WebMaxiFarmacia.Controllers
@@ -99,6 +100,24 @@ namespace WebMaxiFarmacia.Controllers
             return View(pview);
         }
 
+        public ActionResult DeleteProductList(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var saleDetailTmpFind = db.SaleDetailTmps.Where(sdt => sdt.NombreUsuario == User.Identity.Name && sdt.ProductId == id).FirstOrDefault();
+            if (saleDetailTmpFind == null)
+            {
+                return HttpNotFound();
+            }
+
+            db.SaleDetailTmps.Remove(saleDetailTmpFind);
+            db.SaveChanges();
+            return RedirectToAction("Create");
+        }
+
 
         // GET: Sales
         public ActionResult Index()
@@ -142,6 +161,7 @@ namespace WebMaxiFarmacia.Controllers
             var view = new NewSaleView()
             {
                 Fechavta = DateTime.Today,
+                UserId = usuario.UserId,
                 Detalles = db.SaleDetailTmps.Where(sdt => sdt.NombreUsuario == User.Identity.Name).ToList()
             };
 
@@ -153,17 +173,30 @@ namespace WebMaxiFarmacia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Sale sale)
+        public ActionResult Create(NewSaleView newSaleView)
         {
             if (ModelState.IsValid)
             {
-                db.Sales.Add(sale);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var respuesta = MovementsHelper.newSale(newSaleView, User.Identity.Name);
+                if (respuesta.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                ModelState.AddModelError(string.Empty, respuesta.Message);
+                
             }
 
-            ViewBag.UserId = new SelectList(db.Users, "UserId", "NombreUser", sale.UserId);
-            return View(sale);
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            ViewBag.UserId = usuario.NombreUser;
+
+            var view = new NewSaleView()
+            {
+                Fechavta = DateTime.Today,
+                UserId = usuario.UserId,
+                Detalles = db.SaleDetailTmps.Where(sdt => sdt.NombreUsuario == User.Identity.Name).ToList()
+            };
+            return View(view);
         }
 
         // GET: Sales/Edit/5

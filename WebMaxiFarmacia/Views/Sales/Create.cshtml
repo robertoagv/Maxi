@@ -40,8 +40,9 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-               
-                        <input type="text"  value="@ViewBag.UserId"  class="form-control"/>
+                        @Html.HiddenFor(model => model.UserId)
+                        @Html.ValidationMessageFor(model => model.UserId, "", new { @class = "text-danger" })
+                        <input type="text"  value="@ViewBag.UserId" name="" class="form-control"/>
                     </div>
                 </div>
 
@@ -49,6 +50,7 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
+                         @Html.ActionLink("Generar", "Create", new { }, new { @class = "btn btn-primary" })
                         <input type="submit" value="Generar" class="btn btn-default" />
                          @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default"})
                          @Html.ActionLink("Agregar Producto", "AgregarProducto", new { }, new { @class = "btn btn-info" })
@@ -69,7 +71,7 @@
 }
 else
 {
-    <strong> Ha Funcionado........</strong >
+    
     <table class="table table-striped">
         <tr>
             <th>
