@@ -49,7 +49,7 @@
                     <div class="col-md-offset-2 col-md-10">
                         <input type="submit" value="Create" class="btn btn-default" />
                          @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default"})
-                         @Html.ActionLink("Agregar Prodcto", "AgregarProducto", new { }, new { @class = "btn btn-info" })
+                         @Html.ActionLink("Agregar Producto", "AgregarProducto", new { }, new { @class = "btn btn-info" })
                     </div>
                 </div>
             </div>
@@ -68,6 +68,65 @@
 else
 {
     <strong> Ha Funcionado........</strong >
+    <table class="table table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Detalles[0].Descriptionpro)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Detalles[0].Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Detalles[0].Cantidad)
+            </th>
+            <th>
+                Total
+            </th>
+            <th>
+
+            </th>
+        </tr>
+
+        @foreach (var item in Model.Detalles)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descriptionpro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cantidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Valor)
+                </td>
+                <td>
+                    @Html.ActionLink("Quitar", "DeleteProductList", new { id = item.ProductId }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Esta seguro de Quitar este producto?')"})
+                </td>
+            </tr>
+        }
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                    <strong>Total</strong>
+                </td>
+                <td>
+                    <strong>
+                        @Html.DisplayFor(modelItem => Model.TotalCantidad)
+                    </strong>
+                </td>
+                <td>
+                    <strong>
+                        @Html.DisplayFor(modelItem => Model.TotalValue)
+                    </strong>
+                </td>
+            </tr>
+
+    </table>
 }
 
 @section Scripts {

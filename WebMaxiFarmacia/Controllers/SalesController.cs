@@ -17,8 +17,80 @@ namespace WebMaxiFarmacia.Controllers
 
         public ActionResult AgregarProducto()
         {
-            return View();
+            var viewpro = new addProductView{ Codigobarra = -1};
+
+            return View(viewpro);
         }
+
+        [HttpPost]
+        public ActionResult AgregarProducto(long? barcodigo)
+        {
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+
+            if (usuario == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var producto = db.Products.Where(p => p.CompanyId == usuario.CompanyId && p.Codigobarra == barcodigo).FirstOrDefault();
+
+            if (producto ==  null)
+            {
+                addProductView viewproductonotfind = new addProductView
+                {
+                   
+                    Codigobarra = 0
+                   
+                };
+
+                return View(viewproductonotfind);
+            }
+
+            ViewBag.producto = producto;
+            var viewproductofind = new addProductView
+            {
+                ProductId = producto.ProductId,
+                Codigobarra = producto.Codigobarra,
+                Nombreproducto = producto.Nombreproducto,
+                Existencia = producto.Existencia,
+                Precioventa = producto.Precioventa,
+
+            };
+
+            return View(viewproductofind);
+        }
+        [HttpPost]
+        public ActionResult AgregarProductoFind(addProductView pview)
+        {
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+
+            if (usuario == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+           
+                if (ModelState.IsValid)
+                {
+                    var ventaDetalle = new SaleDatilsTmp
+                    {
+                        NombreUsuario = User.Identity.Name,
+                        ProductId = pview.ProductId,
+                        Descriptionpro = pview.Nombreproducto,
+                        Precio = pview.Precioventa,
+                        Cantidad = pview.Cantidad,
+                    };
+
+                    db.SaleDetailTmps.Add(ventaDetalle);
+                    db.SaveChanges();
+                    return RedirectToAction("Create");
+                }
+            
+            
+
+            return View(pview);
+        }
+
 
         // GET: Sales
         public ActionResult Index()
@@ -58,6 +130,7 @@ namespace WebMaxiFarmacia.Controllers
             }
 
             ViewBag.UserId = usuario.NombreUser;
+
             var view = new NewSaleView()
             {
                 Fechavta = DateTime.Now,

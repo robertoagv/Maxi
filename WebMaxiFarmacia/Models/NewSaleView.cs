@@ -22,6 +22,7 @@ namespace WebMaxiFarmacia.Models
         [Display(Name = "Usuario")]
         public int UserId { get; set; }
 
+       
 
         public List<SaleDatilsTmp> Detalles { get; set; }
 
