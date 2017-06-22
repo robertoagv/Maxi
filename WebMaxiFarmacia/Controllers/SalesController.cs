@@ -72,21 +72,29 @@ namespace WebMaxiFarmacia.Controllers
            
                 if (ModelState.IsValid)
                 {
-                    var ventaDetalle = new SaleDatilsTmp
+                    var saleYesExistInDetails = db.SaleDetailTmps.Where(sed => sed.NombreUsuario == User.Identity.Name && sed.ProductId == pview.ProductId).FirstOrDefault();
+                    if (saleYesExistInDetails == null)
                     {
-                        NombreUsuario = User.Identity.Name,
-                        ProductId = pview.ProductId,
-                        Descriptionpro = pview.Nombreproducto,
-                        Precio = pview.Precioventa,
-                        Cantidad = pview.Cantidad,
-                    };
+                        saleYesExistInDetails = new SaleDatilsTmp
+                        {
+                            NombreUsuario = User.Identity.Name,
+                            ProductId = pview.ProductId,
+                            Descriptionpro = pview.Nombreproducto,
+                            Precio = pview.Precioventa,
+                            Cantidad = pview.Cantidad,
+                        };
 
-                    db.SaleDetailTmps.Add(ventaDetalle);
-                    db.SaveChanges();
-                    return RedirectToAction("Create");
+                        db.SaleDetailTmps.Add(saleYesExistInDetails);
+                    }
+                    else
+                    {
+                        saleYesExistInDetails.Cantidad += pview.Cantidad;
+                        db.Entry(saleYesExistInDetails).State = EntityState.Modified;
+                    }
+
+                  db.SaveChanges();
+                  return RedirectToAction("Create");
                 }
-            
-            
 
             return View(pview);
         }
@@ -133,7 +141,7 @@ namespace WebMaxiFarmacia.Controllers
 
             var view = new NewSaleView()
             {
-                Fechavta = DateTime.Now,
+                Fechavta = DateTime.Today,
                 Detalles = db.SaleDetailTmps.Where(sdt => sdt.NombreUsuario == User.Identity.Name).ToList()
             };
 
