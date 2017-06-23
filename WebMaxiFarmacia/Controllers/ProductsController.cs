@@ -54,8 +54,19 @@ namespace WebMaxiFarmacia.Controllers
 
         public ActionResult comprar(int? id)
         {
-            var inventario = db.Inventories.Find(id);
-  
+
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            var bodega = db.Warehouses.Where(b => b.CompanyId == usuario.CompanyId).FirstOrDefault();
+
+            var inventario = db.Inventories.Where(i => i.ProductId == id && i.WarehouseId == bodega.WarehouseId).FirstOrDefault();
+
+            if (inventario == null)
+            {
+                var inventarioget = new Inventory { WarehouseId = bodega.WarehouseId, ProductId = id, Existencia = 0 };
+                ViewBag.inventario = inventarioget;
+                return PartialView(inventarioget);
+            }
+
             ViewBag.inventario = inventario;
            
             return PartialView(inventario);
@@ -64,6 +75,21 @@ namespace WebMaxiFarmacia.Controllers
         [HttpPost]
         public ActionResult comprar(int idbodega, int idinventario, int idproducto, int newcant)
         {
+            var inventario = db.Inventories.Find(idinventario);
+
+            if (inventario == null)
+            {
+               var  inventarionew = new Inventory {
+                        WarehouseId = idbodega,
+                        ProductId = idproducto,
+                        Existencia = newcant
+                };
+                db.Inventories.Add(inventarionew);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+           
+
             var catidad = (from i in db.Inventories
                            where i.ProductId == idproducto
                            select i.Existencia).FirstOrDefault();
@@ -71,7 +97,6 @@ namespace WebMaxiFarmacia.Controllers
             var oldexist = int.Parse(catidad.ToString());
             var newexist = oldexist + newcant;
 
-            var inventario = db.Inventories.Find(idinventario);
             inventario.Existencia = newexist;
             db.SaveChanges();
 

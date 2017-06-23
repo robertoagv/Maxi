@@ -27,6 +27,7 @@ namespace WebMaxiFarmacia.Controllers
             }
 
             var users = db.Users.Where(ua => ua.CompanyId == usuario.CompanyId).Include(u => u.Company).Include(u => u.Employee);
+
             return View(users.ToList());
         }
 
@@ -47,11 +48,12 @@ namespace WebMaxiFarmacia.Controllers
 
         // GET: Users/Create
         public ActionResult Create()
-        {      
-                var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+        {
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
 
-                var empleadoCbo = db.Employees.Where(e => e.CompanyId == usuario.CompanyId).ToList();
-                empleadoCbo.Add(new Employee()
+            var empleadoCbo = db.Employees.Where(e => e.CompanyId == usuario.CompanyId).ToList();
+
+            empleadoCbo.Add(new Employee()
                 {
                     EmployeeId = 0,
                     Nombreemp = "[Seccione un Empleado]"

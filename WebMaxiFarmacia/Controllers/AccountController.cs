@@ -86,7 +86,7 @@ namespace WebMaxiFarmacia.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Tu Usuario o Contraseña son invalidas.");
                     return View(model);
             }
         }
@@ -129,7 +129,7 @@ namespace WebMaxiFarmacia.Controllers
                     return View("Lockout");
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid code.");
+                    ModelState.AddModelError("", "Codigo Invalido.");
                     return View(model);
             }
         }
