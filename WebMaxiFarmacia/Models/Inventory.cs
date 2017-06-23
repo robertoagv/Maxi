@@ -17,7 +17,7 @@ namespace WebMaxiFarmacia.Models
         // [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public int? ProductId { get; set; }
 
-        public double Existencia { get; set; }
+        public int Existencia { get; set; }
 
         public virtual Warehouse Warehouse { get; set; }
         public virtual Product Product { get; set; }

@@ -114,9 +114,22 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Warehouse.Nombre)
                         </td>
-                        <td align="right">
-                            @Html.DisplayFor(modelItem => item.Existencia)
-                        </td>
+                        @if (item.Existencia < 6)
+                        {
+                            <td align="right" class="text-danger">
+                                <strong>
+                                    @Html.DisplayFor(modelItem => item.Existencia)
+                                </strong>
+                            </td>
+                        }
+                        else
+                        {
+
+                            <td align="right">
+                                @Html.DisplayFor(modelItem => item.Existencia)
+                            </td>
+                        }
+
                         @*<td>@Html.ActionLink("Comprar", "Comprar", new { id = item.inventoryId }, new { @class = "btn btn-info  btn-xs" })</td>*@
                         @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
                         {

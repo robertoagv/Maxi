@@ -1,4 +1,5 @@
-﻿@model IEnumerable<WebMaxiFarmacia.Models.Sale>
+﻿@model PagedList.IPagedList<WebMaxiFarmacia.Models.Sale>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Venta";
@@ -9,37 +10,47 @@
 <p>
     @Html.ActionLink("Nueva", "Create")
 </p>
-<table class="table table-striped">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Users.NombreUser)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombrecte)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Fechavta)
-        </th>
-        <th></th>
-    </tr>
+<div class="table table-responsive">
+    <table class="table table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Users.NombreUser)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Nombrecte)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Fechavta)
+            </th>
+            <th></th>
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Users.NombreUser)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombrecte)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Fechavta)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.SaleID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.SaleID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.SaleID })
-        </td>
-    </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Users.NombreUser)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombrecte)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fechavta)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.SaleID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.SaleID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.SaleID })
+                </td>
+            </tr>
+        }
 
-</table>
+    </table>
+</div>
+    Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber), de: @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("Index", new
+   {
+       page,
+       sortOrder = ViewBag.CurrentSort,
+       currentFilter = ViewBag.CurrentFilter
+   }))

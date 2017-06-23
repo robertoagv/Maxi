@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebMaxiFarmacia.Models;
 using WebMaxiFarmacia.classHelper;
+using PagedList;
 
 namespace WebMaxiFarmacia.Controllers
 {
@@ -18,26 +19,29 @@ namespace WebMaxiFarmacia.Controllers
         private cboAll cboAll = new cboAll();
 
         // GET: Products
-        public ActionResult Index()
+        public ActionResult Index(int? page = null)
         {
+            page = (page ?? 1); 
+
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
             if (usuario == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            var products = db.Products.Where(p => p.CompanyId == usuario.CompanyId).Include(p => p.Category).Include(p => p.Company).Include(p => p.Supplier);
-            return View(products.ToList());
+            var products = db.Products.Where(p => p.CompanyId == usuario.CompanyId).Include(p => p.Category).Include(p => p.Company).Include(p => p.Supplier).OrderByDescending(p => p.ProductId);
+            return View(products.ToPagedList((int)page, 2));
         }
 
 
         [HttpPost]
-        public ActionResult Index(long? barcodigo)
+        public ActionResult Index(long? barcodigo, int? page = null)
         {
+            page = (page ?? 1);
             if (barcodigo > 0)
             {
-                var producto = db.Products.Where(p => p.Codigobarra == barcodigo).ToList();
-                return View(producto);
+                var producto = db.Products.Where(p => p.Codigobarra == barcodigo).OrderBy(p => p.ProductId);
+                return View(producto.ToPagedList((int)page, 1));
             }
             else
             {

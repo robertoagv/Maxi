@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using WebMaxiFarmacia.Models;
@@ -42,6 +43,40 @@ namespace WebMaxiFarmacia.classHelper
                     {
                         foreach (var detalle in detalles)
                         {
+
+                            var restarp = db.Inventories.Where(i => i.ProductId == detalle.ProductId).FirstOrDefault();
+
+                            #region Para recorrer varias bodegas.
+                            //if (restarp.Product.Inventories.Count > 1)
+                            //{
+                            //    foreach (var item in restarp.Product.Inventories)
+                            //    {
+                            //        int descs = detalle.Cantidad;
+
+                            //        var inventps = db.Inventories.Where(i => i.inventoryId == item.inventoryId && i.ProductId == item.ProductId).FirstOrDefault();
+                            //        var oldexists = int.Parse(inventps.Existencia.ToString());
+                            //        if (oldexists > detalle.Cantidad)
+                            //        {
+                            //             descs = oldexists - detalle.Cantidad;
+                            //        }
+                            //        else
+                            //        {
+                            //            detalle.Cantidad -= oldexists;
+                            //            var invetarioUpdates = db.Inventories.Find(item.inventoryId);
+                            //            invetarioUpdates.Existencia = detalle.Cantidad;
+                            //            db.SaveChanges();
+                            //        }
+                            //    }
+                            //} 
+                            #endregion
+
+                            var oldExist = int.Parse(restarp.Existencia.ToString());
+                            var desc = oldExist - detalle.Cantidad;
+
+                            var inventarioUpdate = db.Inventories.Find(restarp.inventoryId);
+                            inventarioUpdate.Existencia = desc;
+                            db.SaveChanges();
+
                             var ventaDetalle = new SaleDetail
                             {
 

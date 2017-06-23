@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebMaxiFarmacia.classHelper;
 using WebMaxiFarmacia.Models;
+using PagedList;
 
 namespace WebMaxiFarmacia.Controllers
 {
@@ -48,6 +49,7 @@ namespace WebMaxiFarmacia.Controllers
             }
 
             ViewBag.producto = producto;
+            ViewBag.Existenciascero = " ";
             var viewproductofind = new addProductView
             {
                 ProductId = producto.ProductId,
@@ -70,9 +72,15 @@ namespace WebMaxiFarmacia.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-           
-                if (ModelState.IsValid)
+            if (pview.Cantidad > pview.Existencia || pview.Cantidad == 0)
+            {
+                return RedirectToAction("AgregarProducto", "Sales");
+            }
+
+
+            if (ModelState.IsValid)
                 {
+                
                     var saleYesExistInDetails = db.SaleDetailTmps.Where(sed => sed.NombreUsuario == User.Identity.Name && sed.ProductId == pview.ProductId).FirstOrDefault();
                     if (saleYesExistInDetails == null)
                     {
@@ -94,6 +102,7 @@ namespace WebMaxiFarmacia.Controllers
                     }
 
                   db.SaveChanges();
+
                   return RedirectToAction("Create");
                 }
 
@@ -118,18 +127,19 @@ namespace WebMaxiFarmacia.Controllers
             return RedirectToAction("Create");
         }
 
-
+       
         // GET: Sales
-        public ActionResult Index()
+        public ActionResult Index(int? page = null)
         {
+            page = (page ?? 1);
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
             if (usuario == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            var sales = db.Sales.Where(s => s.CompanyId == usuario.CompanyId).Include(s => s.Users);
-            return View(sales.ToList());
+            var sales = db.Sales.Where(s => s.CompanyId == usuario.CompanyId && s.Fechavta == DateTime.Today).Include(s => s.Users).OrderByDescending(s => s.SaleID);
+            return View(sales.ToPagedList((int)page, 5));
         }
 
         // GET: Sales/Details/5

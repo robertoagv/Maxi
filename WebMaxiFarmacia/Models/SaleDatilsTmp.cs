@@ -32,9 +32,9 @@ namespace WebMaxiFarmacia.Models
         public decimal Precio { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es Obligatorio")]
-        [DataType(DataType.Currency)]
+        //[DataType(DataType.Currency)]
         [Range(0, int.MaxValue, ErrorMessage = "En el campo {0} el numero debe ser mayor a {1}")]
-        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        //[DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public int Cantidad { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]

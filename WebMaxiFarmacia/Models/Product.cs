@@ -53,8 +53,8 @@ namespace WebMaxiFarmacia.Models
 
 
         //propiedades solo de lectura, para el inventario.
-        [DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
-        public double? Existencia { get { return Inventories.Sum(i => i.Existencia); } }
+        //[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
+        public int? Existencia { get { return Inventories.Sum(i => i.Existencia); } }
 
 
 

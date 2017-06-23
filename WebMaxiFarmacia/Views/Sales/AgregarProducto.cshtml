@@ -5,7 +5,7 @@
 }
 
 <h2>AgregarProducto</h2>
-
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 @using (Ajax.BeginForm("AgregarProducto", "Sales", new AjaxOptions
 {
     HttpMethod = "POST",
@@ -19,6 +19,7 @@
         <div>
             <input type="text" name="barcodigo" id="barcodigo" class="form-control" required placeholder="Buscar" />
             <input type="submit" value="Buscar" class="btn btn-primary" />
+           
         </div>
     </div>
 
@@ -69,6 +70,9 @@
 
 <hr />
 
+
+
+
 @using (Ajax.BeginForm("AgregarProductoFind", new AjaxOptions
 {
     HttpMethod = "POST",
@@ -84,8 +88,11 @@
                 @Html.HiddenFor(model => model.ProductId)
                 @Html.HiddenFor(model => model.Nombreproducto)
                 @Html.HiddenFor(model => model.Precioventa)
-                @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.HiddenFor(model => model.Existencia)
+                @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control" }})
                 @Html.ValidationMessageFor(model => model.Cantidad, "", new { @class = "text-danger" })
+                <label id="labelmal" class="text-danger"></label>
+                
                 <input type="submit" value="Agregar" class="btn btn-primary" />
             }
         </div>
@@ -96,3 +103,13 @@
 
 
 
+
+
+
+
+
+@section Scripts{
+ @Scripts.Render("~/bundles/jqueryval")
+    
+
+}
