@@ -74,6 +74,7 @@ namespace WebMaxiFarmacia.Controllers
 
             if (pview.Cantidad > pview.Existencia || pview.Cantidad == 0)
             {
+                ModelState.AddModelError(string.Empty, "La cantidad que desea agregar es mayor a la existencia.");
                 return RedirectToAction("AgregarProducto", "Sales");
             }
 

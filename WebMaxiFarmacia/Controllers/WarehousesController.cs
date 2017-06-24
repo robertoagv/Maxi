@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebMaxiFarmacia.Models;
+using WebMaxiFarmacia.classHelper;
 
 namespace WebMaxiFarmacia.Controllers
 {
@@ -14,6 +15,7 @@ namespace WebMaxiFarmacia.Controllers
     public class WarehousesController : Controller
     {
         private maxifarmaciabdContext db = new maxifarmaciabdContext();
+        private cboAll cbo = new cboAll();
 
         // GET: Warehouses
         public ActionResult Index()
@@ -46,7 +48,7 @@ namespace WebMaxiFarmacia.Controllers
         // GET: Warehouses/Create
         public ActionResult Create()
         {
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "nombresuc");
+            ViewBag.CompanyId = new SelectList(cbo.getSucursal(), "CompanyId", "nombresuc");
             return View();
         }
 
@@ -55,16 +57,31 @@ namespace WebMaxiFarmacia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "WarehouseId,Nombre,Telefono,Direccion,CompanyId")] Warehouse warehouse)
+        public ActionResult Create(Warehouse warehouse)
         {
             if (ModelState.IsValid)
             {
                 db.Warehouses.Add(warehouse);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    if (ex.InnerException != null && ex.InnerException.InnerException != null && ex.InnerException.InnerException.Message.Contains("_index"))
+                    {
+                        ModelState.AddModelError(string.Empty, "La sucursal ya tiene una Bodega.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, ex.Message);
+                    }
+                }
+
             }
 
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "nombresuc", warehouse.CompanyId);
+            ViewBag.CompanyId = new SelectList(cbo.getSucursal(), "CompanyId", "nombresuc", warehouse.CompanyId);
             return View(warehouse);
         }
 
@@ -80,7 +97,7 @@ namespace WebMaxiFarmacia.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "nombresuc", warehouse.CompanyId);
+            ViewBag.CompanyId = new SelectList(cbo.getSucursal(), "CompanyId", "nombresuc", warehouse.CompanyId);
             return View(warehouse);
         }
 
@@ -89,7 +106,7 @@ namespace WebMaxiFarmacia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "WarehouseId,Nombre,Telefono,Direccion,CompanyId")] Warehouse warehouse)
+        public ActionResult Edit(Warehouse warehouse)
         {
             if (ModelState.IsValid)
             {
@@ -97,7 +114,7 @@ namespace WebMaxiFarmacia.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CompanyId = new SelectList(db.Companies, "CompanyId", "nombresuc", warehouse.CompanyId);
+            ViewBag.CompanyId = new SelectList(cbo.getSucursal(), "CompanyId", "nombresuc", warehouse.CompanyId);
             return View(warehouse);
         }
 

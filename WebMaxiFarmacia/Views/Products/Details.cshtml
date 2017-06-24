@@ -135,7 +135,7 @@
                         @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
                         {
 
-                            <td>@Html.ActionLink("Comprar", "Comprar", "Products", new { id = item.inventoryId }, new { @class = "dialog-window btn btn-info btn-xs" })</td>
+                            <td>@Html.ActionLink("Comprar", "Comprar", "Products", new { id = item.ProductId }, new { @class = "dialog-window btn btn-info btn-xs" })</td>
                         }
                     </tr>
                 }

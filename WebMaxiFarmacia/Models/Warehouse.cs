@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -25,7 +26,8 @@ namespace WebMaxiFarmacia.Models
         public string Direccion { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        [Range(1, double.MaxValue, ErrorMessage = "Debe Seleccionar un {0}")]
+        [Range(1, double.MaxValue, ErrorMessage = "Debe Seleccionar una {0}")]
+        [Index("bodega_conpannyid_index", IsUnique =true)]
         [Display(Name = "Sucursal")]
         public int CompanyId { get; set; }
 

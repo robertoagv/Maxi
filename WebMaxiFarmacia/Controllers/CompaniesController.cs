@@ -79,7 +79,7 @@ namespace WebMaxiFarmacia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CompanyId,nombresuc,telefono,direccion,email")] Company company)
+        public ActionResult Edit(Company company)
         {
             if (ModelState.IsValid)
             {
@@ -112,8 +112,24 @@ namespace WebMaxiFarmacia.Controllers
         {
             Company company = db.Companies.Find(id);
             db.Companies.Remove(company);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null && ex.InnerException.InnerException != null && ex.InnerException.InnerException.Message.Contains("REFERENCE"))
+                {
+                    ModelState.AddModelError(string.Empty, "No puede Eliminar esta Informacion, por que esta Relacionada, primero Elimine sus relaciones y vuelva a Intentarlo.");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
+            }
+
+            return View(company);
         }
 
         protected override void Dispose(bool disposing)

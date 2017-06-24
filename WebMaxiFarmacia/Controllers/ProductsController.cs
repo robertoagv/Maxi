@@ -125,10 +125,20 @@ namespace WebMaxiFarmacia.Controllers
         // GET: Products/Create
         public ActionResult Create()
         {
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            if (usuario == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ViewBag.CategoryId = new SelectList(cboAll.getCategory(), "CategoryId", "Descripcion");
-            ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc");
+            //ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc");
             ViewBag.SupplierId = new SelectList(cboAll.getProveedor(), "SupplierId", "Nombre");
-            return View();
+
+            db.Products.Where(p => p.CompanyId == usuario.CompanyId).FirstOrDefault();
+            var producto = new Product { CompanyId = usuario.CompanyId };
+
+            return View(producto);
         }
 
         // POST: Products/Create
@@ -146,7 +156,7 @@ namespace WebMaxiFarmacia.Controllers
             }
 
             ViewBag.CategoryId = new SelectList(cboAll.getCategory(), "CategoryId", "Descripcion", product.CategoryId);
-            ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc", product.CompanyId);
+            //ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc", product.CompanyId);
             ViewBag.SupplierId = new SelectList(cboAll.getProveedor(), "SupplierId", "Nombre", product.SupplierId);
             return View(product);
         }
@@ -164,7 +174,7 @@ namespace WebMaxiFarmacia.Controllers
                 return HttpNotFound();
             }
             ViewBag.CategoryId = new SelectList(cboAll.getCategory(), "CategoryId", "Descripcion", product.CategoryId);
-            ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc", product.CompanyId);
+            //ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc", product.CompanyId);
             ViewBag.SupplierId = new SelectList(cboAll.getProveedor(), "SupplierId", "Nombre", product.SupplierId);
             return View(product);
         }
@@ -174,7 +184,7 @@ namespace WebMaxiFarmacia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,Codigobarra,Nombreproducto,Descripcion,Preciocompra,Precioventa,CategoryId,SupplierId,CompanyId")] Product product)
+        public ActionResult Edit(Product product)
         {
             if (ModelState.IsValid)
             {
@@ -183,7 +193,7 @@ namespace WebMaxiFarmacia.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.CategoryId = new SelectList(cboAll.getCategory(), "CategoryId", "Descripcion", product.CategoryId);
-            ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc", product.CompanyId);
+            //ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc", product.CompanyId);
             ViewBag.SupplierId = new SelectList(cboAll.getProveedor(), "SupplierId", "Nombre", product.SupplierId);
             return View(product);
         }
