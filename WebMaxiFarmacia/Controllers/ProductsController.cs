@@ -17,6 +17,7 @@ namespace WebMaxiFarmacia.Controllers
     {
         private maxifarmaciabdContext db = new maxifarmaciabdContext();
         private cboAll cboAll = new cboAll();
+       
 
         // GET: Products
         public ActionResult Index(int? page = null)
@@ -30,7 +31,7 @@ namespace WebMaxiFarmacia.Controllers
             }
 
             var products = db.Products.Where(p => p.CompanyId == usuario.CompanyId).Include(p => p.Category).Include(p => p.Company).Include(p => p.Supplier).OrderByDescending(p => p.ProductId);
-            return View(products.ToPagedList((int)page, 2));
+            return View(products.ToPagedList((int)page, 5));
         }
 
 
@@ -40,7 +41,9 @@ namespace WebMaxiFarmacia.Controllers
             page = (page ?? 1);
             if (barcodigo > 0)
             {
-                var producto = db.Products.Where(p => p.Codigobarra == barcodigo).OrderBy(p => p.ProductId);
+                var usuarioi = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+                var producto = db.Products.Where(p => p.Codigobarra == barcodigo && p.CompanyId == usuarioi.CompanyId).OrderBy(p => p.ProductId);
+                //TODO: agregar aqui los usuarios a los que p
                 return View(producto.ToPagedList((int)page, 1));
             }
             else

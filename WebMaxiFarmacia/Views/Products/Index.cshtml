@@ -87,7 +87,7 @@
                 </td>
                 @if (item.Existencia < 6)
                 {
-                    <td align="right" class="text-danger">
+                    <td class="text-center text-danger">
                         <strong>
                             @Html.DisplayFor(modelItem => item.Existencia)
                         </strong>
@@ -95,7 +95,7 @@
                 }
                 else
                 {
-                    <td align="right">
+                    <td class="text-center">
                         @Html.DisplayFor(modelItem => item.Existencia)
                     </td>
                 }

@@ -29,6 +29,15 @@ namespace WebMaxiFarmacia.Models
         [Display(Name = "Sucursal")]
         public int CompanyId { get; set; }
 
+
+        public List<SaleDetail> Detalles { get; set; }
+
+        //[DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        public int TotalCantidad { get { return Detalles == null ? 0 : Detalles.Sum(d => d.Cantidad); } }
+
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        public decimal TotalValue { get { return Detalles == null ? 0 : Detalles.Sum(d => d.ValorU); } }
+
         //Relaciones
 
         public virtual User  Users { get; set; }

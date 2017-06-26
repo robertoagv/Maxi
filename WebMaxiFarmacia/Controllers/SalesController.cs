@@ -62,6 +62,7 @@ namespace WebMaxiFarmacia.Controllers
 
             return View(viewproductofind);
         }
+
         [HttpPost]
         public ActionResult AgregarProductoFind(addProductView pview)
         {
@@ -76,6 +77,7 @@ namespace WebMaxiFarmacia.Controllers
             {
                 ModelState.AddModelError(string.Empty, "La cantidad que desea agregar es mayor a la existencia.");
                 return RedirectToAction("AgregarProducto", "Sales");
+
             }
 
 
@@ -150,11 +152,14 @@ namespace WebMaxiFarmacia.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Sale sale = db.Sales.Find(id);
-            if (sale == null)
+            Sale sale = db.Sales.Where(s => s.SaleID == id).Include(s => s.SaleDetails).FirstOrDefault();
+            if (sale== null)
             {
                 return HttpNotFound();
             }
+
+            sale.Detalles = db.SaleDetails.Where(sd => sd.SaleId == sale.SaleID).ToList();
+
             return View(sale);
         }
 

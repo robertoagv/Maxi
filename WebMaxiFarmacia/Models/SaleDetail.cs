@@ -29,14 +29,18 @@ namespace WebMaxiFarmacia.Models
         public decimal Price { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es Obligatorio")]
-        [DataType(DataType.Currency)]
+        //[DataType(DataType.Currency)]
         [Range(0, int.MaxValue, ErrorMessage = "En este campo {0} ingrese valores de {1} a {2}")]
         //[DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         public int Cantidad { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        public decimal ValorU{ get { return Price * (decimal)Cantidad; } }
+
+        
 
         //relaciones
-    
+
         public virtual Product Product { get; set; }
         public virtual Sale Sale { get; set; }
 

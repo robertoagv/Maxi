@@ -2,18 +2,26 @@
 @{
     ViewBag.Title = "Inicio";
 }
+<br />
 
-<div class="jumbotron">
-    <h1>MaxiFarmacia</h1>
-    @if (Model != null)
-    {
-
-        <p>@Model.Company.nombresuc</p>
-        <p>@Model.Company.direccion</p>
-        <p class="lead">@Model.Company.email</p>
-        <p class="lead">@Model.Company.telefono</p>
-    }
-    @*<p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
+<div class="row">
+    <div class="col-md-12">
+        <div class="jumbotron ju" style="background-color:aquamarine">
+            <h1 class="text-center">MaxiFarmacia</h1>
+           
+            @if (Model != null)
+            {
+                <ul class="list-group">
+                    <li class="list-group-item text-center"><label>Sucursal:</label>@Model.Company.nombresuc</li>
+                    <li class="list-group-item text-center"><label>Direccion:</label>@Model.Company.direccion</li>
+                    <li class="list-group-item text-center"><label>Correo:</label>@Model.Company.email</li>
+                    <li class="list-group-item text-center"><label>Telefono:</label>@Model.Company.telefono</li>
+                   
+                </ul>
+            }
+            @*<p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
+        </div>
+    </div>
 </div>
 
 @*<div class="row">

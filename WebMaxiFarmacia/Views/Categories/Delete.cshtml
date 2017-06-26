@@ -4,29 +4,30 @@
     ViewBag.Title = "Eliminar";
 }
 
-<h2>Delete</h2>
+<div class="row">
+    <div class="col-md-offset-2 col-md-8 col-md-offset-2">
+        <h2 class="text-center">Eliminar</h2>
+        <hr />
+        <h2>Esta seguro de Eliminar este Elemento?</h2>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Descripcion)
+            </dd>
+        </dl>
+        <div class="text-center">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-<h3>Esta Seguro de Eliminar este Elemento?</h3>
-<div>
-    <h4>Categoria</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" /> |
-            @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default"})
+                <div class="form-actions no-color">
+                    <input type="submit" value="Eliminar" class="btn btn-danger btn-sm" /> |
+                    @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default btn-sm" })
+                </div>
+            }
         </div>
-    }
+    </div>
+
 </div>

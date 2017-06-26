@@ -117,7 +117,7 @@
                         </td>
                         @if (item.Existencia < 6)
                         {
-                            <td align="right" class="text-danger">
+                            <td class="text-danger text-center">
                                 <strong>
                                     @Html.DisplayFor(modelItem => item.Existencia)
                                 </strong>
@@ -126,7 +126,7 @@
                         else
                         {
 
-                            <td align="right">
+                            <td class="text-center">
                                 @Html.DisplayFor(modelItem => item.Existencia)
                             </td>
                         }
@@ -141,7 +141,7 @@
                 }
                 <tr>
                     <td><strong>Total</strong></td>
-                    <td>
+                    <td class="text-center">
                         <strong>@Html.DisplayFor(model => model.Existencia)</strong>
                     </td>
                 </tr>

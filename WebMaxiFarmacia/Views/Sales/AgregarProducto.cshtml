@@ -5,7 +5,7 @@
 }
 
 <h2>AgregarProducto</h2>
-@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
 @using (Ajax.BeginForm("AgregarProducto", "Sales", new AjaxOptions
 {
     HttpMethod = "POST",
@@ -13,17 +13,19 @@
     UpdateTargetId = "buscarid"
 }))
 {
-
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group form-inline">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
         <div>
             <input type="text" name="barcodigo" id="barcodigo" class="form-control" required placeholder="Buscar" />
+            
             <input type="submit" value="Buscar" class="btn btn-primary" />
            
         </div>
     </div>
 
     <br />
+
     <div class="table table-responsive">
         @if (Model.Codigobarra == -1)
         {
