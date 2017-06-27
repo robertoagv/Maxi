@@ -1,4 +1,5 @@
-﻿@model WebMaxiFarmacia.Models.Product
+﻿
+@model WebMaxiFarmacia.Models.Product
 
 @{
     ViewBag.Title = "Detalles";
@@ -84,7 +85,7 @@
         <p>
             @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
             {
-                 @Html.ActionLink("Editar", "Edit", new { id = Model.ProductId }, new { @class = "btn btn-primary" }) 
+                @Html.ActionLink("Editar", "Edit", new { id = Model.ProductId }, new { @class = "btn btn-primary" })
             }
             @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default" })
         </p>
@@ -95,7 +96,7 @@
         @if (Model.Inventories.Count == 0)
         {
             <div class="alert alert-danger">No hay inventarios de este Producto.</div>
-            @Html.ActionLink("Comprar", "Comprar", "Products", new { id = Model.ProductId}, new { @class = "dialog-window btn btn-info btn-xs" })
+            @Html.ActionLink("Comprar", "Comprar", "Products", new { id = Model.ProductId }, new { @class = "dialog-window btn btn-info btn-xs" })
         }
         else
         {
@@ -174,11 +175,11 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-               
+
             </div>
 
             <div>
-               
+
             </div>
 
         </div>
@@ -230,3 +231,11 @@
     </script>
 
 }
+
+
+
+
+
+
+
+   

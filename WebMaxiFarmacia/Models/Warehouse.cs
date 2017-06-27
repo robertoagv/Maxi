@@ -14,7 +14,7 @@ namespace WebMaxiFarmacia.Models
 
         [Required(ErrorMessage = "El campo {0} es requerido")]
         [MaxLength(25, ErrorMessage = "El campo {0} debe contener maximo {1} caracteres.")]
-        [Display(Name = "Nombre")]
+        [Display(Name = "Bodega")]
         public string Nombre { get; set; }
 
         [DataType(DataType.PhoneNumber)]

@@ -36,23 +36,37 @@ namespace WebMaxiFarmacia.Controllers
 
 
         [HttpPost]
-        public ActionResult Index(long? barcodigo, int? page = null)
+        public ActionResult Index(string termino, int? page = null)
         {
             page = (page ?? 1);
-            if (barcodigo > 0)
+            bool longsi;
+            long barcodigo;
+            string namepro;
+
+            longsi = long.TryParse(termino, out barcodigo);
+
+            if (longsi)
             {
-                var usuarioi = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
-                var producto = db.Products.Where(p => p.Codigobarra == barcodigo && p.CompanyId == usuarioi.CompanyId).OrderBy(p => p.ProductId);
-                //TODO: agregar aqui los usuarios a los que p
-                return View(producto.ToPagedList((int)page, 1));
+                if (barcodigo > 0)
+                {
+                    var usuarioi = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+                    var producto = db.Products.Where(p => p.Codigobarra == barcodigo && p.CompanyId == usuarioi.CompanyId).OrderBy(p => p.ProductId);
+                    //TODO: agregar aqui los usuarios a los que p
+                    return View(producto.ToPagedList((int)page, 5));
+                }
+                else
+                {
+                    return View();
+                }
             }
             else
             {
-
-                return View();
+                namepro = termino;
+                var usuarioi = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+                var producto = db.Products.Where(p =>  p.CompanyId == usuarioi.CompanyId && p.Nombreproducto.StartsWith(namepro)).OrderBy(p => p.ProductId);
+                //TODO: agregar aqui los usuarios a los que p
+                return View(producto.ToPagedList((int)page, 10));
             }
-
-
         }
 
         public ActionResult comprar(int? id)
@@ -78,6 +92,7 @@ namespace WebMaxiFarmacia.Controllers
         [HttpPost]
         public ActionResult comprar(int idbodega, int idinventario, int idproducto, int newcant)
         {
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
             var inventario = db.Inventories.Find(idinventario);
 
             if (inventario == null)
@@ -85,13 +100,20 @@ namespace WebMaxiFarmacia.Controllers
                var  inventarionew = new Inventory {
                         WarehouseId = idbodega,
                         ProductId = idproducto,
-                        Existencia = newcant
+                        Existencia = newcant,
+                        FechaCreada = DateTime.Today,
+                        FechaActualizada = DateTime.Today,
+                        UserId = usuario.UserId
                 };
                 db.Inventories.Add(inventarionew);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-           
+
+            if (newcant <= 0)
+            {
+                return RedirectToAction("Details/" + idproducto, "Products");
+            }
 
             var catidad = (from i in db.Inventories
                            where i.ProductId == idproducto
@@ -101,6 +123,9 @@ namespace WebMaxiFarmacia.Controllers
             var newexist = oldexist + newcant;
 
             inventario.Existencia = newexist;
+            inventario.FechaActualizada = DateTime.Today;
+            inventario.UserId = usuario.UserId;
+
             db.SaveChanges();
 
             ViewBag.inventario = inventario;

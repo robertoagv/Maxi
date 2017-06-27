@@ -12,14 +12,31 @@ namespace WebMaxiFarmacia.Models
         public int inventoryId { get; set; }
 
         //[Required(ErrorMessage = "El campo {0} es obligatorio")]
-        public int? WarehouseId { get; set; }
+        [Display(Name = "Bodega")]
+        public int WarehouseId { get; set; }
 
         // [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [Display(Name = "Producto")]
         public int? ProductId { get; set; }
 
         public int Existencia { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Fecha de Creacion")]
+        public DateTime FechaCreada { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Fecha de Actalizacion")]
+        public DateTime FechaActualizada { get; set; }
+
+        [Display(Name = "Usuario")]
+        public int? UserId { get; set; }
+    
+        public virtual User User { get; set; }
         public virtual Warehouse Warehouse { get; set; }
         public virtual Product Product { get; set; }
+
     }
 }

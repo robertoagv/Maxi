@@ -4,55 +4,59 @@
     ViewBag.Title = "Detalles";
 }
 
-<h2>Detalles</h2>
+<div class="row">
+    <div class="col-xs-10 col-xs-offset-1">
+        <h2>Detalles</h2>
+        <div>
+            <h4>Empleado</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Company.nombresuc)
+                </dt>
 
-<div>
-    <h4>Empleado</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Company.nombresuc)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Company.nombresuc)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Company.nombresuc)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Nombreemp)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombreemp)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Nombreemp)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nombreemp)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Apellidoemp)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Apellidoemp)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Apellidoemp)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Apellidoemp)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Telefonoemp)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Telefonoemp)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Telefonoemp)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Telefonoemp)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Direccionemp)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Direccionemp)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Direccionemp)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Direccionemp)
-        </dd>
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Editar", "Edit", new { id = Model.EmployeeId }, new { @class = "btn btn-primary" }) |
+            @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default" })
+        </p>
 
-    </dl>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Editar", "Edit", new { id = Model.EmployeeId }, new { @class = "btn btn-primary"}) |
-    @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default"})
-</p>

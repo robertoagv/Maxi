@@ -4,85 +4,92 @@
     ViewBag.Title = "eliminar";
 }
 
-<h2>Eliminar</h2>
+<div class="row">
+    <div class="col-xs-10 col-xs-offset-1">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <h2>Eliminar</h2>
+        <h3>Esta seguro de Eliminar este Elemento?</h3>
+        <div>
+            <h4>Producto</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Category.Descripcion)
+                </dt>
 
-<h3>Esta seguro de Eliminar?</h3>
-<div>
-    <h4>Producto</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Category.Descripcion)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Category.Descripcion)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Category.Descripcion)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Company.nombresuc)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Company.nombresuc)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Company.nombresuc)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Company.nombresuc)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Supplier.Nombre)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Supplier.Nombre)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Supplier.Nombre)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Supplier.Nombre)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Codigobarra)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Codigobarra)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Codigobarra)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Codigobarra)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Nombreproducto)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombreproducto)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Nombreproducto)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nombreproducto)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Descripcion)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Preciocompra)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Preciocompra)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Preciocompra)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Preciocompra)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Precioventa)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Precioventa)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Precioventa)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Precioventa)
-        </dd>
+            </dl>
 
-    </dl>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Eliminar" class="btn btn-danger" /> |
-            @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default" })
+                <div class="form-actions no-color">
+                    <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+                    @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default" })
+                </div>
+            }
         </div>
-    }
+    </div>
 </div>
+
+

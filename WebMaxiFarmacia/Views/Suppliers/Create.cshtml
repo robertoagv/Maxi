@@ -4,60 +4,67 @@
     ViewBag.Title = "Proveedor";
 }
 
-<h2>Nuevo</h2>
+
+<div class="row">
+    <div class="col-xs-10 col-xs-offset-1">
+        <h2>Nuevo</h2>
 
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4 class="">Proveedor</h4>
-        <hr>
-        
-        <div class="form-group">
-            <label class="control-label col-md-2" for="Nombre">Nombre</label>
-            <div class="col-md-10">
-                <input class="form-control text-box single-line" data-val="true" data-val-maxlength="El campo Nombre debe contener maximo 25 caracteres." data-val-maxlength-max="25" data-val-required="El campo Nombre es requerido" id="Nombre" name="Nombre" type="text" value="">
-                <span class="field-validation-valid text-danger" data-valmsg-for="Nombre" data-valmsg-replace="true"></span>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4 class="">Proveedor</h4>
+                <hr>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Nombre">Nombre</label>
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" data-val="true" data-val-maxlength="El campo Nombre debe contener maximo 25 caracteres." data-val-maxlength-max="25" data-val-required="El campo Nombre es requerido" id="Nombre" name="Nombre" type="text" value="">
+                        <span class="field-validation-valid text-danger" data-valmsg-for="Nombre" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Telefono">Telefono</label>
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" data-val="true" data-val-number="El campo Telefono debe ser Numerico" data-val-required="El campo Telefono es obligatorio." id="Telefono" name="Telefono" type="tel" value="">
+                        <span class="field-validation-valid text-danger" data-valmsg-for="Telefono" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Email">Correo</label>
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" data-val="true" data-val-email="Correo Invalido" id="Email" name="Email" type="email" value="">
+                        <span class="field-validation-valid text-danger" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="Direccion">Direccion</label>
+                    <div class="col-md-10">
+                        <input class="form-control text-box single-line" data-val="true" data-val-maxlength="El campo Direccion debe contener maximo 100 caracteres." data-val-maxlength-max="100" id="Direccion" name="Direccion" type="text" value="">
+                        <span class="field-validation-valid text-danger" data-valmsg-for="Direccion" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Crear" class="btn btn-primary">
+                        @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default" })
+                    </div>
+                </div>
             </div>
+        }
+
+        <div>
         </div>
 
-        <div class="form-group">
-            <label class="control-label col-md-2" for="Telefono">Telefono</label>
-            <div class="col-md-10">
-                <input class="form-control text-box single-line" data-val="true" data-val-number="El campo Telefono debe ser Numerico" data-val-required="El campo Telefono es obligatorio." id="Telefono" name="Telefono" type="tel" value="">
-                <span class="field-validation-valid text-danger" data-valmsg-for="Telefono" data-valmsg-replace="true"></span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2" for="Email">Correo</label>
-            <div class="col-md-10">
-                <input class="form-control text-box single-line" data-val="true" data-val-email="Correo Invalido" id="Email" name="Email" type="email" value="">
-                <span class="field-validation-valid text-danger" data-valmsg-for="Email" data-valmsg-replace="true"></span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label col-md-2" for="Direccion">Direccion</label>
-            <div class="col-md-10">
-                <input class="form-control text-box single-line" data-val="true" data-val-maxlength="El campo Direccion debe contener maximo 100 caracteres." data-val-maxlength-max="100" id="Direccion" name="Direccion" type="text" value="">
-                <span class="field-validation-valid text-danger" data-valmsg-for="Direccion" data-valmsg-replace="true"></span>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Crear" class="btn btn-primary">
-                @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default"})
-            </div>
-        </div>
     </div>
-}
-
-<div>
 </div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

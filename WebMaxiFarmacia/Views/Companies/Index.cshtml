@@ -1,54 +1,72 @@
-﻿@model IEnumerable<WebMaxiFarmacia.Models.Company>
-
+﻿@model PagedList.IPagedList<WebMaxiFarmacia.Models.Company>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Sucursal";
 }
 
-<h2>Sucursal</h2>
 
-<p>
-    @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary" })
-</p>
-<div class="table table-responsive">
 
-    <table class="table table-striped">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.nombresuc)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.direccion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.email)
-            </th>
-            <th></th>
-        </tr>
+<div class="row">
+    
+        <h2>Sucursal</h2>
+        <p>
+            @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary" })
+        </p>
+        <div class="table table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().nombresuc)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().telefono)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().direccion)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().email)
+                        </th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                 </thead>
 
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.nombresuc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.direccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.email)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new { id=item.CompanyId }, new { @class = "btn btn-primary btn-xs"}) |
-                @Html.ActionLink("Detalles", "Details", new { id=item.CompanyId }, new { @class = "btn btn-info btn-xs" }) |
-                @Html.ActionLink("eliminar", "Delete", new { id=item.CompanyId }, new { @class = "btn btn-danger btn-xs" })
-            </td>
-        </tr>
-    }
+            @foreach (var item in Model) {
+               
+                    <tr>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.nombresuc)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.telefono)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.direccion)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.email)
+                        </td>
+                        <td class="text-center">
+                            @Html.ActionLink("Editar", "Edit", new { id = item.CompanyId }, new { @class = "btn btn-primary btn-xs" }) |
+                            @Html.ActionLink("Detalles", "Details", new { id = item.CompanyId }, new { @class = "btn btn-info btn-xs" }) |
+                            @Html.ActionLink("eliminar", "Delete", new { id = item.CompanyId }, new { @class = "btn btn-danger btn-xs" })
+                        </td>
+                    </tr>
+            }
+            </table>
+            
+        </div>
+   
+            Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber), de: @Model.PageCount
+            @Html.PagedListPager(Model, page => Url.Action("Index", new
+   {
+       page,
+       sortOrder = ViewBag.CurrentSort,
+       currentFilter = ViewBag.CurrentFilter
+   }))
+       
 
-    </table>
+  
+    
 </div>

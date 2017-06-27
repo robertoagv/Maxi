@@ -4,47 +4,53 @@
     ViewBag.Title = "Detalle";
 }
 
-<h2>Detalles</h2>
 
-<div>
-    <h4>Proveedor</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
+<div class="row">
+    <div class="col-xs-10 col-xs-offset-1">
+        <h2>Detalles</h2>
+        <div>
+            <h4>Proveedor</h4>
+            <hr />
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Telefono)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Nombre)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Telefono)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Telefono)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Telefono)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Email)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Direccion)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Email)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Direccion)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Direccion)
+                </dt>
 
-    </dl>
+                <dd>
+                    @Html.DisplayFor(model => model.Direccion)
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Editar", "Edit", new { id = Model.SupplierId }, new { @class = "btn btn-primary" }) |
+            @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default" })
+        </p>
+
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Editar", "Edit", new { id = Model.SupplierId }, new { @class = "btn btn-primary"}) |
-    @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default" })
-</p>

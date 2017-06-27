@@ -5,52 +5,62 @@
     ViewBag.Title = "Venta";
 }
 
-<h2>Venta</h2>
 
-<p>
-    @Html.ActionLink("Nueva", "Create")
-</p>
-<div class="table table-responsive">
-    <table class="table table-striped">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Users.NombreUser)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Nombrecte)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().Fechavta)
-            </th>
-            <th></th>
-        </tr>
+<div class="row">
+    <div class="col-xs-10 col-xs-offset-1">
+        <h2>Venta</h2>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Users.NombreUser)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombrecte)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fechavta)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.SaleID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.SaleID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.SaleID })
-                </td>
-            </tr>
-        }
+        <p>
+            @Html.ActionLink("Nueva", "Create")
+        </p>
+        <div class="table table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().Users.NombreUser)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().Nombrecte)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.FirstOrDefault().Fechavta)
+                        </th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
 
-    </table>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.Users.NombreUser)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.Nombrecte)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.Fechavta)
+                        </td>
+                        <td class="text-center">
+                            @Html.ActionLink("Edit", "Edit", new { id = item.SaleID }) |
+                            @Html.ActionLink("Details", "Detalles", new { id = item.SaleID }, new { @class = "btn btn-info btn-sm"}) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.SaleID })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+        Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber), de: @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Index", new
+{
+    page,
+    sortOrder = ViewBag.CurrentSort,
+    currentFilter = ViewBag.CurrentFilter
+}))
+
+
+    </div>
 </div>
-    Página: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber), de: @Model.PageCount
-    @Html.PagedListPager(Model, page => Url.Action("Index", new
-   {
-       page,
-       sortOrder = ViewBag.CurrentSort,
-       currentFilter = ViewBag.CurrentFilter
-   }))
+

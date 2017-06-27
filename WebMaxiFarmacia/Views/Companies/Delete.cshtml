@@ -4,56 +4,61 @@
     ViewBag.Title = "Eliminar";
 }
 
-<h2>Eliminar</h2>
+<div class="col-xs-10 col-xs-offset-1">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <h2>Eliminar</h2>
 
-<h3>Esta seguro de Eliminar este Elemento?</h3>
-<div>
-    <h4>Sucursal</h4>
-    
+    <h3>Esta seguro de Eliminar este Elemento?</h3>
+    <div>
+        <h4>Sucursal</h4>
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-   
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.nombresuc)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.nombresuc)
-        </dd>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.nombresuc)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.telefono)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.nombresuc)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.telefono)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.telefono)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.direccion)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.telefono)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.direccion)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.direccion)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.email)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.direccion)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.email)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.email)
+            </dt>
 
-    </dl>
+            <dd>
+                @Html.DisplayFor(model => model.email)
+            </dd>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+        </dl>
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Eliminar" class="btn btn-danger" /> |
-            @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default" })
-        </div>
-    }
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+                @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default" })
+            </div>
+        }
+    </div>
+
 </div>

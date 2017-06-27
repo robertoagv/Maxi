@@ -16,7 +16,7 @@ namespace WebMaxiFarmacia.Models
         public long Codigobarra { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        [Display(Name = "Nombre")]
+        [Display(Name = "Producto")]
         public string Nombreproducto { get; set; }
 
         [DataType(DataType.MultilineText)]

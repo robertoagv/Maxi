@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebMaxiFarmacia.Models;
+using PagedList;
 
 namespace WebMaxiFarmacia.Controllers
 {
@@ -16,9 +17,10 @@ namespace WebMaxiFarmacia.Controllers
         private maxifarmaciabdContext db = new maxifarmaciabdContext();
 
         // GET: Companies
-        public ActionResult Index()
+        public ActionResult Index(int? page = null)
         {
-            return View(db.Companies.ToList());
+            page = (page ?? 1);
+            return View(db.Companies.OrderByDescending(c => c.nombresuc).ToPagedList((int)page, 5));
         }
 
         // GET: Companies/Details/5

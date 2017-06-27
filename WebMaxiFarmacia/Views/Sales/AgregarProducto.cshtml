@@ -4,104 +4,111 @@
     ViewBag.Title = "AgregarProducto";
 }
 
-<h2>AgregarProducto</h2>
+<div class="row">
+    <div class="col-xs-10 col-xs-offset-1">
+        <h2>AgregarProducto</h2>
 
-@using (Ajax.BeginForm("AgregarProducto", "Sales", new AjaxOptions
-{
-    HttpMethod = "POST",
-    InsertionMode = InsertionMode.Replace,
-    UpdateTargetId = "buscarid"
-}))
-{
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group form-inline">
-        
-        <div>
-            <input type="text" name="barcodigo" id="barcodigo" class="form-control" required placeholder="Buscar" />
-            
-            <input type="submit" value="Buscar" class="btn btn-primary" />
-           
-        </div>
-    </div>
-
-    <br />
-
-    <div class="table table-responsive">
-        @if (Model.Codigobarra == -1)
+        @using (Ajax.BeginForm("AgregarProducto", "Sales", new AjaxOptions
         {
-            <div>
-                
+            HttpMethod = "POST",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "buscarid"
+        }))
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group form-inline">
+
+                <div>
+                    <input type="text" name="barcodigo" id="barcodigo" class="form-control" required placeholder="Buscar" />
+
+                    <input type="submit" value="Buscar" class="btn btn-primary" />
+
+                </div>
             </div>
-        }
-        else if (Model.Codigobarra == 0)
-        {
-            <div class="alert alert-danger">
-                Producto no encontrado.
+
+            <br />
+
+            <div class="table table-responsive">
+                @if (Model.Codigobarra == -1)
+                {
+                    <div>
+
+                    </div>
+                }
+                else if (Model.Codigobarra == 0)
+                {
+                    <div class="alert alert-danger">
+                        Producto no encontrado.
+                    </div>
+                }
+                else
+                {
+                    <table id="buscarid" class="table table-striped">
+                        <tr>
+                            <th>
+                                Codigo
+                            </th>
+                            <th>
+                                Producto
+                            </th>
+                            <th>
+                                Existencias
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Model.Codigobarra
+                            </td>
+                            <td>
+                                @Model.Nombreproducto
+                            </td>
+                            <td>
+                                @Model.Existencia
+                            </td>
+                        </tr>
+                    </table>
+                }
             </div>
+
         }
-        else
+
+        <hr />
+
+
+
+
+        @using (Ajax.BeginForm("AgregarProductoFind", new AjaxOptions
         {
-            <table id="buscarid" class="table table-striped">
-                <tr>
-                    <th>
-                        Codigo
-                    </th>
-                    <th>
-                        Producto
-                    </th>
-                    <th>
-                        Existencias
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                        @Model.Codigobarra
-                    </td>
-                    <td>
-                        @Model.Nombreproducto
-                    </td>
-                    <td>
-                        @Model.Existencia
-                    </td>
-                </tr>
-            </table>
+            HttpMethod = "POST",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "buscarid"
+        }))
+        {
+
+            <div class="form-group form-inline">
+                <div>
+                    @if (Model.ProductId > 0)
+                    {
+                        @Html.HiddenFor(model => model.ProductId)
+                        @Html.HiddenFor(model => model.Nombreproducto)
+                        @Html.HiddenFor(model => model.Precioventa)
+                        @Html.HiddenFor(model => model.Existencia)
+                        @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Cantidad, "", new { @class = "text-danger" })
+                        <label id="labelmal" class="text-danger"></label>
+
+                        <input type="submit" value="Agregar" class="btn btn-primary" />
+                    }
+                </div>
+            </div>
+            <br />
+            @*@Html.ActionLink("Agregar", "AgregarProducto", new { id = Model.ProductId }, new { @class = "btn btn-primary btn-xs" })*@
         }
+
+
     </div>
+</div>
 
-}
-
-<hr />
-
-
-
-
-@using (Ajax.BeginForm("AgregarProductoFind", new AjaxOptions
-{
-    HttpMethod = "POST",
-    InsertionMode = InsertionMode.Replace,
-    UpdateTargetId = "buscarid"
-}))
-{
-
-    <div class="form-group form-inline">
-        <div>
-            @if (Model.ProductId > 0)
-            {
-                @Html.HiddenFor(model => model.ProductId)
-                @Html.HiddenFor(model => model.Nombreproducto)
-                @Html.HiddenFor(model => model.Precioventa)
-                @Html.HiddenFor(model => model.Existencia)
-                @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control" }})
-                @Html.ValidationMessageFor(model => model.Cantidad, "", new { @class = "text-danger" })
-                <label id="labelmal" class="text-danger"></label>
-                
-                <input type="submit" value="Agregar" class="btn btn-primary" />
-            }
-        </div>
-    </div>
-    <br />
-    @*@Html.ActionLink("Agregar", "AgregarProducto", new { id = Model.ProductId }, new { @class = "btn btn-primary btn-xs" })*@
-}
 
 
 

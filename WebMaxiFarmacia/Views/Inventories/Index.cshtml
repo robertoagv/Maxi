@@ -1,0 +1,90 @@
+﻿@model IEnumerable<WebMaxiFarmacia.Models.Inventory>
+
+@{
+    ViewBag.Title = "Inventarios";
+}
+
+<div class="row">
+    <div class="col-xs-10 col-xs-offset-1">
+        <h2>Inventarios</h2>
+
+        @using (Ajax.BeginForm("Index", new AjaxOptions
+        {
+            HttpMethod = "POST",
+            InsertionMode = InsertionMode.Replace,
+            UpdateTargetId = "buscar"
+        }))
+        {
+
+            <div class="form-group form-inline">
+                <div>
+                    <input type="text" name="termino" id="termino" class="form-control" required placeholder="Buscar" />
+                    <input type="submit" value="Buscar" class="btn btn-primary" />
+                </div>
+            </div>
+        }
+
+
+        <div id="buscar">
+            <div class="table table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">
+                                @Html.DisplayNameFor(model => model.Product.Nombreproducto)
+                            </th>
+                            <th class="text-center">
+                                @Html.DisplayNameFor(model => model.User.NombreUser)
+                            </th>
+                            <th class="text-center">
+                                @Html.DisplayNameFor(model => model.Warehouse.Nombre)
+                            </th>
+                            <th class="text-center">
+                                @Html.DisplayNameFor(model => model.Existencia)
+                            </th>
+                            <th class="text-center">
+                                @Html.DisplayNameFor(model => model.FechaCreada)
+                            </th>
+                            <th class="text-center">
+                                @Html.DisplayNameFor(model => model.FechaActualizada)
+                            </th>
+                            <th class="text-center">
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Product.Nombreproducto)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.User.NombreUser)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Warehouse.Nombre)
+                            </td>
+                            <td class="text-right">
+                                @Html.DisplayFor(modelItem => item.Existencia)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.FechaCreada)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.FechaActualizada)
+                            </td>
+                            <td class="text-center">
+                                @Html.ActionLink("Eliminar", "Eliminar", new { id = item.inventoryId }, new { @class = "btn btn-danger btn-xs" })
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+

@@ -4,47 +4,50 @@
     ViewBag.Title = "Detalles";
 }
 
-<h2>Detalles</h2>
+<div class="col-xs-10 col-xs-offset-1">
+    <h2>Detalles</h2>
 
-<div>
-    <h4>Sucursal</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.nombresuc)
-        </dt>
+    <div>
+        <h4>Sucursal</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.nombresuc)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.nombresuc)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.nombresuc)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.telefono)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.telefono)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.telefono)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.telefono)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.direccion)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.direccion)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.direccion)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.direccion)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.email)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.email)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.email)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.email)
+            </dd>
 
-    </dl>
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Editar", "Edit", new { id = Model.CompanyId }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default" })
+    </p>
+
 </div>
-<p>
-    @Html.ActionLink("Editar", "Edit", new { id = Model.CompanyId }, new { @class = "btn btn-primary" }) |
-    @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default" })
-</p>

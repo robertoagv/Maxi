@@ -4,49 +4,56 @@
     ViewBag.Title = "Bodega";
 }
 
-<h2>Bodega</h2>
+<div class="row">
+    <div class="col-xs-10 col-xs-offset-1">
+        <h2>Bodega</h2>
+        <p>
+            @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary" })
+        </p>
+        <div class="table table-responsive">
 
-<p>
-    @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary"})
-</p>
-<div class="table table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">Sucursal</th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.Nombre)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.Telefono)
+                        </th>
+                        <th class="text-center">
+                            @Html.DisplayNameFor(model => model.Direccion)
+                        </th>
+                        <th class="text-center"></th>
+                    </tr>
+                </thead>
 
-    <table class="table table-striped">
-        <tr>
-            <th>Sucursal</th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Direccion)
-            </th>
-            <th></th>
-        </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.Company.nombresuc)
+                        </td>
+                        <td  class="text-center">
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.Telefono)
+                        </td>
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => item.Direccion)
+                        </td>
+                        <td class="text-center">
+                            @Html.ActionLink("Editar", "Edit", new { id = item.WarehouseId }, new { @class = "btn btn-primary btn-xs" }) |
+                            @Html.ActionLink("Detlles", "Details", new { id = item.WarehouseId }, new { @class = "btn btn-info btn-xs" }) |
+                            @Html.ActionLink("Eliminar", "Delete", new { id = item.WarehouseId }, new { @class = "btn btn-danger btn-xs" })
+                        </td>
+                    </tr>
+                }
 
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Company.nombresuc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Direccion)
-            </td>
-            <td>
-                @Html.ActionLink("Editar", "Edit", new { id=item.WarehouseId }, new { @class = "btn btn-primary btn-xs"}) |
-                @Html.ActionLink("Detlles", "Details", new { id=item.WarehouseId }, new { @class = "btn btn-info btn-xs" }) |
-                @Html.ActionLink("Eliminar", "Delete", new { id=item.WarehouseId }, new { @class = "btn btn-danger btn-xs" })
-            </td>
-        </tr>
-    }
-
-    </table>
+            </table>
+        </div>
+    </div>
 </div>
+

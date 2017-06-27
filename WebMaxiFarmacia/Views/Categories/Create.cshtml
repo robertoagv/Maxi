@@ -11,10 +11,10 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="row">
-        <div class="col-xs-12 col-md-offset-2 col-md-6">
+  
+        <div class="col-xs-offset-1 col-xs-10">
             <div class="form-horizontal">
-                <h2 class="text-center">Nueva</h2>
+                <h2>Nueva</h2>
                 <h4>Categoria</h4>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -26,15 +26,15 @@
                     </div>
                 </div>
 
-                <div class="form-group text-center">
+                <div class="form-group">
                     <div class="col-xs-12 col-md-10">
                         <input type="submit" value="Crear" class="btn btn-primary" />
-                        @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default btn-sm" })
+                        @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default" })
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+   
 
  
 }

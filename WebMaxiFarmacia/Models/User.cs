@@ -31,6 +31,9 @@ namespace WebMaxiFarmacia.Models
 
         public virtual ICollection<Sale> Sales { get; set; }
 
+        public virtual ICollection<Inventory> Inventories { get; set; }
+
+
 
 
     }

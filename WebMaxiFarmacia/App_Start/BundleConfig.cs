@@ -24,7 +24,7 @@ namespace WebMaxiFarmacia
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap-verde.css",
+                      "~/Content/bootstrapverde.css",
                       "~/Content/site.css"));
         }
     }
