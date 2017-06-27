@@ -76,11 +76,16 @@ namespace WebMaxiFarmacia.Controllers
             if (ModelState.IsValid)
             {
                 db.Users.Add(user);
-                db.SaveChanges();
 
-                UserHelper.CreateUserASP(user.NombreUser, role);
+                var respuesta = ChangeValidationHelperDb.ChangeDb(db);
 
-                return RedirectToAction("Index");
+                if (respuesta.Succeeded)
+                {
+                    UserHelper.CreateUserASP(user.NombreUser, role);
+                    return RedirectToAction("Index"); 
+                }
+
+                ModelState.AddModelError(string.Empty, respuesta.Message);
             }
             
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
@@ -145,9 +150,13 @@ namespace WebMaxiFarmacia.Controllers
                 dbBuscarEmailOld.Dispose();
 
                 db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                
-                return RedirectToAction("Index");
+                var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+
+                if (respuesta.Succeeded)
+                {
+                    return RedirectToAction("Index"); 
+                }
+                ModelState.AddModelError(string.Empty, respuesta.Message);
             }
 
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
@@ -186,9 +195,15 @@ namespace WebMaxiFarmacia.Controllers
         {
             User user = db.Users.Find(id);
             db.Users.Remove(user);
-            db.SaveChanges();
-            UserHelper.DeleteUser(user.NombreUser);//lo borra o no.
-            return RedirectToAction("Index");
+            var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+            if (respuesta.Succeeded)
+            {
+                UserHelper.DeleteUser(user.NombreUser);//lo borra o no.
+                return RedirectToAction("Index"); 
+            }
+
+            ModelState.AddModelError(string.Empty, respuesta.Message);
+            return View(user);
         }
 
         protected override void Dispose(bool disposing)

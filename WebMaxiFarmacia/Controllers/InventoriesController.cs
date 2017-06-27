@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using WebMaxiFarmacia.classHelper;
 using WebMaxiFarmacia.Models;
 
 namespace WebMaxiFarmacia.Controllers
@@ -62,7 +63,7 @@ namespace WebMaxiFarmacia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "inventoryId,WarehouseId,ProductId,Existencia,FechaCreada,FechaActualizada,UserId")] Inventory inventory)
+        public ActionResult Create(Inventory inventory)
         {
             if (ModelState.IsValid)
             {
@@ -136,8 +137,15 @@ namespace WebMaxiFarmacia.Controllers
         {
             Inventory inventory = db.Inventories.Find(id);
             db.Inventories.Remove(inventory);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+            if (respuesta.Succeeded)
+            {
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError(string.Empty, respuesta.Message);
+
+            return View(inventory);
         }
 
         protected override void Dispose(bool disposing)

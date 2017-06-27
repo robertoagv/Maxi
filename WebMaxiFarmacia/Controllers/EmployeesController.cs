@@ -64,8 +64,13 @@ namespace WebMaxiFarmacia.Controllers
             if (ModelState.IsValid)
             {
                 db.Employees.Add(employee);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+                if (respuesta.Succeeded)
+                {
+                  return RedirectToAction("Index");
+                }
+
+                ModelState.AddModelError(string.Empty, respuesta.Message);
             }
 
             ViewBag.CompanyId = new SelectList(cboEmp.getSucursal(), "CompanyId", "nombresuc", employee.CompanyId);
@@ -98,9 +103,15 @@ namespace WebMaxiFarmacia.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(employee).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+                if (respuesta.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                ModelState.AddModelError(string.Empty, respuesta.Message);
             }
+
             ViewBag.CompanyId = new SelectList(cboEmp.getSucursal(), "CompanyId", "nombresuc", employee.CompanyId);
             return View(employee);
         }
@@ -127,8 +138,15 @@ namespace WebMaxiFarmacia.Controllers
         {
             Employee employee = db.Employees.Find(id);
             db.Employees.Remove(employee);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+            if (respuesta.Succeeded)
+            {
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError(string.Empty, respuesta.Message);
+
+            return View(employee);
         }
 
         protected override void Dispose(bool disposing)

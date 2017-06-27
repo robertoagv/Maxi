@@ -14,10 +14,11 @@
                         @Html.AntiForgeryToken()
                         <h4></h4>
                         <hr />
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                       
 
                           <div class="row">
                               <div class="col-sm-offset-4 col-sm-8 col-md-offset-4 col-md-8">
+                                  @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                   <div class="input-group">
                                       <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-user"></span></span>
                                       @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder="Usuario"})

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using WebMaxiFarmacia.classHelper;
 using WebMaxiFarmacia.Models;
 
 namespace WebMaxiFarmacia.Controllers
@@ -52,8 +53,12 @@ namespace WebMaxiFarmacia.Controllers
             if (ModelState.IsValid)
             {
                 db.Suppliers.Add(supplier);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+                if (respuesta.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError(string.Empty, respuesta.Message);
             }
 
             return View(supplier);
@@ -84,8 +89,12 @@ namespace WebMaxiFarmacia.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(supplier).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+                if (respuesta.Succeeded)
+                {
+                    return RedirectToAction("Index"); 
+                }
+                ModelState.AddModelError(string.Empty, respuesta.Message);
             }
             return View(supplier);
         }
@@ -112,8 +121,14 @@ namespace WebMaxiFarmacia.Controllers
         {
             Supplier supplier = db.Suppliers.Find(id);
             db.Suppliers.Remove(supplier);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+            if (respuesta.Succeeded)
+            {
+                return RedirectToAction("Index"); 
+            }
+            ModelState.AddModelError(string.Empty, respuesta.Message);
+
+            return View(supplier);
         }
 
         protected override void Dispose(bool disposing)

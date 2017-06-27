@@ -111,9 +111,14 @@ namespace WebMaxiFarmacia.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(warehouse).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+                if (respuesta.Succeeded)
+                {
+                    return RedirectToAction("Index"); 
+                }
+                ModelState.AddModelError(string.Empty, respuesta.Message);
             }
+
             ViewBag.CompanyId = new SelectList(cbo.getSucursal(), "CompanyId", "nombresuc", warehouse.CompanyId);
             return View(warehouse);
         }
@@ -140,8 +145,14 @@ namespace WebMaxiFarmacia.Controllers
         {
             Warehouse warehouse = db.Warehouses.Find(id);
             db.Warehouses.Remove(warehouse);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+            if (respuesta.Succeeded)
+            {
+                return RedirectToAction("Index"); 
+            }
+            ModelState.AddModelError(string.Empty, respuesta.Message);
+
+            return View(warehouse);
         }
 
         protected override void Dispose(bool disposing)

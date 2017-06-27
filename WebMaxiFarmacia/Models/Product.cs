@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -12,6 +13,7 @@ namespace WebMaxiFarmacia.Models
         public int ProductId { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [Index("product_codbarsuc_index", 2, IsUnique = true)]
         [Display(Name = "Codigo Barra")]
         public long Codigobarra { get; set; }
 
@@ -48,6 +50,7 @@ namespace WebMaxiFarmacia.Models
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe Seleccionar un {0}")]
+        [Index("product_codbarsuc_index", 1, IsUnique = true)]
         [Display(Name = "Sucursal")]
         public int CompanyId { get; set; }
 

@@ -105,15 +105,22 @@ namespace WebMaxiFarmacia.Controllers
                         FechaActualizada = DateTime.Today,
                         UserId = usuario.UserId
                 };
+
                 db.Inventories.Add(inventarionew);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+                if (respuesta.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError(string.Empty, respuesta.Message);
             }
 
             if (newcant <= 0)
             {
                 return RedirectToAction("Details/" + idproducto, "Products");
             }
+
+            ModelState.AddModelError(string.Empty, "Error, la cantidad es 0, o mayor a la Existencia."); 
 
             var catidad = (from i in db.Inventories
                            where i.ProductId == idproducto
@@ -126,11 +133,17 @@ namespace WebMaxiFarmacia.Controllers
             inventario.FechaActualizada = DateTime.Today;
             inventario.UserId = usuario.UserId;
 
-            db.SaveChanges();
+            var respueta = ChangeValidationHelperDb.ChangeDb(db);
+            if (respueta.Succeeded)
+            {
+                ViewBag.inventario = inventario;
 
-            ViewBag.inventario = inventario;
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError(string.Empty, respueta.Message);
 
-            return RedirectToAction("Index");
+            return View(inventario);
+            
         }
 
 
@@ -179,8 +192,12 @@ namespace WebMaxiFarmacia.Controllers
             if (ModelState.IsValid)
             {
                 db.Products.Add(product);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+                if (respuesta.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError(string.Empty, "El producto con este Coidigo de Barras ya Existe.");
             }
 
             ViewBag.CategoryId = new SelectList(cboAll.getCategory(), "CategoryId", "Descripcion", product.CategoryId);
@@ -217,9 +234,14 @@ namespace WebMaxiFarmacia.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+                if (respuesta.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError(string.Empty, respuesta.Message);
             }
+       
             ViewBag.CategoryId = new SelectList(cboAll.getCategory(), "CategoryId", "Descripcion", product.CategoryId);
             //ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc", product.CompanyId);
             ViewBag.SupplierId = new SelectList(cboAll.getProveedor(), "SupplierId", "Nombre", product.SupplierId);
@@ -248,8 +270,14 @@ namespace WebMaxiFarmacia.Controllers
         {
             Product product = db.Products.Find(id);
             db.Products.Remove(product);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+            if (respuesta.Succeeded)
+            {
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError(string.Empty, respuesta.Message);
+
+            return View(product);
         }
 
         protected override void Dispose(bool disposing)

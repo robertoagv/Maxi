@@ -75,11 +75,12 @@ namespace WebMaxiFarmacia.Controllers
 
             if (pview.Cantidad > pview.Existencia || pview.Cantidad == 0)
             {
-                ModelState.AddModelError(string.Empty, "La cantidad que desea agregar es mayor a la existencia.");
+                
                 return RedirectToAction("AgregarProducto", "Sales");
 
             }
 
+            ModelState.AddModelError(string.Empty, "La cantidad que desea agregar es mayor a la existencia o igual a 0.");
 
             if (ModelState.IsValid)
                 {
@@ -104,10 +105,13 @@ namespace WebMaxiFarmacia.Controllers
                         db.Entry(saleYesExistInDetails).State = EntityState.Modified;
                     }
 
-                  db.SaveChanges();
-
-                  return RedirectToAction("Create");
-                }
+                    var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+                    if (respuesta.Succeeded)
+                    {
+                        return RedirectToAction("Create");
+                    }
+                ModelState.AddModelError(string.Empty, respuesta.Message);
+            }
 
             return View(pview);
         }
@@ -126,8 +130,14 @@ namespace WebMaxiFarmacia.Controllers
             }
 
             db.SaleDetailTmps.Remove(saleDetailTmpFind);
-            db.SaveChanges();
-            return RedirectToAction("Create");
+            var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+            if (respuesta.Succeeded)
+            {
+                return RedirectToAction("Create");
+            }
+            ModelState.AddModelError(string.Empty, respuesta.Message);
+
+            return View(saleDetailTmpFind);
         }
 
        
@@ -241,9 +251,14 @@ namespace WebMaxiFarmacia.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(sale).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+                if (respuesta.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                ModelState.AddModelError(string.Empty, respuesta.Message);
             }
+
             ViewBag.UserId = new SelectList(db.Users, "UserId", "NombreUser", sale.UserId);
             return View(sale);
         }
@@ -270,8 +285,14 @@ namespace WebMaxiFarmacia.Controllers
         {
             Sale sale = db.Sales.Find(id);
             db.Sales.Remove(sale);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+            if (respuesta.Succeeded)
+            {
+                return RedirectToAction("Index");
+            }
+            ModelState.AddModelError(string.Empty, respuesta.Message);
+
+            return View(sale);
         }
 
         protected override void Dispose(bool disposing)
