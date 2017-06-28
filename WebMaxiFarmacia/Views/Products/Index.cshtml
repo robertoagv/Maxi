@@ -115,7 +115,7 @@
                         </td>
                         @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
                 {
-                            <td>
+                            <td class="text-center">
                                 @Html.ActionLink("Editar", "Edit", new { id = item.ProductId }, new { @class = "btn btn-primary btn-xs" }) |
                                 @Html.ActionLink("Detalles", "Details", new { id = item.ProductId }, new { @class = "btn btn-info btn-xs" }) |
                                 @Html.ActionLink("Eliminar", "Delete", new { id = item.ProductId }, new { @class = "btn btn-danger btn-xs" })

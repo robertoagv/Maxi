@@ -14,10 +14,14 @@ namespace WebMaxiFarmacia.Models
         public int ProductId { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es Obligatorio")]
+        [Display(Name = "Codigo Barra")]
         public long Codigobarra { get; set; }
 
+        [Display(Name = "Producto")]
         public string Nombreproducto  { get; set; }
+        [Display(Name = "Precio Venta")]
         public decimal Precioventa { get; set; }
+        
         public double? Existencia { get; set; }
     
         [Required(ErrorMessage = "El campo {0} es Obligatorio")]

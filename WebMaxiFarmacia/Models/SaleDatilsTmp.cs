@@ -17,6 +17,7 @@ namespace WebMaxiFarmacia.Models
         public string NombreUsuario { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es Obligatorio")]
+        [Display(Name = "Producto")]
         public int ProductId { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es Obligatorio")]

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -13,14 +14,16 @@ namespace WebMaxiFarmacia.Models
 
         [Required(ErrorMessage = "El campo {0} es Obligatorio.")]
         [MaxLength(256, ErrorMessage = "El campo {0} debe contener maximo {1} caracteres.")]
-        [Display(Name = "Correo")]
+        [Display(Name = "Usuario")]
         [DataType(DataType.EmailAddress, ErrorMessage = "El campo {0} no es un Correo Valido.")]
+        [Index("user_nameuser_index", 2, IsUnique = true)]
         public string NombreUser { get; set; }
 
         [Display(Name = "Empleado")]
         public int EmployeeId { get; set; }
 
         [Display(Name = "Sucursal")]
+        [Index("user_nameuser_index", 1, IsUnique = true)]
         public int CompanyId { get; set; }
 
 

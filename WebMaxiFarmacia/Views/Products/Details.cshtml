@@ -96,7 +96,7 @@
         @if (Model.Inventories.Count == 0)
         {
             <div class="alert alert-danger">No hay inventarios de este Producto.</div>
-            @Html.ActionLink("Comprar", "Comprar", "Products", new { id = Model.ProductId }, new { @class = "dialog-window btn btn-info btn-xs" })
+            @Html.ActionLink("Comprar", "comprar", "Products", new { id = Model.ProductId }, new { @class = "dialog-window btn btn-info btn-xs" })
         }
         else
         {

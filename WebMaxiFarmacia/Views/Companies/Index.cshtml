@@ -12,6 +12,21 @@
         <p>
             @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary" })
         </p>
+    @using (Ajax.BeginForm("Index", new AjaxOptions
+    {
+        HttpMethod = "POST",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "buscarid"
+    }))
+    {
+
+        <div class="form-group form-inline">
+            <div>
+                <input type="text" name="termino" id="termino" class="form-control" required placeholder="Buscar" />
+                <input type="submit" value="Buscar" class="btn btn-primary" />
+            </div>
+        </div>
+    }
         <div class="table table-responsive">
             <table class="table table-striped table-bordered table-hover">
                 <thead>
@@ -66,7 +81,7 @@
        currentFilter = ViewBag.CurrentFilter
    }))
        
-
+    @Html.ActionLink("Ver Todo", "Index", new { }, new { @class = "btn btn-info btn-xs" })
   
     
 </div>

@@ -79,12 +79,20 @@ namespace WebMaxiFarmacia.Controllers
 
             if (inventario == null)
             {
-                var inventarioget = new Inventory { WarehouseId = bodega.WarehouseId, ProductId = id, Existencia = 0 };
-                ViewBag.inventario = inventarioget;
+                var inventarioget = new Inventory
+                {
+                    WarehouseId = bodega.WarehouseId,
+                    ProductId = id,
+                    Existencia = 0,
+                    FechaCreada = DateTime.Today,
+                    FechaActualizada = DateTime.Today,
+                    UserId = usuario.UserId
+                };
+                //ViewBag.inventario = inventarioget;
                 return PartialView(inventarioget);
             }
 
-            ViewBag.inventario = inventario;
+            //ViewBag.inventario = inventario;
            
             return PartialView(inventario);
         }
@@ -93,8 +101,14 @@ namespace WebMaxiFarmacia.Controllers
         public ActionResult comprar(int idbodega, int idinventario, int idproducto, int newcant)
         {
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
-            var inventario = db.Inventories.Find(idinventario);
+            
 
+            if (newcant <= 0)
+            {
+                return RedirectToAction("Details/" + idproducto, "Products");
+            }
+
+            var inventario = db.Inventories.Find(idinventario);
             if (inventario == null)
             {
                var  inventarionew = new Inventory {
@@ -110,17 +124,13 @@ namespace WebMaxiFarmacia.Controllers
                 var respuesta = ChangeValidationHelperDb.ChangeDb(db);
                 if (respuesta.Succeeded)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Details/" + idproducto, "Products");
                 }
                 ModelState.AddModelError(string.Empty, respuesta.Message);
             }
 
-            if (newcant <= 0)
-            {
-                return RedirectToAction("Details/" + idproducto, "Products");
-            }
-
-            ModelState.AddModelError(string.Empty, "Error, la cantidad es 0, o mayor a la Existencia."); 
+           
+           
 
             var catidad = (from i in db.Inventories
                            where i.ProductId == idproducto
@@ -138,7 +148,7 @@ namespace WebMaxiFarmacia.Controllers
             {
                 ViewBag.inventario = inventario;
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Details/" + idproducto, "Products");
             }
             ModelState.AddModelError(string.Empty, respueta.Message);
 
@@ -176,21 +186,23 @@ namespace WebMaxiFarmacia.Controllers
             //ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc");
             ViewBag.SupplierId = new SelectList(cboAll.getProveedor(), "SupplierId", "Nombre");
 
-            db.Products.Where(p => p.CompanyId == usuario.CompanyId).FirstOrDefault();
-            var producto = new Product { CompanyId = usuario.CompanyId };
+            //db.Products.Where(p => p.CompanyId == usuario.CompanyId).FirstOrDefault();
+
+            var producto = new Product { CompanyId = usuario.CompanyId};
 
             return View(producto);
         }
 
-        // POST: Products/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Product product)
         {
             if (ModelState.IsValid)
             {
+                
+
+               
                 db.Products.Add(product);
                 var respuesta = ChangeValidationHelperDb.ChangeDb(db);
                 if (respuesta.Succeeded)

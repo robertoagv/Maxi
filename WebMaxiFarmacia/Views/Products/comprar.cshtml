@@ -1,12 +1,29 @@
 ﻿@model WebMaxiFarmacia.Models.Inventory
 
-@ViewBag.inventario.WarehouseId
-
+@*@ViewBag.inventario.WarehouseId
 @ViewBag.inventario.inventoryId
+@ViewBag.inventario.ProductId*@
 
-@ViewBag.inventario.ProductId
+@Model.WarehouseId
+@Model.inventoryId
+@Model.ProductId
 
+@if (Model.inventoryId == 0)
+{
+    <p class="text-info">
+        Se creara el inventario de este producto
+    </p>
+}
+else
+{
+    <div>
+        <p class="text-info">
+            Creado: <strong>@Model.FechaCreada.ToShortDateString()</strong> Actualizada: <strong>@Model.FechaActualizada.ToShortDateString()</strong> por: <strong>@Model.User.NombreUser</strong>
+        </p>
+    </div>
+}
 
+<br />
 @using (Ajax.BeginForm("comprar", new AjaxOptions
 {
     HttpMethod = "POST",
@@ -15,22 +32,23 @@
 }))
 {
 
-    <input type="hidden" name="idbodega" value="@ViewBag.inventario.WarehouseId" />
-    <input type="hidden" name="idinventario" value="@ViewBag.inventario.inventoryId" />
-    <input type="hidden" name="idproducto" value="@ViewBag.inventario.ProductId" />
+    <input type="hidden" name="idbodega" value="@Model.WarehouseId" />
+    <input type="hidden" name="idinventario" value="@Model.inventoryId" />
+    <input type="hidden" name="idproducto" value="@Model.ProductId" />
 
     <div class="row">
-        <div class="col-md-offset-2 col-md-8">
+        <div class="col-md-offset-2 col-md-9">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group form-inline">
-        <div class="">
-            <label class="control-label">Cantidad</label>
-            <input type="text" value="" class="form-control" placeholder="Cantidad" name="newcant" required/>
-            <span id="helpBlock" class="help-block">Ingrese numeros mayores a 0.</span>
-            <input type="submit" value="Agregar" class="btn btn-primary" />
-            @*@Html.ActionLink("Cancelar", "Index", new { }, new { @class = "btn btn-default" })*@
-        </div>
-    </div>
+            <div class="form-group form-inline">
+                <div class="text-center">
+                    <label class="control-label">Cantidad</label>
+                    <input type="text" value="" class="form-control" placeholder="Cantidad" name="newcant" required/>
+          
+                    <input type="submit" value="Agregar" class="btn btn-primary" />
+                    <p class="text-danger">Ingrese numeros mayores a 0.</p>
+                    @*@Html.ActionLink("Cancelar", "Index", new { }, new { @class = "btn btn-default" })*@
+                </div>
+            </div>
 
         </div>
     </div>

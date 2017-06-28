@@ -10,11 +10,13 @@ namespace WebMaxiFarmacia.Models
     {
 
         [MaxLength(100, ErrorMessage = "El campo {0} debe contener maximo {1} caracteres.")]
+        [Display(Name = "Cliente")]
         public string Nombrecte { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es Obligatorio")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Fecha de Venta")]
         public DateTime Fechavta { get; set; }
 
         //[Required(ErrorMessage = "El campo {0} es obligatorio")]

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using WebMaxiFarmacia.Models;
 using PagedList;
 using WebMaxiFarmacia.classHelper;
+using PagedList;
 
 namespace WebMaxiFarmacia.Controllers
 {
@@ -22,6 +23,13 @@ namespace WebMaxiFarmacia.Controllers
         {
             page = (page ?? 1);
             return View(db.Categories.OrderByDescending(c => c.CategoryId).ToPagedList((int)page, 5));
+        }
+        [HttpPost]
+        public ActionResult Index(string termino, int? page = null)
+        { 
+
+            page = (page ?? 1);
+            return View(db.Categories.Where(c => c.Descripcion == termino).OrderByDescending(c => c.CategoryId).ToPagedList((int)page, 5));
         }
 
         // GET: Categories/Details/5

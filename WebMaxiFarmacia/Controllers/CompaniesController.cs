@@ -23,6 +23,12 @@ namespace WebMaxiFarmacia.Controllers
             page = (page ?? 1);
             return View(db.Companies.OrderByDescending(c => c.nombresuc).ToPagedList((int)page, 5));
         }
+        [HttpPost]
+        public ActionResult Index(string termino, int? page = null)
+        {
+            page = (page ?? 1);
+            return View(db.Companies.Where(c => c.nombresuc == termino).OrderByDescending(c => c.nombresuc).ToPagedList((int)page, 10));
+        }
 
         // GET: Companies/Details/5
         public ActionResult Details(int? id)

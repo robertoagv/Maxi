@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebMaxiFarmacia.Models;
 using WebMaxiFarmacia.classHelper;
+using PagedList;
 
 namespace WebMaxiFarmacia.Controllers
 {
@@ -18,19 +19,34 @@ namespace WebMaxiFarmacia.Controllers
         private cboAll cboEmp = new cboAll();
 
         // GET: Employees
-        public ActionResult Index()
+        public ActionResult Index(int? page = null)
         {
-
+            page = (page ?? 1);
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
             if (usuario == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            var employees = db.Employees.Where(e => e.CompanyId == usuario.CompanyId).Include(e => e.Company);
+            var employees = db.Employees.Where(e => e.CompanyId == usuario.CompanyId).Include(e => e.Company).OrderByDescending(e => e.EmployeeId);
 
-            return View(employees.ToList());
+            return View(employees.ToPagedList((int)page, 5));
         }
+        [HttpPost]
+        public ActionResult Index(string termino, int? page = null)
+        {
+            page = (page ?? 1);
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            if (usuario == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var employees = db.Employees.Where(e => e.CompanyId == usuario.CompanyId && e.Nombreemp == termino).Include(e => e.Company).OrderByDescending(e => e.EmployeeId);
+
+            return View(employees.ToPagedList((int)page, 10));
+        }
+
 
         // GET: Employees/Details/5
         public ActionResult Details(int? id)
@@ -50,13 +66,20 @@ namespace WebMaxiFarmacia.Controllers
         // GET: Employees/Create
         public ActionResult Create()
         {
-            ViewBag.CompanyId = new SelectList(cboEmp.getSucursal(), "CompanyId", "nombresuc");
-            return View();
+
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            if (usuario == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var empleado = new Employee { CompanyId = usuario.CompanyId };
+
+            //ViewBag.CompanyId = new SelectList(cboEmp.getSucursal(), "CompanyId", "nombresuc");
+
+            return View(empleado);
         }
 
-        // POST: Employees/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Employee employee)
@@ -73,7 +96,7 @@ namespace WebMaxiFarmacia.Controllers
                 ModelState.AddModelError(string.Empty, respuesta.Message);
             }
 
-            ViewBag.CompanyId = new SelectList(cboEmp.getSucursal(), "CompanyId", "nombresuc", employee.CompanyId);
+            //ViewBag.CompanyId = new SelectList(cboEmp.getSucursal(), "CompanyId", "nombresuc", employee.CompanyId);
             return View(employee);
         }
 
@@ -89,13 +112,11 @@ namespace WebMaxiFarmacia.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CompanyId = new SelectList(cboEmp.getSucursal(), "CompanyId", "nombresuc", employee.CompanyId);
+            //ViewBag.CompanyId = new SelectList(cboEmp.getSucursal(), "CompanyId", "nombresuc", employee.CompanyId);
             return View(employee);
         }
 
-        // POST: Employees/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Employee employee)
@@ -112,7 +133,7 @@ namespace WebMaxiFarmacia.Controllers
                 ModelState.AddModelError(string.Empty, respuesta.Message);
             }
 
-            ViewBag.CompanyId = new SelectList(cboEmp.getSucursal(), "CompanyId", "nombresuc", employee.CompanyId);
+            //ViewBag.CompanyId = new SelectList(cboEmp.getSucursal(), "CompanyId", "nombresuc", employee.CompanyId);
             return View(employee);
         }
 

@@ -90,13 +90,13 @@
                     @if (Model.ProductId > 0)
                     {
                         @Html.HiddenFor(model => model.ProductId)
+                        @Html.HiddenFor(model => model.Codigobarra)
                         @Html.HiddenFor(model => model.Nombreproducto)
                         @Html.HiddenFor(model => model.Precioventa)
                         @Html.HiddenFor(model => model.Existencia)
                         @Html.EditorFor(model => model.Cantidad, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Cantidad, "", new { @class = "text-danger" })
-                        <label id="labelmal" class="text-danger"></label>
-
+                        @*@Html.ValidationMessageFor(model => model.Cantidad, "", new { @class = "text-danger" })*@
+                  
                         <input type="submit" value="Agregar" class="btn btn-primary" />
                     }
                 </div>

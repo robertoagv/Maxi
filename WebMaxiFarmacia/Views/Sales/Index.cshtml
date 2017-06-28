@@ -11,7 +11,7 @@
         <h2>Venta</h2>
 
         <p>
-            @Html.ActionLink("Nueva", "Create")
+            @Html.ActionLink("Nueva", "Create", new { }, new { @class = "btn btn-primary"})
         </p>
         <div class="table table-responsive">
             <table class="table table-striped table-bordered table-hover">
@@ -43,9 +43,9 @@
                             @Html.DisplayFor(modelItem => item.Fechavta)
                         </td>
                         <td class="text-center">
-                            @Html.ActionLink("Edit", "Edit", new { id = item.SaleID }) |
-                            @Html.ActionLink("Details", "Detalles", new { id = item.SaleID }, new { @class = "btn btn-info btn-sm"}) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.SaleID })
+                            @*@Html.ActionLink("Edit", "Edit", new { id = item.SaleID }) |*@
+                            @Html.ActionLink("Detalle", "Details", new { id = item.SaleID }, new { @class = "btn btn-info btn-sm"}) 
+                            @*@Html.ActionLink("Delete", "Delete", new { id = item.SaleID })*@
                         </td>
                     </tr>
                 }

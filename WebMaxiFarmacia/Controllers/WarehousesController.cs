@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebMaxiFarmacia.Models;
 using WebMaxiFarmacia.classHelper;
+using PagedList;
 
 namespace WebMaxiFarmacia.Controllers
 {
@@ -18,16 +19,18 @@ namespace WebMaxiFarmacia.Controllers
         private cboAll cbo = new cboAll();
 
         // GET: Warehouses
-        public ActionResult Index()
+        public ActionResult Index(int? page = null)
         {
-            //var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
-            //if (usuario == null)
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
-
-            var warehouses = db.Warehouses.Include(w => w.Company);
-            return View(warehouses.ToList());
+            page = (page ?? 1);
+            var warehouses = db.Warehouses.Include(w => w.Company).OrderByDescending(b => b.WarehouseId);
+            return View(warehouses.ToPagedList((int)page, 5));
+        }
+        [HttpPost]
+        public ActionResult Index(string termino, int? page = null)
+        {
+            page = (page ?? 1);
+            var warehouses = db.Warehouses.Where(b => b.Nombre == termino).Include(w => w.Company).OrderByDescending(b => b.WarehouseId);
+            return View(warehouses.ToPagedList((int)page, 10));
         }
 
         // GET: Warehouses/Details/5

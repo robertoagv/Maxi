@@ -12,7 +12,7 @@ namespace WebMaxiFarmacia.Models
         public int CompanyId { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        [Display(Name = "Nombre")]
+        [Display(Name = "Sucursal")]
         public string nombresuc { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
@@ -21,10 +21,11 @@ namespace WebMaxiFarmacia.Models
         public int telefono { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        [Display(Name = "Nombre")]
+        [Display(Name = "Direccion")]
         public string direccion { get; set; }
 
         [EmailAddress(ErrorMessage = "Debe ingresar un correo valido")]
+        [Display(Name = "Correo")]
         public string email { get; set; }
 
         //Relaciones

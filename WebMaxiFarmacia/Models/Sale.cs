@@ -12,11 +12,13 @@ namespace WebMaxiFarmacia.Models
         public int SaleID { get; set; }
 
         [MaxLength(100, ErrorMessage = "El campo {0} es obligatorio.")]
+        [Display(Name = "Cliente")]
         public string Nombrecte { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es Obligatorio")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Fecha de Venta")]
         public DateTime Fechavta { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
@@ -33,9 +35,11 @@ namespace WebMaxiFarmacia.Models
         public List<SaleDetail> Detalles { get; set; }
 
         //[DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        [Display(Name = "Total Cantidad")]
         public int TotalCantidad { get { return Detalles == null ? 0 : Detalles.Sum(d => d.Cantidad); } }
 
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        [Display(Name = "Total Valor")]
         public decimal TotalValue { get { return Detalles == null ? 0 : Detalles.Sum(d => d.ValorU); } }
 
         //Relaciones

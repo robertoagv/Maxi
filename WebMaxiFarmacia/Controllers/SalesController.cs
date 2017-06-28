@@ -80,40 +80,38 @@ namespace WebMaxiFarmacia.Controllers
 
             }
 
-            ModelState.AddModelError(string.Empty, "La cantidad que desea agregar es mayor a la existencia o igual a 0.");
+
 
             if (ModelState.IsValid)
+            {
+
+                var saleYesExistInDetails = db.SaleDetailTmps.Where(sed => sed.NombreUsuario == User.Identity.Name && sed.ProductId == pview.ProductId).FirstOrDefault();
+                if (saleYesExistInDetails == null)
                 {
-                
-                    var saleYesExistInDetails = db.SaleDetailTmps.Where(sed => sed.NombreUsuario == User.Identity.Name && sed.ProductId == pview.ProductId).FirstOrDefault();
-                    if (saleYesExistInDetails == null)
+                    saleYesExistInDetails = new SaleDatilsTmp
                     {
-                        saleYesExistInDetails = new SaleDatilsTmp
-                        {
-                            NombreUsuario = User.Identity.Name,
-                            ProductId = pview.ProductId,
-                            Descriptionpro = pview.Nombreproducto,
-                            Precio = pview.Precioventa,
-                            Cantidad = pview.Cantidad,
-                        };
+                        NombreUsuario = User.Identity.Name,
+                        ProductId = pview.ProductId,
+                        Descriptionpro = pview.Nombreproducto,
+                        Precio = pview.Precioventa,
+                        Cantidad = pview.Cantidad,
+                    };
 
-                        db.SaleDetailTmps.Add(saleYesExistInDetails);
-                    }
-                    else
-                    {
-                        saleYesExistInDetails.Cantidad += pview.Cantidad;
-                        db.Entry(saleYesExistInDetails).State = EntityState.Modified;
-                    }
+                    db.SaleDetailTmps.Add(saleYesExistInDetails);
+                }
+                else
+                {
+                    saleYesExistInDetails.Cantidad += pview.Cantidad;
+                    db.Entry(saleYesExistInDetails).State = EntityState.Modified;
+                }
 
-                    var respuesta = ChangeValidationHelperDb.ChangeDb(db);
-                    if (respuesta.Succeeded)
-                    {
-                        return RedirectToAction("Create");
-                    }
-                ModelState.AddModelError(string.Empty, respuesta.Message);
+                db.SaveChanges();
+                return RedirectToAction("Create");
             }
 
+
             return View(pview);
+            
         }
 
         public ActionResult DeleteProductList(int? id)
