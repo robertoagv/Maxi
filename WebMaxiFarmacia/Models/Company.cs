@@ -16,7 +16,8 @@ namespace WebMaxiFarmacia.Models
         public string nombresuc { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        [DataType(DataType.PhoneNumber)]
+        [DataType(DataType.PhoneNumber, ErrorMessage = "El campo {0} debe ser Numerico.")]
+        [DisplayFormat(DataFormatString  = "{0:##-##-##}", ApplyFormatInEditMode = false)]
         [Display(Name = "Telefono")]
         public int telefono { get; set; }
 

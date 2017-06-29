@@ -359,6 +359,8 @@
     <Content Include="Views\Sales\AgregarProducto.cshtml" />
     <Content Include="Views\Inventories\Delete.cshtml" />
     <Content Include="Views\Inventories\Index.cshtml" />
+    <Content Include="Views\Home\Error400.cshtml" />
+    <Content Include="Views\Home\Error404.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

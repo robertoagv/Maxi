@@ -15,7 +15,7 @@ namespace WebMaxiFarmacia.Models
 
         [Required(ErrorMessage = "El campo {0} es Obligatorio")]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = false)]
         [Display(Name = "Fecha de Venta")]
         public DateTime Fechavta { get; set; }
 

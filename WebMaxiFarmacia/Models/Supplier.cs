@@ -16,7 +16,8 @@ namespace WebMaxiFarmacia.Models
         [Display(Name = "Proveedor")]
         public string Nombre { get; set; }
 
-        [DataType(DataType.PhoneNumber)]
+        [DataType(DataType.PhoneNumber, ErrorMessage = "Debe ingresar un dato numerico.")]
+        [DisplayFormat(DataFormatString = "{0:##-##-##}", ApplyFormatInEditMode = false)]
         public int Telefono { get; set; }
 
         [EmailAddress(ErrorMessage = "Correo Invalido")]

@@ -13,9 +13,9 @@
             {
                 <ul class="list-group">
                     <li class="list-group-item text-center"><label>Sucursal:</label>@Model.Company.nombresuc</li>
-                    <li class="list-group-item text-center"><label>Direccion:</label>@Model.Company.direccion</li>
-                    <li class="list-group-item text-center"><label>Correo:</label>@Model.Company.email</li>
-                    <li class="list-group-item text-center"><label>Telefono:</label>@Model.Company.telefono</li>
+                    <li class="list-group-item text-center"><label>Direccion:</label><address>@Model.Company.direccion</address></li>
+                    <li class="list-group-item text-center"><label>Correo:</label><address><a href="mailto:@Model.Company.email">@Model.Company.email</a></address></li>
+                    <li class="list-group-item text-center"><label>Telefono:</label><address><abbr title="Telefono">@Model.Company.telefono</abbr></address></li>
                    
                 </ul>
             }
@@ -23,6 +23,21 @@
         </div>
     </div>
 </div>
+
+
+
+@*<address>
+    One Microsoft Way<br />
+    Redmond, WA 98052-6399<br />
+    <abbr title="Phone">P:</abbr>
+    425.555.0100
+</address>
+
+<address>
+    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
+    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+</address>*@
+
 
 @*<div class="row">
     <div class="col-md-4">

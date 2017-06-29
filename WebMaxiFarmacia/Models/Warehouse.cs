@@ -17,7 +17,8 @@ namespace WebMaxiFarmacia.Models
         [Display(Name = "Bodega")]
         public string Nombre { get; set; }
 
-        [DataType(DataType.PhoneNumber)]
+        [DataType(DataType.PhoneNumber, ErrorMessage = "El campo {0} debe ser Numerico.")]
+        [DisplayFormat(DataFormatString = "{0:##-##-##}", ApplyFormatInEditMode = false)]
         [Display(Name = "Telefono")]
         public int Telefono { get; set; }
 

@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using WebMaxiFarmacia.Models;
 using WebMaxiFarmacia.classHelper;
+using PagedList;
 
 namespace WebMaxiFarmacia.Controllers
 {
@@ -18,18 +19,34 @@ namespace WebMaxiFarmacia.Controllers
         private cboAll cboAll = new cboAll();
 
         // GET: Users
-        public ActionResult Index()
+        public ActionResult Index(int? page = null)
         {
+            page = (page ?? 1);
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
             if (usuario == null)
             {
                 return RedirectToAction("Index", "Home");
             }
 
-            var users = db.Users.Where(ua => ua.CompanyId == usuario.CompanyId).Include(u => u.Company).Include(u => u.Employee);
+            var users = db.Users.Where(ua => ua.CompanyId == usuario.CompanyId).Include(u => u.Company).Include(u => u.Employee).OrderByDescending(u => u.NombreUser);
 
-            return View(users.ToList());
+            return View(users.ToPagedList((int)page, 10));
         }
+        [HttpPost]
+        public ActionResult Index(string termino, int? page = null)
+        {
+            page = (page ?? 1);
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            if (usuario == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var users = db.Users.Where(ua => ua.CompanyId == usuario.CompanyId && ua.NombreUser == termino).Include(u => u.Company).Include(u => u.Employee).OrderByDescending(u => u.NombreUser);
+
+            return View(users.ToPagedList((int)page, 10));
+        }
+
 
         // GET: Users/Details/5
         public ActionResult Details(int? id)
@@ -46,9 +63,29 @@ namespace WebMaxiFarmacia.Controllers
             return View(user);
         }
 
+
+        
+
         // GET: Users/Create
         public ActionResult Create()
         {
+            if (User.IsInRole("SuperAdmin"))
+            {
+                var companyid = db.Companies.OrderByDescending(c => c.CompanyId).FirstOrDefault();
+                var empleado = db.Employees.Where(e => e.CompanyId == companyid.CompanyId).ToList();
+                empleado.Add(new Employee()
+                {
+                    EmployeeId = 0,
+                    Nombreemp = "[Seccione un Empleado]"
+                });
+
+                //ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc");
+                ViewBag.EmployeeId = new SelectList(empleado.OrderBy(e => e.Nombreemp).ToList(), "EmployeeId", "Nombreemp");
+                var user = new User { CompanyId = companyid.CompanyId };
+                return View(user);
+            }
+
+
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
 
             var empleadoCbo = db.Employees.Where(e => e.CompanyId == usuario.CompanyId).ToList();
@@ -59,7 +96,7 @@ namespace WebMaxiFarmacia.Controllers
                     Nombreemp = "[Seccione un Empleado]"
                 });
 
-                 empleadoCbo.OrderBy(e => e.Nombreemp).ToList();
+                 //empleadoCbo.Where(e => e.CompanyId == usuario.CompanyId).OrderBy(e => e.Nombreemp).ToList();
 
             //ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc");
             ViewBag.EmployeeId = new SelectList(empleadoCbo.OrderBy(e => e.Nombreemp).ToList(), "EmployeeId", "Nombreemp");

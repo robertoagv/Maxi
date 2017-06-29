@@ -16,14 +16,14 @@ namespace WebMaxiFarmacia.Models
         [MaxLength(256, ErrorMessage = "El campo {0} debe contener maximo {1} caracteres.")]
         [Display(Name = "Usuario")]
         [DataType(DataType.EmailAddress, ErrorMessage = "El campo {0} no es un Correo Valido.")]
-        [Index("user_nameuser_index", 2, IsUnique = true)]
+        [Index("user_nameuser_index", IsUnique = true)]
         public string NombreUser { get; set; }
 
         [Display(Name = "Empleado")]
         public int EmployeeId { get; set; }
 
         [Display(Name = "Sucursal")]
-        [Index("user_nameuser_index", 1, IsUnique = true)]
+       
         public int CompanyId { get; set; }
 
 

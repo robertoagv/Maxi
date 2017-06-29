@@ -22,7 +22,7 @@
 
         <div class="form-group form-inline">
             <div>
-                <input type="text" name="termino" id="termino" class="form-control" required placeholder="Buscar" />
+                <input type="text" name="termino" id="termino" class="form-control" required placeholder="Buscar" autofocus autocomplete="on"/>
                 <input type="submit" value="Buscar" class="btn btn-primary" />
             </div>
         </div>
@@ -67,6 +67,7 @@
                             @Html.ActionLink("Detalles", "Details", new { id = item.CompanyId }, new { @class = "btn btn-info btn-xs" }) |
                             @Html.ActionLink("eliminar", "Delete", new { id = item.CompanyId }, new { @class = "btn btn-danger btn-xs" })
                         </td>
+                     
                     </tr>
             }
             </table>

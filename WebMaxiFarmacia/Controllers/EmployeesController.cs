@@ -66,8 +66,15 @@ namespace WebMaxiFarmacia.Controllers
         // GET: Employees/Create
         public ActionResult Create()
         {
+            if (User.IsInRole("SuperAdmin"))
+            {
+                ViewBag.CompanyId = new SelectList(cboEmp.getSucursal(), "CompanyId", "nombresuc");
+                var empleadosuper = new Employee { Telefonoemp = 00, Direccionemp = "--------" };
+                return View(empleadosuper);
+            }
 
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            
             if (usuario == null)
             {
                 return RedirectToAction("Index", "Home");
@@ -96,7 +103,7 @@ namespace WebMaxiFarmacia.Controllers
                 ModelState.AddModelError(string.Empty, respuesta.Message);
             }
 
-            //ViewBag.CompanyId = new SelectList(cboEmp.getSucursal(), "CompanyId", "nombresuc", employee.CompanyId);
+            ViewBag.CompanyId = new SelectList(cboEmp.getSucursal(), "CompanyId", "nombresuc", employee.CompanyId);
             return View(employee);
         }
 
