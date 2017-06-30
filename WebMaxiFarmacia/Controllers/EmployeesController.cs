@@ -32,6 +32,7 @@ namespace WebMaxiFarmacia.Controllers
 
             return View(employees.ToPagedList((int)page, 5));
         }
+
         [HttpPost]
         public ActionResult Index(string termino, int? page = null)
         {

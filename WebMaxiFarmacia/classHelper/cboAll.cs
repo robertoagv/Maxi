@@ -8,15 +8,15 @@ using System.Web.Mvc;
 
 namespace WebMaxiFarmacia.classHelper
 {
-    public class cboAll : Controller
+    public class cboAll
     {
-        
+        //maxifarmaciabdContext db = new maxifarmaciabdContext();
       
         public List<Supplier> getProveedor()
         {
-            using(var db = new maxifarmaciabdContext())
+            using (var db = new maxifarmaciabdContext())
             {
-               var  proveedorCbo = db.Suppliers.ToList();
+                var  proveedorCbo = db.Suppliers.ToList();
                 proveedorCbo.Add(new Supplier()
                 {
                     SupplierId = 0,
@@ -24,7 +24,7 @@ namespace WebMaxiFarmacia.classHelper
                 });
 
                 return proveedorCbo.OrderBy(p => p.Nombre).ToList();
-            } 
+            }
         }
 
         public List<Category> getCategory()
@@ -60,6 +60,15 @@ namespace WebMaxiFarmacia.classHelper
             }
         }
 
-        
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
+
+
     }
 }

@@ -10,7 +10,7 @@ using WebMaxiFarmacia.Models;
 
 namespace WebMaxiFarmacia.classHelper
 {
-    public class UserHelper : IDisposable
+    public class UserHelper
     {
         private static ApplicationDbContext userContext = new ApplicationDbContext();
 
@@ -193,15 +193,15 @@ namespace WebMaxiFarmacia.classHelper
 
         }
 
-        public void Dispose()
+        //public void Dispose()
 
-        {
+        //{
 
-            userContext.Dispose();
+        //    userContext.Dispose();
 
-            db.Dispose();
+        //    db.Dispose();
 
-        }
+        //}
 
     }
 }

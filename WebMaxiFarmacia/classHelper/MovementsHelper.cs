@@ -8,16 +8,9 @@ using WebMaxiFarmacia.Models;
 namespace WebMaxiFarmacia.classHelper
 {
     
-    public class MovementsHelper : IDisposable
+    public class MovementsHelper
     {
         private static maxifarmaciabdContext db = new maxifarmaciabdContext();
-
-
-
-        public void Dispose()
-        {
-            db.Dispose();
-        }
 
         public static Response newSale(NewSaleView newSaleView, string nombreUsuario)
         {
@@ -118,8 +111,7 @@ namespace WebMaxiFarmacia.classHelper
                 }
             }
         }
-
-
-
     }
+
+    
 }

@@ -9,7 +9,7 @@ using System.Web.Mvc;
 using WebMaxiFarmacia.Models;
 using PagedList;
 using WebMaxiFarmacia.classHelper;
-using PagedList;
+
 
 namespace WebMaxiFarmacia.Controllers
 {
