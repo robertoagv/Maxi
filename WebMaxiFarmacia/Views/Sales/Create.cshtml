@@ -75,69 +75,72 @@
 }
 else
 {
-    
-    <table class="table table-bordered table-striped table-hover">
-        <thead>
-            <tr>
-                <th class="text-center">
-                    @Html.DisplayNameFor(model => model.Detalles[0].Descriptionpro)
-                </th>
-                <th class="text-center">
-                    @Html.DisplayNameFor(model => model.Detalles[0].Precio)
-                </th>
-                <th class="text-center">
-                    @Html.DisplayNameFor(model => model.Detalles[0].Cantidad)
-                </th>
-                <th class="text-center">
-                    Total
-                </th>
-                <th class="text-center">
-                    Accion
-                </th>
-            </tr>
-        </thead>
 
-        @foreach (var item in Model.Detalles)
-        {
-            <tr>
-                <td class="text-center">
-                    @Html.DisplayFor(modelItem => item.Descriptionpro)
-                </td>
-                <td class="text-right">
-                    @Html.DisplayFor(modelItem => item.Precio)
-                </td>
-                <td class="text-right">
-                    @Html.DisplayFor(modelItem => item.Cantidad)
-                </td>
-                <td class="text-right">
-                    @Html.DisplayFor(modelItem => item.Valor)
-                </td>
-                <td class="text-center">
-                    @Html.ActionLink("Quitar", "DeleteProductList", new { id = item.ProductId }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Esta seguro de Quitar este producto?')"})
-                </td>
-            </tr>
-        }
-            <tr>
-                <td>
+    <div class="table table-responsive">
 
-                </td>
-                <td class="text-right">
-                    <strong>Total</strong>
-                </td>
-                <td class="text-right">
-                    <strong>
-                        @Html.DisplayFor(modelItem => Model.TotalCantidad)
-                    </strong>
-                </td>
-                <td class="text-right">
-                    <strong>
-                        @Html.DisplayFor(modelItem => Model.TotalValue)
-                    </strong>
-                </td>
-                <td></td>
-            </tr>
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.Detalles[0].Descriptionpro)
+                    </th>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.Detalles[0].Precio)
+                    </th>
+                    <th class="text-center">
+                        @Html.DisplayNameFor(model => model.Detalles[0].Cantidad)
+                    </th>
+                    <th class="text-center">
+                        Total
+                    </th>
+                    <th class="text-center">
+                        Accion
+                    </th>
+                </tr>
+            </thead>
 
-    </table>
+            @foreach (var item in Model.Detalles)
+            {
+                <tr>
+                    <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Descriptionpro)
+                    </td>
+                    <td class="text-right">
+                        @Html.DisplayFor(modelItem => item.Precio)
+                    </td>
+                    <td class="text-right">
+                        @Html.DisplayFor(modelItem => item.Cantidad)
+                    </td>
+                    <td class="text-right">
+                        @Html.DisplayFor(modelItem => item.Valor)
+                    </td>
+                    <td class="text-center">
+                        @Html.ActionLink("Quitar", "DeleteProductList", new { id = item.ProductId }, new { @class = "btn btn-danger btn-xs", onclick = "return confirm('Esta seguro de Quitar este producto?')"})
+                    </td>
+                </tr>
+            }
+                <tr>
+                    <td>
+
+                    </td>
+                    <td class="text-right">
+                        <strong>Total</strong>
+                    </td>
+                    <td class="text-right">
+                        <strong>
+                            @Html.DisplayFor(modelItem => Model.TotalCantidad)
+                        </strong>
+                    </td>
+                    <td class="text-right">
+                        <strong>
+                            @Html.DisplayFor(modelItem => Model.TotalValue)
+                        </strong>
+                    </td>
+                    <td></td>
+                </tr>
+
+        </table>
+    </div>
 }
 
 
