@@ -48,12 +48,17 @@
                             <th class="text-center">
                                 @Html.DisplayNameFor(model => model.FechaActualizada)
                             </th>
-                            <th class="text-center">
+                            @*<th class="text-center">
                                 Acciones
-                            </th>
+                            </th>*@
                         </tr>
                     </thead>
-
+                    @if (Model.Count() == 0)
+                    {
+                        <div class="alert alert-danger">
+                            No se encontro el Registro
+                        </div>
+                    }
                     @foreach (var item in Model)
                     {
                         <tr>
@@ -66,18 +71,30 @@
                             <td class="text-center">
                                 @Html.DisplayFor(modelItem => item.Warehouse.Nombre)
                             </td>
-                            <td class="text-right">
-                                @Html.DisplayFor(modelItem => item.Existencia)
-                            </td>
+                            @if (item.Existencia < 6)
+                            {
+
+                                <td class="danger text-right">
+                                    @Html.DisplayFor(modelItem => item.Existencia)
+                                </td>
+
+                            }
+                            else
+                            {
+                                <td class="text-right">
+                                    @Html.DisplayFor(modelItem => item.Existencia)
+                                </td>
+                            }
+                            
                             <td class="text-center">
                                 @Html.DisplayFor(modelItem => item.FechaCreada)
                             </td>
                             <td class="text-center">
                                 @Html.DisplayFor(modelItem => item.FechaActualizada)
                             </td>
-                            <td class="text-center">
-                                @Html.ActionLink("Eliminar", "Eliminar", new { id = item.inventoryId }, new { @class = "btn btn-danger btn-xs" })
-                            </td>
+                            @*<td class="text-center">
+                                    @Html.ActionLink("Eliminar", "Eliminar", new { id = item.inventoryId }, new { @class = "btn btn-danger btn-xs" })
+                                </td>*@
                         </tr>
                     }
 

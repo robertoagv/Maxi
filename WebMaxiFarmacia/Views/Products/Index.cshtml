@@ -51,9 +51,13 @@
                         </th>
                         @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
             {
+                            @*<th class="text-right">
+                                @Html.DisplayNameFor(model => model.FirstOrDefault().Porcentaje.NumPorcentaje)
+                            </th>*@
                             <th class="text-center">
                                 @Html.DisplayNameFor(model => model.FirstOrDefault().Preciocompra)
                             </th>
+                         
                         }
                         <th class="text-center">
                             @Html.DisplayNameFor(model => model.FirstOrDefault().Precioventa)
@@ -90,7 +94,7 @@
                         </td>
                         @if (item.Existencia < 6)
                 {
-                            <td class="text-center text-danger">
+                            <td class="text-center danger">
                                 <strong>
                                     @Html.DisplayFor(modelItem => item.Existencia)
                                 </strong>
@@ -98,6 +102,7 @@
                         }
                         else
                         {
+
                             <td class="text-center">
                                 @Html.DisplayFor(modelItem => item.Existencia)
                             </td>
@@ -105,6 +110,9 @@
 
                         @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
                 {
+                            @*<td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Porcentaje.Porcentaje)
+                            </td>*@
                             <td class="text-right">
                                 @Html.DisplayFor(modelItem => item.Preciocompra)
                             </td>

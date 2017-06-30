@@ -244,7 +244,7 @@ namespace WebMaxiFarmacia.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SaleID,Nombrecte,Fechavta,UserId")] Sale sale)
+        public ActionResult Edit(Sale sale)
         {
             if (ModelState.IsValid)
             {

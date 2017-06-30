@@ -19,6 +19,7 @@ namespace WebMaxiFarmacia.Models
 
         [Display(Name = "Producto")]
         public string Nombreproducto  { get; set; }
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         [Display(Name = "Precio Venta")]
         public decimal Precioventa { get; set; }
         
@@ -26,7 +27,7 @@ namespace WebMaxiFarmacia.Models
     
         [Required(ErrorMessage = "El campo {0} es Obligatorio")]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        [Range(0, int.MaxValue, ErrorMessage = "En el campo {0} debes ingresar numeros mayores a {1}.")]
+        [Range(1, int.MaxValue, ErrorMessage = "En el campo {0} debes ingresar numeros mayores a {1}.")]
         public int Cantidad { get; set; }
     }
 }

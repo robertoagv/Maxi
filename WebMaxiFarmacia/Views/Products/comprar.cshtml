@@ -1,12 +1,12 @@
 ﻿@model WebMaxiFarmacia.Models.Inventory
 
 @*@ViewBag.inventario.WarehouseId
-@ViewBag.inventario.inventoryId
-@ViewBag.inventario.ProductId*@
+    @ViewBag.inventario.inventoryId
+    @ViewBag.inventario.ProductId*@
 
-@Model.WarehouseId
-@Model.inventoryId
-@Model.ProductId
+@*@Model.WarehouseId
+    @Model.inventoryId
+    @Model.ProductId*@
 
 @if (Model.inventoryId == 0)
 {
@@ -18,7 +18,9 @@ else
 {
     <div>
         <p class="text-info">
-            Creado: <strong>@Model.FechaCreada.ToShortDateString()</strong> Actualizada: <strong>@Model.FechaActualizada.ToShortDateString()</strong> por: <strong>@Model.User.NombreUser</strong>
+            Creado: <strong>@Model.FechaCreada.ToShortDateString()</strong><br />
+            Actualizada: <strong>@Model.FechaActualizada.ToShortDateString()</strong><br />
+            por: <strong>@Model.User.NombreUser</strong>
         </p>
     </div>
 }
@@ -42,10 +44,10 @@ else
             <div class="form-group form-inline">
                 <div class="text-center">
                     <label class="control-label">Cantidad</label>
-                    <input type="text" value="" class="form-control" placeholder="Cantidad" name="newcant" required autofocus/>
-          
+                    <input type="text" value="" class="form-control" placeholder="Cantidad" name="newcant" required autofocus />
+
                     <input type="submit" value="Agregar" class="btn btn-primary" />
-                    <p class="text-danger">Ingrese numeros mayores a 0.</p>
+                    <p class="text-info">Ingrese numeros mayores a 0.</p>
                     @*@Html.ActionLink("Cancelar", "Index", new { }, new { @class = "btn btn-default" })*@
                 </div>
             </div>

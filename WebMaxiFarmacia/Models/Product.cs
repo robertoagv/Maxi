@@ -32,6 +32,8 @@ namespace WebMaxiFarmacia.Models
         [Display(Name = "Precio Compra")]
         public decimal Preciocompra { get; set; }
 
+      
+
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         [Range(0, double.MaxValue, ErrorMessage = "Debe seleccionar a {0} entre {1} y {2}")]
@@ -65,12 +67,15 @@ namespace WebMaxiFarmacia.Models
         public virtual Category Category { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual Company Company { get; set; }
+      
 
         public virtual ICollection<Inventory> Inventories { get; set; }
         public virtual ICollection<SaleDetail> SaleDetails { get; set; }
 
         public virtual ICollection<SaleDatilsTmp>  SaleDatailTmps { get; set; }
 
-    
+        
+
+
     }
 }

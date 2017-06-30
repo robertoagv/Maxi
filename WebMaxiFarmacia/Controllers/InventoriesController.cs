@@ -27,9 +27,21 @@ namespace WebMaxiFarmacia.Controllers
         [HttpPost]
         public ActionResult Index(string termino)
         {
+            bool yesDate;
+            DateTime buscarfecha;
+            yesDate = DateTime.TryParse(termino, out buscarfecha);
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            if (yesDate)
+            {
+                var bodegafecha = db.Warehouses.Where(b => b.CompanyId == usuario.CompanyId).FirstOrDefault();
+                var inventoriesfecha = db.Inventories.Where(i => i.WarehouseId == bodegafecha.WarehouseId && i.FechaActualizada == buscarfecha).Include(i => i.Product).Include(i => i.User).Include(i => i.Warehouse).ToList();
+
+                return View(inventoriesfecha);
+            }
+
+           
             var bodega = db.Warehouses.Where(b => b.CompanyId == usuario.CompanyId).FirstOrDefault();
-            var inventories = db.Inventories.Where(i => i.WarehouseId == bodega.WarehouseId && i.User.NombreUser.StartsWith(termino)).Include(i => i.Product).Include(i => i.User).Include(i => i.Warehouse).ToList();
+            var inventories = db.Inventories.Where(i => i.WarehouseId == bodega.WarehouseId && i.Product.Nombreproducto == termino).Include(i => i.Product).Include(i => i.User).Include(i => i.Warehouse).ToList();
 
             return View(inventories);
         }
