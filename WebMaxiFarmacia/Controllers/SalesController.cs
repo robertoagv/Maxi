@@ -25,8 +25,10 @@ namespace WebMaxiFarmacia.Controllers
         }
 
         [HttpPost]
-        public ActionResult AgregarProducto(long? barcodigo)
+        public ActionResult AgregarProducto(string term)
         {
+            long barCodigo;
+            bool yesLong = long.TryParse(term, out barCodigo);
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
 
             if (usuario == null)
@@ -34,33 +36,67 @@ namespace WebMaxiFarmacia.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var producto = db.Products.Where(p => p.CompanyId == usuario.CompanyId && p.Codigobarra == barcodigo).FirstOrDefault();
-
-            if (producto ==  null)
+            if (yesLong)
             {
-                addProductView viewproductonotfind = new addProductView
+                var productoBar = db.Products.Where(p => p.CompanyId == usuario.CompanyId && p.Codigobarra == barCodigo).FirstOrDefault();
+
+                if (productoBar == null)
                 {
-                   
-                    Codigobarra = 0
-                   
+                    addProductView viewproductonotfind = new addProductView
+                    {
+
+                        Codigobarra = 0
+
+                    };
+
+                    return View(viewproductonotfind);
+                }
+
+                ViewBag.producto = productoBar;
+                ViewBag.Existenciascero = " ";
+                var viewproductofindBar = new addProductView
+                {
+                    ProductId = productoBar.ProductId,
+                    Codigobarra = productoBar.Codigobarra,
+                    Nombreproducto = productoBar.Nombreproducto,
+                    Existencia = productoBar.Existencia,
+                    Precioventa = productoBar.Precioventa,
+
                 };
 
-                return View(viewproductonotfind);
+                return View(viewproductofindBar);
+            }
+            else
+            {
+                var producto = db.Products.Where(p => p.CompanyId == usuario.CompanyId && p.Nombreproducto == term).FirstOrDefault();
+
+                if (producto == null)
+                {
+                    addProductView viewproductonotfind = new addProductView
+                    {
+
+                        Codigobarra = 0
+
+                    };
+
+                    return View(viewproductonotfind);
+                }
+
+                ViewBag.producto = producto;
+                ViewBag.Existenciascero = " ";
+                var viewproductofind = new addProductView
+                {
+                    ProductId = producto.ProductId,
+                    Codigobarra = producto.Codigobarra,
+                    Nombreproducto = producto.Nombreproducto,
+                    Existencia = producto.Existencia,
+                    Precioventa = producto.Precioventa,
+
+                };
+
+                return View(viewproductofind);
             }
 
-            ViewBag.producto = producto;
-            ViewBag.Existenciascero = " ";
-            var viewproductofind = new addProductView
-            {
-                ProductId = producto.ProductId,
-                Codigobarra = producto.Codigobarra,
-                Nombreproducto = producto.Nombreproducto,
-                Existencia = producto.Existencia,
-                Precioventa = producto.Precioventa,
-
-            };
-
-            return View(viewproductofind);
         }
 
         [HttpPost]
