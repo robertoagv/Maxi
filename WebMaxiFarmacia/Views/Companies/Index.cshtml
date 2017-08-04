@@ -71,6 +71,12 @@
                             @Html.ActionLink("Editar", "Edit", new { id = item.CompanyId }, new { @class = "btn btn-primary btn-xs" }) |
                             @Html.ActionLink("Detalles", "Details", new { id = item.CompanyId }, new { @class = "btn btn-info btn-xs" }) |
                             @Html.ActionLink("eliminar", "Delete", new { id = item.CompanyId }, new { @class = "btn btn-danger btn-xs" })
+                            @Html.ActionLink("Actualizar", "Actualizar", new { id = item.CompanyId }, new { @class = "btn btn-danger btn-xs" })
+                          
+                            @*@Ajax.ActionLink("Actualizar", "Actualizar", new { id = item.CompanyId},new AjaxOptions
+                       {
+                           HttpMethod = "GET"
+                       })*@
                         </td>
                      
                     </tr>
@@ -88,6 +94,11 @@
    }))
        
     @Html.ActionLink("Ver Todo", "Index", new { }, new { @class = "btn btn-info btn-xs" })
-  
+
+   
+
+
+
+
     
 </div>

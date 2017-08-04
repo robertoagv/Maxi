@@ -17,6 +17,36 @@ namespace WebMaxiFarmacia.Controllers
     {
         private maxifarmaciabdContext db = new maxifarmaciabdContext();
 
+        
+        public ActionResult Actualizar(int? id)
+        {
+
+            var productos = db.Products.Where(p => p.CompanyId == 1);
+            //var proexist = db.Products.Where(p => p.CompanyId == id).FirstOrDefault();
+            
+
+            foreach (var producto in productos)
+            {
+                    var newProdct = new Product
+                    {
+                        Codigobarra = producto.Codigobarra,
+                        Nombreproducto = producto.Nombreproducto,
+                        Descripcion = producto.Descripcion,
+                        Preciocompra = producto.Precioventa,
+                        Precioventa = 0,
+                        Porcentaje = producto.Porcentaje,
+                        CategoryId = producto.CategoryId,
+                        SupplierId = 6,
+                        CompanyId = (int)id
+                    };
+                    db.Products.Add(newProdct);
+                                
+            }
+
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         // GET: Companies
         public ActionResult Index(int? page = null)
         {
@@ -64,10 +94,32 @@ namespace WebMaxiFarmacia.Controllers
                 var respuesta = ChangeValidationHelperDb.ChangeDb(db);
                 if (respuesta.Succeeded)
                 {
+                    var productos = db.Products.Where(p => p.CompanyId == 1);
+
+                    foreach (var producto in productos)
+                    {
+                        var newProdct = new Product
+                        {
+                            Codigobarra = producto.Codigobarra,
+                            Nombreproducto = producto.Nombreproducto,
+                            Descripcion = producto.Descripcion,
+                            Preciocompra = producto.Precioventa,
+                            Precioventa = 0,
+                            Porcentaje = producto.Porcentaje,
+                            CategoryId = producto.CategoryId,
+                            SupplierId = 6,
+                            CompanyId = company.CompanyId
+                        };
+                        db.Products.Add(newProdct);
+
+                    }
+
+                    db.SaveChanges();
                     return RedirectToAction("Index");
                 }
 
                 ModelState.AddModelError(string.Empty, respuesta.Message);
+                
             }
 
             return View(company);

@@ -32,13 +32,19 @@ namespace WebMaxiFarmacia.Models
         [Display(Name = "Precio Compra")]
         public decimal Preciocompra { get; set; }
 
-      
-
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         [Range(0, double.MaxValue, ErrorMessage = "Debe seleccionar a {0} entre {1} y {2}")]
         [Display(Name = "Precio Venta")]
         public decimal Precioventa { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
+        [Range(0, double.MaxValue, ErrorMessage = "Debe seleccionar a {0} entre {1} y {2}")]
+        [Display(Name = "Precio Nuevo")]
+        public decimal PrecioCompraNew { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:P}", ApplyFormatInEditMode = false)]
+        public decimal Porcentaje { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe Seleccionar un {0}")]
@@ -61,7 +67,8 @@ namespace WebMaxiFarmacia.Models
         //[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
         public int? Existencia { get { return Inventories.Sum(i => i.Existencia); } }
 
-
+        
+       
 
         //Relaciones
         public virtual Category Category { get; set; }

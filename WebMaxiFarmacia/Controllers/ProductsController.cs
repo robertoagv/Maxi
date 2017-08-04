@@ -22,7 +22,7 @@ namespace WebMaxiFarmacia.Controllers
         // GET: Products
         public ActionResult Index(int? page = null)
         {
-            page = (page ?? 1); 
+            page = (page ?? 1);
 
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
             if (usuario == null)
@@ -200,8 +200,8 @@ namespace WebMaxiFarmacia.Controllers
         {
             if (ModelState.IsValid)
             {
-                
 
+                product.Porcentaje = ((product.Preciocompra / product.Precioventa) - 1) / -1;
                
                 db.Products.Add(product);
                 var respuesta = ChangeValidationHelperDb.ChangeDb(db);
@@ -209,7 +209,7 @@ namespace WebMaxiFarmacia.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-                ModelState.AddModelError(string.Empty, "El producto con este Coidigo de Barras ya Existe.");
+                ModelState.AddModelError(string.Empty, "El producto con este Codigo de Barras ya Existe.");
             }
 
            
@@ -248,6 +248,7 @@ namespace WebMaxiFarmacia.Controllers
         {
             if (ModelState.IsValid)
             {
+                product.Porcentaje = ((product.Preciocompra / product.Precioventa) - 1) / -1;
                 db.Entry(product).State = EntityState.Modified;
                 var respuesta = ChangeValidationHelperDb.ChangeDb(db);
                 if (respuesta.Succeeded)

@@ -38,6 +38,7 @@ namespace WebMaxiFarmacia.classHelper
                         {
 
                             var restarp = db.Inventories.Where(i => i.ProductId == detalle.ProductId).FirstOrDefault();
+                            var rest = db.Inventories.Where(i => i.ProductId == detalle.ProductId).Select(i => i.Existencia).FirstOrDefault();
 
                             #region Para recorrer varias bodegas.
                             //if (restarp.Product.Inventories.Count > 1)
@@ -63,7 +64,7 @@ namespace WebMaxiFarmacia.classHelper
                             //} 
                             #endregion
 
-                            var oldExist = int.Parse(restarp.Existencia.ToString());
+                            var oldExist = int.Parse(rest.ToString());
                             var desc = oldExist - detalle.Cantidad;
 
                             var inventarioUpdate = db.Inventories.Find(restarp.inventoryId);
