@@ -22,6 +22,8 @@ namespace WebMaxiFarmacia.Controllers
             var bodega = db.Warehouses.Where(b => b.CompanyId == usuario.CompanyId).FirstOrDefault();
             var inventories = db.Inventories.Where(i => i.WarehouseId == bodega.WarehouseId).Include(i => i.Product).Include(i => i.User).ToList();
 
+            
+
             return View(inventories);
         }
         [HttpPost]

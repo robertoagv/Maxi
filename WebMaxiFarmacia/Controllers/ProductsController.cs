@@ -17,7 +17,15 @@ namespace WebMaxiFarmacia.Controllers
     {
         private maxifarmaciabdContext db = new maxifarmaciabdContext();
         private cboAll cboAll = new cboAll();
-       
+
+        public JsonResult buscarProductojq(string term)
+        {
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            var finded = db.Products.Where(p => p.CompanyId == usuario.CompanyId && p.Nombreproducto.StartsWith(term)).Select(p => p.Nombreproducto).ToList();
+
+            return Json(finded, JsonRequestBehavior.AllowGet);
+        }
+
 
         // GET: Products
         public ActionResult Index(int? page = null)
@@ -36,14 +44,14 @@ namespace WebMaxiFarmacia.Controllers
 
 
         [HttpPost]
-        public ActionResult Index(string termino, int? page = null)
+        public ActionResult Index(string term, int? page = null)
         {
             page = (page ?? 1);
             bool longsi;
             long barcodigo;
             string namepro;
 
-            longsi = long.TryParse(termino, out barcodigo);
+            longsi = long.TryParse(term, out barcodigo);
 
             if (longsi)
             {
@@ -61,7 +69,7 @@ namespace WebMaxiFarmacia.Controllers
             }
             else
             {
-                namepro = termino;
+                namepro = term;
                 var usuarioi = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
                 var producto = db.Products.Where(p =>  p.CompanyId == usuarioi.CompanyId && p.Nombreproducto.StartsWith(namepro)).OrderBy(p => p.ProductId);
                 //TODO: agregar aqui los usuarios a los que p

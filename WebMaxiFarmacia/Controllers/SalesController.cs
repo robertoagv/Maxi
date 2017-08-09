@@ -25,6 +25,25 @@ namespace WebMaxiFarmacia.Controllers
             return Json(finded, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult rangoFecha()
+        {
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            var rango = db.Sales.Where(s => s.CompanyId == usuario.CompanyId && s.Fechavta == DateTime.Today).Include(s => s.SaleDetails).ToList();
+           
+
+            return View(rango);
+        }
+        [HttpPost]
+        public ActionResult rangoFecha(DateTime d, DateTime hasta)
+        { 
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            var rango = db.Sales.Where(s => s.CompanyId == usuario.CompanyId && s.Fechavta >= d && s.Fechavta <= hasta).Include(s => s.SaleDetails).ToList();
+
+           
+
+            return View(rango);
+        }
+
         public ActionResult AgregarProducto()
         {
             var viewpro = new addProductView{ Codigobarra = -1};

@@ -21,12 +21,18 @@ namespace WebMaxiFarmacia.Controllers
         public ActionResult Actualizar(int? id)
         {
 
+          
+
             var productos = db.Products.Where(p => p.CompanyId == 1);
-            //var proexist = db.Products.Where(p => p.CompanyId == id).FirstOrDefault();
+           
             
 
             foreach (var producto in productos)
             {
+                var existe = db.Products.Where(p => p.CompanyId == id && p.Codigobarra == producto.Codigobarra).ToList();
+
+                if (existe.Count() == 0)
+                {
                     var newProdct = new Product
                     {
                         Codigobarra = producto.Codigobarra,
@@ -39,11 +45,15 @@ namespace WebMaxiFarmacia.Controllers
                         SupplierId = 6,
                         CompanyId = (int)id
                     };
+
                     db.Products.Add(newProdct);
-                                
+
+                }
+
             }
 
             db.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
