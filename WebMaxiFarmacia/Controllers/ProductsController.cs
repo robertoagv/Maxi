@@ -17,12 +17,20 @@ namespace WebMaxiFarmacia.Controllers
     {
         private maxifarmaciabdContext db = new maxifarmaciabdContext();
         private cboAll cboAll = new cboAll();
-       
+
+        public JsonResult buscarProductojq(string term)
+        {
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            var finded = db.Products.Where(p => p.CompanyId == usuario.CompanyId && p.Nombreproducto.StartsWith(term)).Select(p => p.Nombreproducto).ToList();
+
+            return Json(finded, JsonRequestBehavior.AllowGet);
+        }
+
 
         // GET: Products
         public ActionResult Index(int? page = null)
         {
-            page = (page ?? 1); 
+            page = (page ?? 1);
 
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
             if (usuario == null)
@@ -36,14 +44,14 @@ namespace WebMaxiFarmacia.Controllers
 
 
         [HttpPost]
-        public ActionResult Index(string termino, int? page = null)
+        public ActionResult Index(string term, int? page = null)
         {
             page = (page ?? 1);
             bool longsi;
             long barcodigo;
             string namepro;
 
-            longsi = long.TryParse(termino, out barcodigo);
+            longsi = long.TryParse(term, out barcodigo);
 
             if (longsi)
             {
@@ -61,7 +69,7 @@ namespace WebMaxiFarmacia.Controllers
             }
             else
             {
-                namepro = termino;
+                namepro = term;
                 var usuarioi = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
                 var producto = db.Products.Where(p =>  p.CompanyId == usuarioi.CompanyId && p.Nombreproducto.StartsWith(namepro)).OrderBy(p => p.ProductId);
                 //TODO: agregar aqui los usuarios a los que p
@@ -200,8 +208,8 @@ namespace WebMaxiFarmacia.Controllers
         {
             if (ModelState.IsValid)
             {
-                
 
+                product.Porcentaje = ((product.Preciocompra / product.Precioventa) - 1) / -1;
                
                 db.Products.Add(product);
                 var respuesta = ChangeValidationHelperDb.ChangeDb(db);
@@ -209,7 +217,7 @@ namespace WebMaxiFarmacia.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-                ModelState.AddModelError(string.Empty, "El producto con este Coidigo de Barras ya Existe.");
+                ModelState.AddModelError(string.Empty, "El producto con este Codigo de Barras ya Existe.");
             }
 
            
@@ -248,6 +256,7 @@ namespace WebMaxiFarmacia.Controllers
         {
             if (ModelState.IsValid)
             {
+                product.Porcentaje = ((product.Preciocompra / product.Precioventa) - 1) / -1;
                 db.Entry(product).State = EntityState.Modified;
                 var respuesta = ChangeValidationHelperDb.ChangeDb(db);
                 if (respuesta.Succeeded)

@@ -31,14 +31,27 @@
                     <thead>
                         <tr>
                             <th class="text-center">
+                                @Html.DisplayNameFor(model => model.Product.Codigobarra)
+                            </th>
+                            <th class="text-center">
                                 @Html.DisplayNameFor(model => model.Product.Nombreproducto)
+                            </th>
+                            <th class="text-center">
+                                @Html.DisplayNameFor(model => model.Product.Preciocompra)
+                            </th>
+                            <th class="text-center">
+                                @Html.DisplayNameFor(model => model.Product.Precioventa)
+                            </th>
+                            <th class="text-center">
+                                @Html.DisplayNameFor(model => model.Product.PrecioCompraNew)
+                            </th>
+                            <th class="text-center">
+                                @Html.DisplayNameFor(model => model.Product.Porcentaje)
                             </th>
                             <th class="text-center">
                                 @Html.DisplayNameFor(model => model.User.NombreUser)
                             </th>
-                            <th class="text-center">
-                                @Html.DisplayNameFor(model => model.Warehouse.Nombre)
-                            </th>
+                            
                             <th class="text-center">
                                 @Html.DisplayNameFor(model => model.Existencia)
                             </th>
@@ -63,25 +76,43 @@
                     {
                         <tr>
                             <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Product.Codigobarra)
+                            </td>
+                            <td class="text-center">
                                 @Html.DisplayFor(modelItem => item.Product.Nombreproducto)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Product.Preciocompra)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Product.Precioventa)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Product.PrecioCompraNew)
+                            </td>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Product.Porcentaje)
                             </td>
                             <td class="text-center">
                                 @Html.DisplayFor(modelItem => item.User.NombreUser)
                             </td>
-                            <td class="text-center">
-                                @Html.DisplayFor(modelItem => item.Warehouse.Nombre)
-                            </td>
-                            @if (item.Existencia < 6)
+                            
+                            @if (item.WarehouseId == 1 && item.Existencia < 1000)
                             {
-
-                                <td class="danger text-right">
+                                <td class="text-center danger">
                                     @Html.DisplayFor(modelItem => item.Existencia)
                                 </td>
 
                             }
+                            else if (item.Existencia < 30)
+                            {
+                                <td class="text-center danger">
+                                    @Html.DisplayFor(modelItem => item.Existencia)
+                                </td>
+                            }
                             else
                             {
-                                <td class="text-right">
+                                <td class="text-center">
                                     @Html.DisplayFor(modelItem => item.Existencia)
                                 </td>
                             }

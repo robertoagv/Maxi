@@ -20,7 +20,9 @@ namespace WebMaxiFarmacia.Controllers
         {
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
             var bodega = db.Warehouses.Where(b => b.CompanyId == usuario.CompanyId).FirstOrDefault();
-            var inventories = db.Inventories.Where(i => i.WarehouseId == bodega.WarehouseId).Include(i => i.Product).Include(i => i.User).Include(i => i.Warehouse).ToList();
+            var inventories = db.Inventories.Where(i => i.WarehouseId == bodega.WarehouseId).Include(i => i.Product).Include(i => i.User).ToList();
+
+            
 
             return View(inventories);
         }
@@ -34,14 +36,14 @@ namespace WebMaxiFarmacia.Controllers
             if (yesDate)
             {
                 var bodegafecha = db.Warehouses.Where(b => b.CompanyId == usuario.CompanyId).FirstOrDefault();
-                var inventoriesfecha = db.Inventories.Where(i => i.WarehouseId == bodegafecha.WarehouseId && i.FechaActualizada == buscarfecha).Include(i => i.Product).Include(i => i.User).Include(i => i.Warehouse).ToList();
+                var inventoriesfecha = db.Inventories.Where(i => i.WarehouseId == bodegafecha.WarehouseId && i.FechaActualizada == buscarfecha).Include(i => i.Product).Include(i => i.User).ToList();
 
                 return View(inventoriesfecha);
             }
 
            
             var bodega = db.Warehouses.Where(b => b.CompanyId == usuario.CompanyId).FirstOrDefault();
-            var inventories = db.Inventories.Where(i => i.WarehouseId == bodega.WarehouseId && i.Product.Nombreproducto == termino).Include(i => i.Product).Include(i => i.User).Include(i => i.Warehouse).ToList();
+            var inventories = db.Inventories.Where(i => i.WarehouseId == bodega.WarehouseId && i.Product.Nombreproducto == termino).Include(i => i.Product).Include(i => i.User).ToList();
 
             return View(inventories);
         }

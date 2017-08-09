@@ -16,6 +16,33 @@ namespace WebMaxiFarmacia.Controllers
     public class SalesController : Controller
     {
         private maxifarmaciabdContext db = new maxifarmaciabdContext();
+        
+        public JsonResult buscarProductojq(string term)
+        {
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            var finded = db.Products.Where(p => p.CompanyId == usuario.CompanyId && p.Nombreproducto.StartsWith(term)).Select(p => p.Nombreproducto).Take(5).ToList();
+
+            return Json(finded, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult rangoFecha()
+        {
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            var rango = db.Sales.Where(s => s.CompanyId == usuario.CompanyId && s.Fechavta == DateTime.Today).Include(s => s.SaleDetails).ToList();
+           
+
+            return View(rango);
+        }
+        [HttpPost]
+        public ActionResult rangoFecha(DateTime d, DateTime hasta)
+        { 
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            var rango = db.Sales.Where(s => s.CompanyId == usuario.CompanyId && s.Fechavta >= d && s.Fechavta <= hasta).Include(s => s.SaleDetails).ToList();
+
+           
+
+            return View(rango);
+        }
 
         public ActionResult AgregarProducto()
         {
@@ -68,7 +95,11 @@ namespace WebMaxiFarmacia.Controllers
             }
             else
             {
+<<<<<<< HEAD
                 var producto = db.Products.Where(p => p.CompanyId == usuario.CompanyId && p.Nombreproducto == term).FirstOrDefault();
+=======
+                var producto = db.Products.Where(p => p.CompanyId == usuario.CompanyId && p.Nombreproducto.Contains(term)).FirstOrDefault();
+>>>>>>> desarrollo
 
                 if (producto == null)
                 {
@@ -76,6 +107,7 @@ namespace WebMaxiFarmacia.Controllers
                     {
 
                         Codigobarra = 0
+<<<<<<< HEAD
 
                     };
 
@@ -97,6 +129,28 @@ namespace WebMaxiFarmacia.Controllers
                 return View(viewproductofind);
             }
 
+=======
+
+                    };
+
+                    return View(viewproductonotfind);
+                }
+
+                ViewBag.producto = producto;
+                ViewBag.Existenciascero = " ";
+                var viewproductofind = new addProductView
+                {
+                    ProductId = producto.ProductId,
+                    Codigobarra = producto.Codigobarra,
+                    Nombreproducto = producto.Nombreproducto,
+                    Existencia = producto.Existencia,
+                    Precioventa = producto.Precioventa,
+
+                };
+
+                return View(viewproductofind);
+            }
+>>>>>>> desarrollo
         }
 
         [HttpPost]
