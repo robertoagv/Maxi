@@ -1,0 +1,97 @@
+﻿@model WebMaxiFarmacia.Models.Sale
+
+@{
+    Layout = null;
+    ViewBag.Title = "Detalle";
+}
+
+<div class="row">
+    <div class="col-xs-10 col-xs-offset-1">
+        <div class="table table-responsive">
+            <h2>Detalle</h2>
+            <div>
+                <h4>Venta</h4>
+                <hr />
+                <div style="font-size:large">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Users.NombreUser)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Users.NombreUser)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Nombrecte)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Nombrecte)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Fechavta)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Fechavta)
+                        </dd>
+
+                    </dl>
+                </div>
+
+            </div>
+
+            <p>
+                @*@Html.ActionLink("Editar", "Edit", new { id = Model.SaleID })|*@
+                @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default" })
+            </p>
+            <div class="table table-responsive">
+
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Producto</th>
+                            <th class="text-center">Precio</th>
+                            <th class="text-center">Cantidad</th>
+                            <th class="text-center">Total</th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model.Detalles)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Descriptionpro)
+                            </td>
+                            <td class="text-right">
+                                @Html.DisplayFor(modelItem => item.Price)
+                            </td>
+                            <td class="text-right">
+                                @Html.DisplayFor(modelItem => item.Cantidad)
+                            </td>
+                            <td class="text-right">
+                                @Html.DisplayFor(modelItem => item.ValorU)
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td></td>
+                        <td class="text-right"><strong>Totales</strong></td>
+                        <td class="text-right">
+                            <strong>
+                                @Html.DisplayFor(modelItem => Model.TotalCantidad)
+                            </strong>
+                        </td>
+                        <td class="text-right">
+                            <strong>
+                                @Html.DisplayFor(modelItem => Model.TotalValue)
+                            </strong>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
