@@ -13,7 +13,6 @@ using Rotativa;
 
 namespace WebMaxiFarmacia.Controllers
 {
-
     [Authorize(Roles = "SuperAdmin, Admin, User")]
     public class SalesController : Controller
     {
