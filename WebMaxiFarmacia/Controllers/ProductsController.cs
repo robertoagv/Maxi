@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using WebMaxiFarmacia.Models;
 using WebMaxiFarmacia.classHelper;
 using PagedList;
+using System.IO;
 
 namespace WebMaxiFarmacia.Controllers
 {
@@ -38,8 +39,8 @@ namespace WebMaxiFarmacia.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var products = db.Products.Where(p => p.CompanyId == usuario.CompanyId).Include(p => p.Category).Include(p => p.Supplier).OrderByDescending(p => p.ProductId);
-            return View(products.ToPagedList((int)page, 5));
+            var products = db.Products.Where(p => p.CompanyId == usuario.CompanyId).Include(p => p.Category).Include(p => p.Supplier).Include(p => p.UnitMeasure).OrderByDescending(p => p.ProductId);
+            return View(products.ToPagedList((int)page, 15));
         }
 
 
@@ -164,7 +165,58 @@ namespace WebMaxiFarmacia.Controllers
             
         }
 
+        [HttpPost]
+        public ActionResult fileCSV(HttpPostedFileBase file)
+        {
+            string filePath = string.Empty;
 
+            if (file != null)
+            {
+                string path = Server.MapPath("~/excel/");
+                if (!Directory.Exists(path))
+                { 
+                    Directory.CreateDirectory(path);
+                }
+
+                filePath = path + Path.GetFileName(file.FileName);
+                string extension = Path.GetExtension(file.FileName);
+                file.SaveAs(filePath);
+
+                string csv = System.IO.File.ReadAllText(filePath);
+
+                foreach (string row in csv.Split('\n'))
+                {
+                    if (!string.IsNullOrEmpty(row))
+                    {
+                        var productoExcel = new Product
+                        {
+                            Codigobarra = Convert.ToInt64(row.Split(';')[0]), 
+                            Nombreproducto = row.Split(';')[1],
+                            Descripcion = row.Split(';')[2],
+                            Preciocompra = Convert.ToDecimal(row.Split(';')[3]),
+                            Precioventa = Convert.ToDecimal(row.Split(';')[4]),
+                            PrecioCompraNew = Convert.ToDecimal(row.Split(';')[5]),
+                            Uso = row.Split(';')[6],
+                            Ubicacion = row.Split(';')[7],
+                            PrincipioActivo = row.Split(';')[8],
+                            Porcentaje = 0,
+                            UnitMeasureId = 1,
+                            CategoryId = 7,
+                            SupplierId = 6,
+                            CompanyId = 1
+                        };
+
+                        db.Products.Add(productoExcel);
+                    }
+                }
+
+
+                db.SaveChanges();
+                return RedirectToAction("Index", "Products");
+            }
+
+            return RedirectToAction("Create", "Products");
+        }
 
         // GET: Products/Details/5
         public ActionResult Details(int? id)
@@ -189,7 +241,8 @@ namespace WebMaxiFarmacia.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-           
+
+            ViewBag.UnitMeasureId = new SelectList(cboAll.getUnidad(), "UnitMeasureId", "Tipo");
             ViewBag.CategoryId = new SelectList(cboAll.getCategory(), "CategoryId", "Descripcion");
             //ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc");
             ViewBag.SupplierId = new SelectList(cboAll.getProveedor(), "SupplierId", "Nombre");
@@ -208,7 +261,7 @@ namespace WebMaxiFarmacia.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                
                 product.Porcentaje = ((product.Preciocompra / product.Precioventa) - 1) / -1;
                
                 db.Products.Add(product);
@@ -217,10 +270,10 @@ namespace WebMaxiFarmacia.Controllers
                 {
                     return RedirectToAction("Index");
                 }
-                ModelState.AddModelError(string.Empty, "El producto con este Codigo de Barras ya Existe.");
+                ModelState.AddModelError(string.Empty, "El producto con este Codigo de Barra ya Existe.");
             }
 
-           
+            ViewBag.UnitMeasureId = new SelectList(cboAll.getUnidad(), "UnitMeasureId", "Tipo", product.UnitMeasureId);
             ViewBag.CategoryId = new SelectList(cboAll.getCategory(), "CategoryId", "Descripcion", product.CategoryId);
             //ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc", product.CompanyId);
             ViewBag.SupplierId = new SelectList(cboAll.getProveedor(), "SupplierId", "Nombre", product.SupplierId);
@@ -240,7 +293,8 @@ namespace WebMaxiFarmacia.Controllers
             {
                 return HttpNotFound();
             }
-            
+
+            ViewBag.UnitMeasureId = new SelectList(cboAll.getUnidad(), "UnitMeasureId", "Tipo", product.UnitMeasureId);
             ViewBag.CategoryId = new SelectList(cboAll.getCategory(), "CategoryId", "Descripcion", product.CategoryId);
             //ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc", product.CompanyId);
             ViewBag.SupplierId = new SelectList(cboAll.getProveedor(), "SupplierId", "Nombre", product.SupplierId);
@@ -265,7 +319,8 @@ namespace WebMaxiFarmacia.Controllers
                 }
                 ModelState.AddModelError(string.Empty, respuesta.Message);
             }
-           
+
+            ViewBag.UnitMeasureId = new SelectList(cboAll.getUnidad(), "UnitMeasureId", "Tipo", product.UnitMeasureId);
             ViewBag.CategoryId = new SelectList(cboAll.getCategory(), "CategoryId", "Descripcion", product.CategoryId);
             //ViewBag.CompanyId = new SelectList(cboAll.getSucursal(), "CompanyId", "nombresuc", product.CompanyId);
             ViewBag.SupplierId = new SelectList(cboAll.getProveedor(), "SupplierId", "Nombre", product.SupplierId);

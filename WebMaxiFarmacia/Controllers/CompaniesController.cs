@@ -40,7 +40,12 @@ namespace WebMaxiFarmacia.Controllers
                         Descripcion = producto.Descripcion,
                         Preciocompra = producto.Precioventa,
                         Precioventa = 0,
+                        PrecioCompraNew = 0,
+                        Uso = producto.Uso,
+                        Ubicacion = producto.Ubicacion,
+                        PrincipioActivo = producto.PrincipioActivo,
                         Porcentaje = producto.Porcentaje,
+                        UnitMeasureId = producto.UnitMeasureId,
                         CategoryId = producto.CategoryId,
                         SupplierId = 6,
                         CompanyId = (int)id

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using WebMaxiFarmacia.classHelper;
 using WebMaxiFarmacia.Models;
 using PagedList;
+using Rotativa;
 
 namespace WebMaxiFarmacia.Controllers
 {
@@ -16,7 +17,7 @@ namespace WebMaxiFarmacia.Controllers
     public class SalesController : Controller
     {
         private maxifarmaciabdContext db = new maxifarmaciabdContext();
-        
+        List<SaleDetail> envio = new List<SaleDetail>();
         public JsonResult buscarProductojq(string term)
         {
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
@@ -29,20 +30,27 @@ namespace WebMaxiFarmacia.Controllers
         {
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
             var rango = db.Sales.Where(s => s.CompanyId == usuario.CompanyId && s.Fechavta == DateTime.Today).Include(s => s.SaleDetails).ToList();
-           
 
+
+
+            var productos = db.Products.ToList();
+         
             return View(rango);
         }
+        
         [HttpPost]
         public ActionResult rangoFecha(DateTime d, DateTime hasta)
         { 
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
             var rango = db.Sales.Where(s => s.CompanyId == usuario.CompanyId && s.Fechavta >= d && s.Fechavta <= hasta).Include(s => s.SaleDetails).ToList();
-
-           
+            
 
             return View(rango);
         }
+
+       
+        
+
 
         public ActionResult AgregarProducto()
         {
@@ -231,6 +239,39 @@ namespace WebMaxiFarmacia.Controllers
             sale.Detalles = db.SaleDetails.Where(sd => sd.SaleId == sale.SaleID).ToList();
 
             return View(sale);
+        }
+        public ActionResult DetallesPDF(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Sale sale = db.Sales.Where(s => s.SaleID == id).Include(s => s.SaleDetails).FirstOrDefault();
+            if (sale == null)
+            {
+                return HttpNotFound();
+            }
+
+            sale.Detalles = db.SaleDetails.Where(sd => sd.SaleId == sale.SaleID).ToList();
+
+            return View(sale);
+        }
+
+
+        public ActionResult exportPdf(int id)
+        {
+            Sale sale = db.Sales.Where(s => s.SaleID == id).Include(s => s.SaleDetails).FirstOrDefault();
+            if (sale == null)
+            {
+                return HttpNotFound();
+            }
+
+            sale.Detalles = db.SaleDetails.Where(sd => sd.SaleId == sale.SaleID).ToList();
+
+            return new ViewAsPdf("Details", sale)
+            {
+                FileName = Server.MapPath("~/Content/Venta.pdf")
+            };
         }
 
         // GET: Sales/Create

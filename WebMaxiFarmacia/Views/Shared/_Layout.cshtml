@@ -9,7 +9,7 @@
     <link href="~/Content/themes/base/all.css" rel="stylesheet" />
 </head>
 <body style="background-color:floralwhite">
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top hidden-print">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -30,12 +30,15 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Archivo<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li>@Html.ActionLink("Bodega", "Index", "Warehouses")</li>
+                                <li>@Html.ActionLink("Unidad Medida", "Index", "UnitMeasures")</li>
                                 <li>@Html.ActionLink("Categoria", "Index", "Categories")</li>
                                 <li>@Html.ActionLink("Administrador", "Create", "Employees")</li>
                                 <li>@Html.ActionLink("Usuario", "Create", "Users")</li>
                                 <li>@Html.ActionLink("Proveedor", "Index", "Suppliers")</li>
                                 <li>@Html.ActionLink("Empleado", "Index", "Employees")</li>
                                 <li>@Html.ActionLink("Sucursal", "Index", "Companies")</li>
+                                
+                                
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -90,12 +93,19 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-offset-2 col-md-8 col-md-offset-2">
+            <div class="hidden-print col-md-offset-2 col-md-8 col-md-offset-2">
                     <hr />
                     <footer class="text-center">
-                        <p>&copy; @DateTime.Now.Year - Roberto Grave </p>
+                        <p>&copy; @DateTime.Now.Year - Roberto Grave  </p>
                     </footer>
                     <hr />
+            </div>
+            <div class="hidden visible-print col-md-offset-2 col-md-8 col-md-offset-2">
+                <hr />
+                <footer class="text-center">
+                    <p>&copy; @DateTime.Now.Year - MaxiFarm  </p>
+                </footer>
+                <hr />
             </div>
         </div>
     </div>

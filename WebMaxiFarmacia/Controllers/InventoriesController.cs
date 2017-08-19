@@ -15,6 +15,16 @@ namespace WebMaxiFarmacia.Controllers
     {
         private maxifarmaciabdContext db = new maxifarmaciabdContext();
 
+
+        //public ActionResult movimientos(DateTime fecha, string term)
+        //{
+        //    var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+        //    var bodegafecha = db.Warehouses.Where(b => b.CompanyId == usuario.CompanyId).FirstOrDefault();
+        //    var inventoriesfecha = db.Inventories.Where(i => i.WarehouseId == bodegafecha.WarehouseId && i.FechaActualizada == fecha).Include(i => i.Product).Include(i => i.User).ToList();
+
+        //    var salidas = db.SaleDetails.Where(s => s.)
+        //}
+
         // GET: Inventories 
         public ActionResult Index()
         {

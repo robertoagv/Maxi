@@ -35,7 +35,7 @@
             @Html.DisplayNameFor(model => model.Fechavta)
         </th>
         <th>
-           Codigo Barra
+            @Html.DisplayNameFor(model => model.Nombrecte)
         </th>
         <th>
             Producto
@@ -46,41 +46,22 @@
         <th>
             Cantidad
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombrecte)
-        </th>
-        <th></th>
+        
+        <th>Total</th>
     </tr>
 
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Fechavta)
-        </td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombrecte)
-        </td>
-        <td>@Html.ActionLink("Details", "Details", new { id = item.SaleID })</td>
-        @*<td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.SaleID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.SaleID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.SaleID })
-            </td>*@
-    </tr>
-    <tr>
-        <td></td>
-        <td><b>Cantidad Vendida</b></td>
-        <td></td>
-        <td><b>Total Ventas</b></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fechavta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombrecte)
+            </td>  
+        </tr>
+    }
+   ...
 
+  
 </table>
