@@ -29,27 +29,45 @@ namespace WebMaxiFarmacia.Controllers
         public ActionResult rangoFecha()
         {
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
-            var rango = db.Sales.Where(s => s.CompanyId == usuario.CompanyId && s.Fechavta == DateTime.Today).Include(s => s.SaleDetails).ToList();
+            //var rangoheader = db.Sales.Where(s => s.CompanyId == usuario.CompanyId && s.Fechavta == DateTime.Today).ToList();
 
+            var rango = (from s in db.Sales.ToList()
+                        join sd in db.SaleDetails.ToList()
+                        on s.SaleID equals sd.SaleId
+                        where s.CompanyId == usuario.CompanyId && s.Fechavta == DateTime.Today
+                        select new saledetailr{
+                            cliente = s.Nombrecte,
+                            fecha = s.Fechavta,
+                            descripcion = sd.Descriptionpro,
+                            precio = sd.Price,
+                            cantidad = sd.Cantidad,
+                            valortotal = sd.ValorU
+                        }).ToList();
 
+            var sumaCantidad = rango.Sum(x => x.cantidad);
+            var sumaPrice = rango.Sum(x => x.valortotal);
+            var totalVentas = rango.Count;
 
-            var productos = db.Products.ToList();
-         
+            ViewBag.totalCantidad = sumaCantidad;
+            ViewBag.totalPrecioCantidad = sumaPrice;
+            ViewBag.totalventa = totalVentas;      
+                       
+
             return View(rango);
         }
-        
-        [HttpPost]
-        public ActionResult rangoFecha(DateTime d, DateTime hasta)
-        { 
-            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
-            var rango = db.Sales.Where(s => s.CompanyId == usuario.CompanyId && s.Fechavta >= d && s.Fechavta <= hasta).Include(s => s.SaleDetails).ToList();
-            
 
-            return View(rango);
-        }
+        //[HttpPost]
+        //public ActionResult rangoFecha(DateTime d, DateTime hasta)
+        //{ 
+        //    var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
 
-       
-        
+
+
+        //return View();
+        //}
+
+
+
 
 
         public ActionResult AgregarProducto()
