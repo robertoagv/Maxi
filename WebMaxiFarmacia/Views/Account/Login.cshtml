@@ -51,6 +51,7 @@
                                 <div class="checkbox">
                                     @Html.CheckBoxFor(m => m.RememberMe)
                                     @Html.LabelFor(m => m.RememberMe)
+                                  
                                 </div>
                             </div>
                         </div>
@@ -67,6 +68,7 @@
                                 @Html.ActionLink("Forgot your password?", "ForgotPassword")
                             </p>*@
                     }
+       
                
 
             </div>
@@ -76,7 +78,7 @@
                 </section>
             </div>*@
  </div>
-
+@Html.ActionLink("Recuperar Contraseña", "enviarMail", "Users")
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

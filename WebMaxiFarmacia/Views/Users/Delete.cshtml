@@ -38,11 +38,13 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+    @using (Html.BeginForm("EliminarEditar", "Users")) {
+        @*@Html.AntiForgeryToken()*@
 
         <div class="form-actions no-color">
+            <input type="hidden" value="@Model.UserId" id="id" name="id" />
             <input type="submit" value="Eliminar" class="btn btn-danger" /> |
+           
             @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default"})
         </div>
     }

@@ -166,13 +166,15 @@ namespace WebMaxiFarmacia.classHelper
 
             var random = new Random();
 
-            var newPassword = string.Format("{0}{1}{2:04}*",
+            var newPassword = user.NombreUser;
 
-            //user.FirstName.Trim().ToUpper().Substring(0, 1),
+            //var newPassword = string.Format("{0}{2:04}*",
 
-            //user.LastName.Trim().ToLower(),
+            ////user.NombreUser.Trim().ToUpper().Substring(0, 1),
 
-            random.Next(10000));
+            ////user.NombreUser.Trim().ToLower(),
+
+            //random.Next(10000));
 
             userManager.RemovePassword(userASP.Id);
 

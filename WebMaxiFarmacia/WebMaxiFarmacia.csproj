@@ -255,13 +255,6 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Warehouse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="reporteRango.aspx.cs">
-      <DependentUpon>reporteRango.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="reporteRango.aspx.designer.cs">
-      <DependentUpon>reporteRango.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -318,7 +311,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="reporteRango.aspx" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
@@ -444,6 +436,7 @@
     <Content Include="Views\Boxes\Details.cshtml" />
     <Content Include="Views\Boxes\Edit.cshtml" />
     <Content Include="Views\Boxes\Index.cshtml" />
+    <Content Include="Views\Users\enviarMail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

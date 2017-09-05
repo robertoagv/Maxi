@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Recuperar Contraseña";
+}
+
+<h2>enviarMail</h2>
+@using (Ajax.BeginForm("enviarMail", new AjaxOptions
+{
+    HttpMethod = "POST",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "buscarid"
+}))
+{
+
+    <div class="form-group form-inline">
+        <div>
+            <input type="email" name="email" id="email" class="form-control" required placeholder="Buscar" autofocus autocomplete="" />
+            <input type="submit" value="Buscar" class="btn btn-primary" />
+        </div>
+    </div>
+}
