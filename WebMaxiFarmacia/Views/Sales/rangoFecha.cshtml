@@ -6,11 +6,16 @@
 
 @if (Model.Select(s => s.fecha).FirstOrDefault() == DateTime.Today)
 {
-    <h2>Ventas de Hoy </h2>
+    <h2 class="text-center">@ViewBag.forma</h2>
+    <h3>@ViewBag.sucursal</h3>
+    <h4>@ViewBag.valorinicialcaja</h4>
+
 }
 else
 {
-    <h2>Ventas de 2/5/2014 a 3/8/2018</h2>
+    <h2 class="text-center">@ViewBag.forma @ViewBag.fini  @ViewBag.ffinal</h2>
+    <h3>@ViewBag.sucursal</h3>
+
 }
 
 @*<p>
@@ -35,27 +40,34 @@ else
     </div>
 }
 
-
+<div>
+    <input type="button" onclick="javascript:window.print()" value="Imprimir" class="btn btn-info hidden-print" />
+</div>
 <table class="table table-bordered table-hover table-striped">
-    <tr>
-        <th class="text-center">
-            Cliente
-        </th>
-        <th class="text-center">
-            Fecha
-        </th>
-        <th class="text-center">
-            Producto
-        </th>
-        <th class="text-center">
-            Precio
-        </th>
-        <th class="text-center">
-            Cantidad
-        </th>
-        
-        <th class="text-center">Total</th>
-    </tr>
+    <thead>
+        <tr>
+            <th class="text-center">
+                Cliente
+            </th>
+            <th class="text-center">
+                Fecha
+            </th>
+            <th class="text-center">
+                Codigo
+            </th>
+            <th class="text-center">
+                Producto
+            </th>
+            <th class="text-center">
+                Precio
+            </th>
+            <th class="text-center">
+                Cantidad
+            </th>
+
+            <th class="text-center">Total</th>
+        </tr>
+    </thead>
 
     @foreach (var item in Model)
     {
@@ -67,15 +79,18 @@ else
                 @item.fecha.ToString("d")
             </td>  
             <td class="text-center">
+                @item.Codigo
+            </td>
+            <td class="text-center">
                 @item.descripcion
             </td>
-            <td class="text-left">
+            <td class="text-right">
                 Q.@item.precio
             </td>
-            <td class="text-left">
+            <td class="text-right">
                 @item.cantidad
             </td>
-            <td class="text-left">
+            <td class="text-right">
                 Q.@item.valortotal
             </td>
         </tr>
@@ -83,14 +98,22 @@ else
 
     <tr>
         <td></td>
+        <td></td>
         <td class="text-center"><strong>Total Ventas</strong></td>
-        <td><strong>@ViewBag.totalventa</strong></td>
+        <td class="text-right"><strong>@ViewBag.totalventa</strong></td>
         <td class="text-center"><strong>Totales</strong></td>
-        <td class="text-left"><strong>@ViewBag.totalCantidad</strong></td>
-        <td class="text-left"><strong>Q.@ViewBag.totalPrecioCantidad</strong></td>
-
+        <td class="text-right"><strong>@ViewBag.totalCantidad</strong></td>
+        <td class="text-right"><strong>Q.@ViewBag.totalPrecioCantidad</strong></td>
     </tr>
-   ...
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td class="text-right"><strong>Caja y Venta del Dia</strong></td>
+        <td class="text-right"><strong>Q.@ViewBag.sumaTventasValorinicial</strong></td>
+    </tr>
 
   
 </table>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -20,6 +21,8 @@ namespace WebMaxiFarmacia.Models
         public int? ProductId { get; set; }
 
         public int Existencia { get; set; }
+        [Display(Name = "Ultima Entrada")]
+        public int UltimoAdd { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = false)]
@@ -33,10 +36,17 @@ namespace WebMaxiFarmacia.Models
 
         [Display(Name = "Usuario")]
         public int? UserId { get; set; }
-    
+
+        [NotMapped]
+        public string nombrep { get; set; }
+        [NotMapped]
+        public long codigobarra { get; set; }
+        [NotMapped]
+        public string nombreu { get; set; }
+         
         public virtual User User { get; set; }
         public virtual Warehouse Warehouse { get; set; }
         public virtual Product Product { get; set; }
 
-    }
+    } 
 }

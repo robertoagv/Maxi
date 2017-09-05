@@ -30,7 +30,7 @@ namespace WebMaxiFarmacia.Controllers
         {
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
             //var rangoheader = db.Sales.Where(s => s.CompanyId == usuario.CompanyId && s.Fechavta == DateTime.Today).ToList();
-
+            var valorinicial = db.Boxes.Where(v => v.CompanyId == usuario.CompanyId && v.Fecha == DateTime.Today).OrderByDescending(o => o.BoxId).FirstOrDefault();
             var rango = (from s in db.Sales.ToList()
                         join sd in db.SaleDetails.ToList()
                         on s.SaleID equals sd.SaleId
@@ -38,6 +38,7 @@ namespace WebMaxiFarmacia.Controllers
                         select new saledetailr{
                             cliente = s.Nombrecte,
                             fecha = s.Fechavta,
+                            Codigo = sd.Product.Codigobarra,
                             descripcion = sd.Descriptionpro,
                             precio = sd.Price,
                             cantidad = sd.Cantidad,
@@ -47,28 +48,55 @@ namespace WebMaxiFarmacia.Controllers
             var sumaCantidad = rango.Sum(x => x.cantidad);
             var sumaPrice = rango.Sum(x => x.valortotal);
             var totalVentas = rango.Count;
+            var valor = valorinicial.valor;
 
+            ViewBag.valorinicialcaja = "Caja del Dia con: Q." + valor;
+            ViewBag.forma = "Ventas del Dia";
+            ViewBag.sucursal = "Sucursal: " + usuario.Company.nombresuc;
             ViewBag.totalCantidad = sumaCantidad;
             ViewBag.totalPrecioCantidad = sumaPrice;
-            ViewBag.totalventa = totalVentas;      
-                       
+            ViewBag.totalventa = totalVentas;
+            var sumaVentaCaja = sumaPrice + valorinicial.valor;
+            ViewBag.sumaTventasValorinicial = sumaVentaCaja;
 
             return View(rango);
         }
 
-        //[HttpPost]
-        //public ActionResult rangoFecha(DateTime d, DateTime hasta)
-        //{ 
-        //    var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+        [HttpPost]
+        public ActionResult rangoFecha(DateTime d, DateTime hasta)
+        {
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
 
+            var rango = (from s in db.Sales.ToList()
+                         join sd in db.SaleDetails.ToList()
+                         on s.SaleID equals sd.SaleId
+                         where s.CompanyId == usuario.CompanyId && s.Fechavta >= d && s.Fechavta <= hasta
+                         select new saledetailr
+                         {
+                             cliente = s.Nombrecte,
+                             fecha = s.Fechavta,
+                             Codigo = sd.Product.Codigobarra,
+                             descripcion = sd.Descriptionpro,
+                             precio = sd.Price,
+                             cantidad = sd.Cantidad,
+                             valortotal = sd.ValorU
+                         }).ToList();
 
+            var sumaCantidad = rango.Sum(x => x.cantidad);
+            var sumaPrice = rango.Sum(x => x.valortotal);
+            var totalVentas = rango.Count;
 
-        //return View();
-        //}
+            ViewBag.forma = "Ventas del ";
+            ViewBag.fini = d.ToString("d");
+            ViewBag.ffinal = " - " + hasta.ToString("d");
+            ViewBag.sucursal = "Sucursal: " + usuario.Company.nombresuc;
+            ViewBag.totalCantidad = sumaCantidad;
+            ViewBag.totalPrecioCantidad = sumaPrice;
+            ViewBag.totalventa = totalVentas;
 
-
-
-
+            return View(rango);
+        }
+        
 
         public ActionResult AgregarProducto()
         {

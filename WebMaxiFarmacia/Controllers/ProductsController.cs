@@ -93,6 +93,7 @@ namespace WebMaxiFarmacia.Controllers
                     WarehouseId = bodega.WarehouseId,
                     ProductId = id,
                     Existencia = 0,
+                    UltimoAdd = 0,
                     FechaCreada = DateTime.Today,
                     FechaActualizada = DateTime.Today,
                     UserId = usuario.UserId
@@ -124,6 +125,7 @@ namespace WebMaxiFarmacia.Controllers
                         WarehouseId = idbodega,
                         ProductId = idproducto,
                         Existencia = newcant,
+                        UltimoAdd = newcant,
                         FechaCreada = DateTime.Today,
                         FechaActualizada = DateTime.Today,
                         UserId = usuario.UserId
@@ -149,6 +151,7 @@ namespace WebMaxiFarmacia.Controllers
             var newexist = oldexist + newcant;
 
             inventario.Existencia = newexist;
+            inventario.UltimoAdd = newcant;
             inventario.FechaActualizada = DateTime.Today;
             inventario.UserId = usuario.UserId;
 
@@ -202,7 +205,7 @@ namespace WebMaxiFarmacia.Controllers
                             Porcentaje = 0,
                             UnitMeasureId = 1,
                             CategoryId = 7,
-                            SupplierId = 6,
+                            SupplierId = 2,
                             CompanyId = 1
                         };
 
@@ -211,8 +214,17 @@ namespace WebMaxiFarmacia.Controllers
                 }
 
 
-                db.SaveChanges();
-                return RedirectToAction("Index", "Products");
+                //db.SaveChanges();
+                var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+                if (respuesta.Succeeded)
+                {
+                    return RedirectToAction("Index");
+
+                }
+
+
+                TempData["mensaje"] = "Algunos codigos de producto que trae el archivo ya existen, puede tambien ingresar aqui los productos.";
+                return RedirectToAction("Create", "Products");
             }
 
             return RedirectToAction("Create", "Products");

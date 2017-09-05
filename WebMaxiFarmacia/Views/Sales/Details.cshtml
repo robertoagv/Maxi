@@ -48,6 +48,7 @@
             <p>
                 @*@Html.ActionLink("Editar", "Edit", new { id = Model.SaleID })|*@ 
                 @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default hidden-print"})
+                <input type="button" onclick="javascript:window.print()" value="Imprimir" class="btn btn-info hidden-print" />
                            </p>
             <div class="table table-responsive">
 

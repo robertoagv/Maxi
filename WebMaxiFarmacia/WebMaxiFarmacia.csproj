@@ -214,6 +214,7 @@
     <Compile Include="classHelper\MovementsHelper.cs" />
     <Compile Include="classHelper\UserHelper.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BoxesController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CompaniesController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\addProductView.cs" />
+    <Compile Include="Models\Box.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -268,6 +270,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrapverde.css" />
+    <Content Include="Content\imggif\load1.gif" />
+    <Content Include="Content\imggif\load2.gif" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -434,6 +438,12 @@
     <Content Include="Views\UnitMeasures\Edit.cshtml" />
     <Content Include="Views\UnitMeasures\Index.cshtml" />
     <Content Include="Views\Sales\DetallesPDF.cshtml" />
+    <Content Include="Views\Inventories\movimientos.cshtml" />
+    <Content Include="Views\Boxes\Create.cshtml" />
+    <Content Include="Views\Boxes\Delete.cshtml" />
+    <Content Include="Views\Boxes\Details.cshtml" />
+    <Content Include="Views\Boxes\Edit.cshtml" />
+    <Content Include="Views\Boxes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

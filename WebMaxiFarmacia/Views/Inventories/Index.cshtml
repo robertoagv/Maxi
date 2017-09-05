@@ -6,8 +6,8 @@
 
 <div class="row">
     <div class="col-xs-10 col-xs-offset-1">
-        <h2>Inventarios</h2>
-
+        <h2 class="text-center">Inventarios</h2>
+        <h3>@ViewBag.sucursal</h3>
         @using (Ajax.BeginForm("Index", new AjaxOptions
         {
             HttpMethod = "POST",
@@ -18,12 +18,14 @@
 
             <div class="hidden-print form-group form-inline">
                 <div>
-                    <input type="text" name="termino" id="termino" class="form-control" required placeholder="Buscar" />
+                    <input type="text" name="term" id="term" class="form-control" required placeholder="Buscar" />
                     <input type="submit" value="Buscar" class="btn btn-primary" />
                 </div>
             </div>
         }
-
+        <div>
+            <input type="button" onclick="javascript:window.print()" value="Imprimir" class="btn btn-info hidden-print" />
+        </div>
 
         <div id="buscar">
             <div class="table">
@@ -48,9 +50,9 @@
                             <th class="text-center">
                                 @Html.DisplayNameFor(model => model.Product.Porcentaje)
                             </th>
-                            <th class="text-center">
+                            @*<th class="text-center">
                                 @Html.DisplayNameFor(model => model.User.NombreUser)
-                            </th>
+                            </th>*@
                             
                             <th class="text-center">
                                 @Html.DisplayNameFor(model => model.Existencia)
@@ -93,14 +95,15 @@
                             <td class="text-center">
                                 @Html.DisplayFor(modelItem => item.Product.Porcentaje)
                             </td>
-                            <td class="text-center">
+                            @*<td class="text-center">
                                 @Html.DisplayFor(modelItem => item.User.NombreUser)
-                            </td>
+                            </td>*@
                             
                             @if (item.WarehouseId == 1 && item.Existencia < 1000)
                             {
                                 <td class="text-center danger">
                                     @Html.DisplayFor(modelItem => item.Existencia)
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
                                 </td>
 
                             }
@@ -108,6 +111,7 @@
                             {
                                 <td class="text-center danger">
                                     @Html.DisplayFor(modelItem => item.Existencia)
+                                    <span class="glyphicon glyphicon-shopping-cart"></span>
                                 </td>
                             }
                             else
@@ -137,3 +141,19 @@
     </div>
 </div>
 
+@section Scripts{
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+
+    <script>
+        $(function () {
+            $("#term").autocomplete({
+                source: "/Inventories/buscarProductojq", minLength : 2
+            });
+        });
+    </script>
+
+
+}

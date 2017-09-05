@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - MaxiFarmacia</title>
+    <title>@ViewBag.Title - MaxiFarm</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/themes/base/all.css" rel="stylesheet" />
@@ -17,7 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("MaxiFarmacia", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("MaxiFarm", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -29,7 +29,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Archivo<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("Bodega", "Index", "Warehouses")</li>
+                                <li>@Html.ActionLink("Abrir Caja", "Index", "Boxes")</li>
                                 <li>@Html.ActionLink("Unidad Medida", "Index", "UnitMeasures")</li>
                                 <li>@Html.ActionLink("Categoria", "Index", "Categories")</li>
                                 <li>@Html.ActionLink("Administrador", "Create", "Employees")</li>
@@ -45,8 +45,8 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li>@Html.ActionLink("Inventarios", "Index", "Inventories")</li>
-                                
-                                <li>@Html.ActionLink("Rango", "rangoFecha", "Sales")</li>
+                                <li>@Html.ActionLink("Movimientos", "movimientos", "Inventories")</li>
+                                <li>@Html.ActionLink("Ventas por Fecha", "rangoFecha", "Sales")</li>
                             </ul>
                         </li>
                                 <li>@Html.ActionLink("Producto", "Index", "Products")</li>
@@ -59,6 +59,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Archivo<b class="caret"></b></a>
                             <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Abrir Caja", "Index", "Boxes")</li>
                                 <li>@Html.ActionLink("Producto", "Index", "Products")</li>
                                 <li>@Html.ActionLink("Ventas", "Index", "Sales")</li>
                                 <li>@Html.ActionLink("Inventarios", "Index", "Inventories")</li>
@@ -68,8 +69,8 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reportes<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li>@Html.ActionLink("Inventarios", "Index", "Inventories")</li>
-                              
-                                <li>@Html.ActionLink("Rango", "rangoFecha", "Sales")</li>
+                                <li>@Html.ActionLink("Movimientos", "movimientos", "Inventories")</li>
+                                <li>@Html.ActionLink("Ventas por Fecha", "rangoFecha", "Sales")</li>
                             </ul>
                         </li>
                                 <li>@Html.ActionLink("Empleado", "Index", "Employees")</li>

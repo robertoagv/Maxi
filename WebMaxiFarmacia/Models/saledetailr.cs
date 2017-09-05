@@ -9,10 +9,12 @@ namespace WebMaxiFarmacia.Models
     {
         public string cliente { get; set; }
         public DateTime fecha { get; set; }
+        public long Codigo { get; set; }
         public string descripcion { get; set; }
         public decimal precio { get; set; }
         public int cantidad { get; set; }
         public decimal valortotal { get; set; }
-
-    }
+        public string  usuario { get; set; }
+         
+    } 
 }

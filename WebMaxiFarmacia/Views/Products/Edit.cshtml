@@ -114,8 +114,13 @@
                         </div>
                     </div>
                 }
+                else
+                {
+                    @Html.HiddenFor(model => model.CategoryId);
+                    @Html.HiddenFor(model => model.SupplierId);
+                }
 
-                
+
 
                 @Html.HiddenFor(model => model.CompanyId);
 

@@ -1,0 +1,164 @@
+﻿@model IEnumerable<WebMaxiFarmacia.Models.Inventory>
+
+@{
+    ViewBag.Title = "Movimientos";
+}
+
+<h2 class="text-center">Movimientos</h2>
+<h3>@ViewBag.sucursal</h3>
+@using (Ajax.BeginForm("movimientos", new AjaxOptions
+{
+    HttpMethod = "POST",
+    InsertionMode = InsertionMode.Replace,
+    UpdateTargetId = "buscarid"
+}))
+{
+
+    <div class="form-group form-inline hidden-print">
+        <div>
+            <input type="text" name="term" id="term" class="form-control" required placeholder="Buscar" autofocus autocomplete="on" />
+
+            <input type="submit" value="Buscar" class="btn btn-primary" />
+        </div>
+    </div>
+}
+
+<div>
+    <input type="button" onclick="javascript:window.print()" value="Imprimir" class="btn btn-info hidden-print" />
+</div>
+
+<h2>Ultima Salidas</h2>
+<hr />
+<table class="table table-bordered table-hover table-striped">
+    <tr>
+        <th>
+            Codigo
+        </th>
+        <th>
+            Descripcion
+        </th>
+        <th>
+            Ultima Salida
+        </th>
+        <th>
+            Fecha
+        </th>
+        <th>
+            Usuario
+        </th>
+
+    </tr>
+    @if (ViewBag.ventas == null)
+    {
+        if (ViewBag.color == "rojo")
+        {
+            <div class="alert alert-danger">
+                @ViewBag.mensaje
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                @ViewBag.mensaje
+            </div>
+        }
+
+    }
+    else
+    {
+        <tr>
+            <td>
+                @ViewBag.ventas.Codigo
+            </td>
+            <td>
+                @ViewBag.ventas.descripcion
+            </td>
+            <td>
+                @ViewBag.ventas.cantidad
+            </td>
+            <td>
+                @ViewBag.ventas.fecha.ToString("d")
+            </td>
+            <td>
+                @ViewBag.ventas.usuario
+            </td>
+
+        </tr>
+    }
+    @*@foreach (var item in ViewBag.ventas)
+        {*@
+
+    @*}*@
+
+</table>
+
+
+<h2>Ultima Entrada</h2>
+<hr />
+<table class="table table-bordered table-hover table-striped">
+    <tr>
+        <th>
+             Codigo
+        </th>
+        <th>
+            Producto
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Existencia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UltimoAdd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaActualizada)
+        </th>
+        <th>
+           Usuario
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Codigobarra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product.Nombreproducto)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Existencia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UltimoAdd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaActualizada)
+            </td>
+            <td>
+               @Html.DisplayFor(modelItem => item.User.NombreUser)
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@section Scripts{
+
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+
+    <script>
+        $(function () {
+            $("#term").autocomplete({
+                source: "/Inventories/buscarProductojq", minLength : 2
+            });
+        });
+    </script>
+
+
+}
