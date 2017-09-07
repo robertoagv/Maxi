@@ -50,9 +50,9 @@
                             <th class="text-center">
                                 @Html.DisplayNameFor(model => model.Product.Porcentaje)
                             </th>
-                            @*<th class="text-center">
-                                @Html.DisplayNameFor(model => model.User.NombreUser)
-                            </th>*@
+                            <th class="text-center">
+                                @Html.DisplayNameFor(model => model.Product.PrincipioActivo)
+                            </th>
                             
                             <th class="text-center">
                                 @Html.DisplayNameFor(model => model.Existencia)
@@ -95,9 +95,9 @@
                             <td class="text-center">
                                 @Html.DisplayFor(modelItem => item.Product.Porcentaje)
                             </td>
-                            @*<td class="text-center">
-                                @Html.DisplayFor(modelItem => item.User.NombreUser)
-                            </td>*@
+                            <td class="text-center">
+                                @Html.DisplayFor(modelItem => item.Product.PrincipioActivo)
+                            </td>
                             
                             @if (item.WarehouseId == 1 && item.Existencia < 1000)
                             {

@@ -78,7 +78,10 @@
                 </section>
             </div>*@
  </div>
-@Html.ActionLink("Recuperar Contraseña", "enviarMail", "Users")
+<div class="text-center">
+    @Html.ActionLink("Recuperar Contraseña", "enviarMail", "Users")
+</div>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

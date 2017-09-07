@@ -8,7 +8,10 @@
 {
     <h2 class="text-center">@ViewBag.forma</h2>
     <h3>@ViewBag.sucursal</h3>
-    <h4>@ViewBag.valorinicialcaja</h4>
+    
+        <h4>Caja del dia: Q.@ViewBag.valorinicialcaja</h4>
+    
+
 
 }
 else
@@ -77,7 +80,7 @@ else
             </td>
             <td class="text-center">
                 @item.fecha.ToString("d")
-            </td>  
+            </td>
             <td class="text-center">
                 @item.Codigo
             </td>
@@ -103,17 +106,23 @@ else
         <td class="text-right"><strong>@ViewBag.totalventa</strong></td>
         <td class="text-center"><strong>Totales</strong></td>
         <td class="text-right"><strong>@ViewBag.totalCantidad</strong></td>
-        <td class="text-right"><strong>Q.@ViewBag.totalPrecioCantidad</strong></td>
+        <td class="text-right"><strong>@ViewBag.totalPrecioCantidad.ToString("C")</strong></td>
     </tr>
     <tr>
+        
+        
+        @if (ViewBag.sumaTventasValorinicial != null)
+        {
         <td></td>
         <td></td>
         <td></td>
         <td></td>
         <td></td>
-        <td class="text-right"><strong>Caja y Venta del Dia</strong></td>
-        <td class="text-right"><strong>Q.@ViewBag.sumaTventasValorinicial</strong></td>
-    </tr>
+            <td class="text-right"><strong>Caja y Venta del Dia</strong></td>
+            <td class="text-right"><strong>@ViewBag.sumaTventasValorinicial.ToString("C")</strong></td>
+        }
+        
+    </tr>    
 
-  
+
 </table>

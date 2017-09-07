@@ -68,13 +68,13 @@ namespace WebMaxiFarmacia.Controllers
         public ActionResult Index(int? page = null)
         {
             page = (page ?? 1);
-            return View(db.Companies.OrderByDescending(c => c.nombresuc).ToPagedList((int)page, 5));
+            return View(db.Companies.Where(w => w.CompanyId != 1).OrderByDescending(c => c.nombresuc).ToPagedList((int)page, 5));
         }
         [HttpPost]
         public ActionResult Index(string termino, int? page = null)
         {
             page = (page ?? 1);
-            return View(db.Companies.Where(c => c.nombresuc == termino).OrderByDescending(c => c.nombresuc).ToPagedList((int)page, 10));
+            return View(db.Companies.Where(c => c.nombresuc == termino && c.CompanyId != 1).OrderByDescending(c => c.nombresuc).ToPagedList((int)page, 10));
         }
 
         // GET: Companies/Details/5
@@ -129,7 +129,7 @@ namespace WebMaxiFarmacia.Controllers
                             Porcentaje = producto.Porcentaje,
                             UnitMeasureId = producto.UnitMeasureId,
                             CategoryId = producto.CategoryId,
-                            SupplierId = 6,
+                            SupplierId = 6, //dejar como id 1 en la BD de azure.
                             CompanyId = company.CompanyId
                         };
 

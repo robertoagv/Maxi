@@ -3,7 +3,14 @@
     ViewBag.Title = "Recuperar Contraseña";
 }
 
-<h2>enviarMail</h2>
+<h2>Recuperar Contraseña</h2>
+@if (ViewBag.mensaje != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.mensaje
+    </div>
+}
+<hr />
 @using (Ajax.BeginForm("enviarMail", new AjaxOptions
 {
     HttpMethod = "POST",
@@ -14,8 +21,8 @@
 
     <div class="form-group form-inline">
         <div>
-            <input type="email" name="email" id="email" class="form-control" required placeholder="Buscar" autofocus autocomplete="" />
-            <input type="submit" value="Buscar" class="btn btn-primary" />
+            <input type="email" name="email" id="email" class="form-control" required placeholder="Ingresa tu correo" autofocus autocomplete="" />
+            <input type="submit" value="Enviar" class="btn btn-primary" />
         </div>
     </div>
 }

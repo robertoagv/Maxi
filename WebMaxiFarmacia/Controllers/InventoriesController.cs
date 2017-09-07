@@ -18,7 +18,7 @@ namespace WebMaxiFarmacia.Controllers
         public JsonResult buscarProductojq(string term)
         {
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
-            var finded = db.Products.Where(p => p.CompanyId == usuario.CompanyId && p.Nombreproducto.StartsWith(term)).Select(p => p.Nombreproducto).Take(5).ToList();
+            var finded = db.Products.Where(p => p.CompanyId == usuario.CompanyId && p.Nombreproducto.StartsWith(term)).Select(p => p.Nombreproducto).ToList();
 
             return Json(finded, JsonRequestBehavior.AllowGet);
         }
@@ -103,8 +103,8 @@ namespace WebMaxiFarmacia.Controllers
         public ActionResult Index()
         {
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
-            var bodega = db.Warehouses.Where(b => b.CompanyId == usuario.CompanyId).FirstOrDefault();
-            var inventories = db.Inventories.Where(i => i.WarehouseId == bodega.WarehouseId).Include(i => i.Product).Include(i => i.User).ToList();
+            //var bodega = db.Warehouses.Where(b => b.CompanyId == usuario.CompanyId).FirstOrDefault();
+            var inventories = db.Inventories.Where(i => /*i.WarehouseId == bodega.WarehouseId &&*/ i.inventoryId == 0).Include(i => i.Product).Include(i => i.User).ToList();
             ViewBag.sucursal = "Sucursal: " + usuario.Company.nombresuc;
 
 
@@ -127,7 +127,7 @@ namespace WebMaxiFarmacia.Controllers
 
             
             var bodega = db.Warehouses.Where(b => b.CompanyId == usuario.CompanyId).FirstOrDefault();
-            var inventories = db.Inventories.Where(i => i.WarehouseId == bodega.WarehouseId && i.Product.Nombreproducto == term).Include(i => i.Product).Include(i => i.User).ToList();
+            var inventories = db.Inventories.Where(i => i.WarehouseId == bodega.WarehouseId && i.Product.Nombreproducto.StartsWith(term)).Include(i => i.Product).Include(i => i.User).ToList();
             ViewBag.sucursal = usuario.Company.nombresuc;
 
             return View(inventories);

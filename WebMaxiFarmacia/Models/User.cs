@@ -26,6 +26,7 @@ namespace WebMaxiFarmacia.Models
        
         public int CompanyId { get; set; }
 
+        public int estado { get; set; }
 
         //Relaciones.
 

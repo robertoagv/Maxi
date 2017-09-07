@@ -11,21 +11,21 @@
 </p>
 <table class="table table-bordered table-hover table-striped">
     <tr>
-        <th>
+        <th class="text-center">
             @Html.DisplayNameFor(model => model.Tipo)
         </th>
-        <th>Acciones</th>
+        <th class="text-center">Acciones</th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        <td class="text-center">
             @Html.DisplayFor(modelItem => item.Tipo)
         </td>
-        <td>
-            @Html.ActionLink("Editar", "Edit", new { id=item.UnitMeasureId }, new { @class = "btn btn-primary btn-sm"}) |
-            @Html.ActionLink("Detalles", "Details", new { id=item.UnitMeasureId }, new { @class = "btn btn-info btn-sm" }) |
-            @Html.ActionLink("Eliminar", "Delete", new { id=item.UnitMeasureId }, new { @class = "btn btn-danger btn-sm" })
+        <td class="text-center">
+            @Html.ActionLink("Editar", "Edit", new { id=item.UnitMeasureId }, new { @class = "btn btn-primary btn-xs"}) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.UnitMeasureId }, new { @class = "btn btn-info btn-xs" }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.UnitMeasureId }, new { @class = "btn btn-danger btn-xs" })
         </td>
     </tr>
 }

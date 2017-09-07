@@ -166,7 +166,7 @@ namespace WebMaxiFarmacia.classHelper
 
             var random = new Random();
 
-            var newPassword = user.NombreUser;
+            var newPassword = random.Next(1000000).ToString();
 
             //var newPassword = string.Format("{0}{2:04}*",
 
@@ -180,14 +180,14 @@ namespace WebMaxiFarmacia.classHelper
 
             userManager.AddPassword(userASP.Id, newPassword);
 
-            var subject = "Taxes Password Recovery";
+            var subject = "MaxiFarm-Soporte";
 
             var body = string.Format(@"
-                                        <h1>Taxes Password Recovery</h1>
+                                        <h1>Recuperacion de  Contraseña</h1>
 
-                                        <p>Yor new password is: <strong>{0}</strong></p>
+                                        <p>Tu nueva Contraseña es: <strong>{0}</strong></p>
 
-                                        <p>Please change it for one, that you remember easyly",
+                                        <p>Puedes iniciar sesion con la nueva contraseña",
 
             newPassword);
 

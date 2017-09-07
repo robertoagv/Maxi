@@ -31,7 +31,7 @@ namespace WebMaxiFarmacia.Models
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = false)]
-        [Display(Name = "Fecha de Actalizacion")]
+        [Display(Name = "Fecha de Actualizacion")]
         public DateTime FechaActualizada { get; set; }
 
         [Display(Name = "Usuario")]

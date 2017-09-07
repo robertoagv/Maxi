@@ -10,12 +10,15 @@ using WebMaxiFarmacia.Models;
 using WebMaxiFarmacia.classHelper;
 using PagedList;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace WebMaxiFarmacia.Controllers
 {
     [Authorize(Roles = "SuperAdmin, Admin")]
     public class UsersController : Controller
     {
+        private static ApplicationDbContext userContext = new ApplicationDbContext();
         private maxifarmaciabdContext db = new maxifarmaciabdContext();
         private cboAll cboAll = new cboAll();
         [AllowAnonymous]
@@ -25,12 +28,23 @@ namespace WebMaxiFarmacia.Controllers
         }
         [AllowAnonymous]
         [HttpPost]
-        public async Task enviarMail(string email)
+        public async Task<ActionResult> enviarMail(string email)
         {
-           
-            await UserHelper.PasswordRecovery(email);
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
 
-            return;
+            var userASP = userManager.FindByEmail(email);
+            var user = db.Users.Where(tp => tp.NombreUser == email).FirstOrDefault();
+
+            if (userASP != null && user != null)
+            {
+                await UserHelper.PasswordRecovery(email);
+                return RedirectToAction("Login", "Account");
+            }
+
+            ViewBag.mensaje = "No Existe el Usuario o el Correo es Invalido.";
+            return View();
+
+           
         }
 
 
@@ -44,7 +58,7 @@ namespace WebMaxiFarmacia.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var users = db.Users.Where(ua => ua.CompanyId == usuario.CompanyId && ua.NombreUser == usuario.NombreUser).Include(u => u.Company).Include(u => u.Employee).OrderByDescending(u => u.NombreUser);
+            var users = db.Users.Where(ua => ua.CompanyId == usuario.CompanyId && ua.estado != 1).Include(u => u.Company).Include(u => u.Employee).OrderByDescending(u => u.NombreUser);
 
             return View(users.ToPagedList((int)page, 10));
         }
@@ -58,7 +72,7 @@ namespace WebMaxiFarmacia.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var users = db.Users.Where(ua => ua.CompanyId == usuario.CompanyId && ua.NombreUser == termino && ua.NombreUser == usuario.NombreUser).Include(u => u.Company).Include(u => u.Employee).OrderByDescending(u => u.NombreUser);
+            var users = db.Users.Where(ua => ua.CompanyId == usuario.CompanyId && ua.NombreUser == termino && ua.estado != 1).Include(u => u.Company).Include(u => u.Employee).OrderByDescending(u => u.NombreUser);
 
             return View(users.ToPagedList((int)page, 10));
         }
@@ -160,17 +174,20 @@ namespace WebMaxiFarmacia.Controllers
 
         public ActionResult EliminarEditar(int? id)
         {
-            
+            string newusuario;
             if (id != null)
             {
                 var dbBuscarEmailOld = new maxifarmaciabdContext();
                 var oldUser = dbBuscarEmailOld.Users.Find(id);
                 if (oldUser != null)
                 {
-                    UserHelper.UpdateUser(oldUser.NombreUser, "usuario@nulo.com");
+                    newusuario = "usuario" + oldUser.UserId + "@nulo.com";
+                    UserHelper.UpdateUser(oldUser.NombreUser, newusuario);
                 }
                 dbBuscarEmailOld.Dispose();
 
+                oldUser.NombreUser = "usuario" + oldUser.UserId + "@nulo.com";
+                oldUser.estado = 1;
                 db.Entry(oldUser).State = EntityState.Modified;
                 var respuesta = ChangeValidationHelperDb.ChangeDb(db);
 

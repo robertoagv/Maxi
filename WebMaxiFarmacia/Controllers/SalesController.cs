@@ -48,15 +48,24 @@ namespace WebMaxiFarmacia.Controllers
             var sumaCantidad = rango.Sum(x => x.cantidad);
             var sumaPrice = rango.Sum(x => x.valortotal);
             var totalVentas = rango.Count;
-            var valor = valorinicial.valor;
+            decimal valor;
+            if (valorinicial != null)
+            {
+                 valor = valorinicial.valor;
+            }
+            else
+            {
+                valor = 0;
+            }
+            
 
-            ViewBag.valorinicialcaja = "Caja del Dia con: Q." + valor;
+            ViewBag.valorinicialcaja = valor;
             ViewBag.forma = "Ventas del Dia";
             ViewBag.sucursal = "Sucursal: " + usuario.Company.nombresuc;
             ViewBag.totalCantidad = sumaCantidad;
             ViewBag.totalPrecioCantidad = sumaPrice;
             ViewBag.totalventa = totalVentas;
-            var sumaVentaCaja = sumaPrice + valorinicial.valor;
+            var sumaVentaCaja = sumaPrice + valor;
             ViewBag.sumaTventasValorinicial = sumaVentaCaja;
 
             return View(rango);
