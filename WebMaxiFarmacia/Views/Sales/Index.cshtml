@@ -45,6 +45,8 @@
                         <td class="text-center">
                             @*@Html.ActionLink("Edit", "Edit", new { id = item.SaleID }) |*@
                             @Html.ActionLink("Detalle", "Details", new { id = item.SaleID }, new { @class = "btn btn-info btn-sm"}) 
+                            @*@Html.ActionLink("Exportar PDF", "exportPdf", new { id = item.SaleID},new { @class = "btn btn-default" })*@
+                            
                             @*@Html.ActionLink("Delete", "Delete", new { id = item.SaleID })*@
                         </td>
                     </tr>

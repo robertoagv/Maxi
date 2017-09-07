@@ -20,13 +20,9 @@ namespace WebMaxiFarmacia.Controllers
         
         public ActionResult Actualizar(int? id)
         {
-
-          
-
+            
             var productos = db.Products.Where(p => p.CompanyId == 1);
            
-            
-
             foreach (var producto in productos)
             {
                 var existe = db.Products.Where(p => p.CompanyId == id && p.Codigobarra == producto.Codigobarra).ToList();
@@ -40,7 +36,12 @@ namespace WebMaxiFarmacia.Controllers
                         Descripcion = producto.Descripcion,
                         Preciocompra = producto.Precioventa,
                         Precioventa = 0,
+                        PrecioCompraNew = 0,
+                        Uso = producto.Uso,
+                        Ubicacion = producto.Ubicacion,
+                        PrincipioActivo = producto.PrincipioActivo,
                         Porcentaje = producto.Porcentaje,
+                        UnitMeasureId = producto.UnitMeasureId,
                         CategoryId = producto.CategoryId,
                         SupplierId = 6,
                         CompanyId = (int)id
@@ -52,8 +53,14 @@ namespace WebMaxiFarmacia.Controllers
 
             }
 
-            db.SaveChanges();
+            //db.SaveChanges();
+            var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+            if (respuesta.Succeeded)
+            {
+                return RedirectToAction("Index");
+            }
 
+            ModelState.AddModelError(string.Empty, "Algunos codigos de producto ya se existen.");
             return RedirectToAction("Index");
         }
 
@@ -61,13 +68,13 @@ namespace WebMaxiFarmacia.Controllers
         public ActionResult Index(int? page = null)
         {
             page = (page ?? 1);
-            return View(db.Companies.OrderByDescending(c => c.nombresuc).ToPagedList((int)page, 5));
+            return View(db.Companies.Where(w => w.CompanyId != 1).OrderByDescending(c => c.nombresuc).ToPagedList((int)page, 5));
         }
         [HttpPost]
         public ActionResult Index(string termino, int? page = null)
         {
             page = (page ?? 1);
-            return View(db.Companies.Where(c => c.nombresuc == termino).OrderByDescending(c => c.nombresuc).ToPagedList((int)page, 10));
+            return View(db.Companies.Where(c => c.nombresuc == termino && c.CompanyId != 1).OrderByDescending(c => c.nombresuc).ToPagedList((int)page, 10));
         }
 
         // GET: Companies/Details/5
@@ -114,17 +121,36 @@ namespace WebMaxiFarmacia.Controllers
                             Nombreproducto = producto.Nombreproducto,
                             Descripcion = producto.Descripcion,
                             Preciocompra = producto.Precioventa,
-                            Precioventa = 0,
+                            Precioventa = 0.00M,
+                            PrecioCompraNew = 0,
+                            Uso = producto.Uso,
+                            Ubicacion = producto.Ubicacion,
+                            PrincipioActivo = producto.PrincipioActivo,
                             Porcentaje = producto.Porcentaje,
+                            UnitMeasureId = producto.UnitMeasureId,
                             CategoryId = producto.CategoryId,
-                            SupplierId = 6,
+                            SupplierId = 6, //dejar como id 1 en la BD de azure.
                             CompanyId = company.CompanyId
                         };
+
                         db.Products.Add(newProdct);
 
                     }
 
                     db.SaveChanges();
+
+                    var ultimocompany = db.Companies.OrderByDescending(o => o.CompanyId).FirstOrDefault();
+                    var nuevaBodega = new Warehouse
+                    {
+                        Nombre = ultimocompany.nombresuc,
+                        Telefono = ultimocompany.telefono,
+                        Direccion = ultimocompany.direccion,
+                        CompanyId = ultimocompany.CompanyId
+                    };
+                    db.Warehouses.Add(nuevaBodega);
+
+                    db.SaveChanges();
+
                     return RedirectToAction("Index");
                 }
 

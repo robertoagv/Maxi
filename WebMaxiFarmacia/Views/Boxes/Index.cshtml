@@ -1,0 +1,51 @@
+﻿@model IEnumerable<WebMaxiFarmacia.Models.Box>
+
+@{
+    ViewBag.Title = "Caja";
+}
+
+<h2>Caja</h2>
+
+<p>
+    @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary"})
+</p>
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Company.nombresuc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.valor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.usuario)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Company.nombresuc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.valor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Fecha)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.usuario)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.BoxId }, new { @class = "btn btn-primary btn-xs" }) |
+            @Html.ActionLink("Detalle", "Details", new { id=item.BoxId }, new { @class = "btn btn-info btn-xs" }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.BoxId }, new { @class = "btn btn-danger btn-xs" })
+        </td>
+    </tr>
+}
+
+</table>

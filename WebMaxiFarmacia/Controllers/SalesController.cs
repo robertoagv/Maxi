@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using WebMaxiFarmacia.classHelper;
 using WebMaxiFarmacia.Models;
 using PagedList;
+using Rotativa;
 
 namespace WebMaxiFarmacia.Controllers
 {
@@ -16,7 +17,7 @@ namespace WebMaxiFarmacia.Controllers
     public class SalesController : Controller
     {
         private maxifarmaciabdContext db = new maxifarmaciabdContext();
-        
+        List<SaleDetail> envio = new List<SaleDetail>();
         public JsonResult buscarProductojq(string term)
         {
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
@@ -28,21 +29,83 @@ namespace WebMaxiFarmacia.Controllers
         public ActionResult rangoFecha()
         {
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
-            var rango = db.Sales.Where(s => s.CompanyId == usuario.CompanyId && s.Fechavta == DateTime.Today).Include(s => s.SaleDetails).ToList();
-           
+            //var rangoheader = db.Sales.Where(s => s.CompanyId == usuario.CompanyId && s.Fechavta == DateTime.Today).ToList();
+            var valorinicial = db.Boxes.Where(v => v.CompanyId == usuario.CompanyId && v.Fecha == DateTime.Today).OrderByDescending(o => o.BoxId).FirstOrDefault();
+            var rango = (from s in db.Sales.ToList()
+                        join sd in db.SaleDetails.ToList()
+                        on s.SaleID equals sd.SaleId
+                        where s.CompanyId == usuario.CompanyId && s.Fechavta == DateTime.Today
+                        select new saledetailr{
+                            cliente = s.Nombrecte,
+                            fecha = s.Fechavta,
+                            Codigo = sd.Product.Codigobarra,
+                            descripcion = sd.Descriptionpro,
+                            precio = sd.Price,
+                            cantidad = sd.Cantidad,
+                            valortotal = sd.ValorU
+                        }).ToList();
+
+            var sumaCantidad = rango.Sum(x => x.cantidad);
+            var sumaPrice = rango.Sum(x => x.valortotal);
+            var totalVentas = rango.Count;
+            decimal valor;
+            if (valorinicial != null)
+            {
+                 valor = valorinicial.valor;
+            }
+            else
+            {
+                valor = 0;
+            }
+            
+
+            ViewBag.valorinicialcaja = valor;
+            ViewBag.forma = "Ventas del Dia";
+            ViewBag.sucursal = "Sucursal: " + usuario.Company.nombresuc;
+            ViewBag.totalCantidad = sumaCantidad;
+            ViewBag.totalPrecioCantidad = sumaPrice;
+            ViewBag.totalventa = totalVentas;
+            var sumaVentaCaja = sumaPrice + valor;
+            ViewBag.sumaTventasValorinicial = sumaVentaCaja;
 
             return View(rango);
         }
+
         [HttpPost]
         public ActionResult rangoFecha(DateTime d, DateTime hasta)
-        { 
+        {
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
-            var rango = db.Sales.Where(s => s.CompanyId == usuario.CompanyId && s.Fechavta >= d && s.Fechavta <= hasta).Include(s => s.SaleDetails).ToList();
 
-           
+            var rango = (from s in db.Sales.ToList()
+                         join sd in db.SaleDetails.ToList()
+                         on s.SaleID equals sd.SaleId
+                         where s.CompanyId == usuario.CompanyId && s.Fechavta >= d && s.Fechavta <= hasta
+                         select new saledetailr
+                         {
+                             cliente = s.Nombrecte,
+                             fecha = s.Fechavta,
+                             Codigo = sd.Product.Codigobarra,
+                             descripcion = sd.Descriptionpro,
+                             precio = sd.Price,
+                             cantidad = sd.Cantidad,
+                             valortotal = sd.ValorU
+                         }).ToList();
+
+            var sumaCantidad = rango.Sum(x => x.cantidad);
+            var sumaPrice = rango.Sum(x => x.valortotal);
+            var totalVentas = rango.Count;
+
+            ViewBag.forma = "Ventas del ";
+            ViewBag.fini = d.ToString("d");
+            ViewBag.ffinal = " - " + hasta.ToString("d");
+            ViewBag.sucursal = "Sucursal: " + usuario.Company.nombresuc;
+            ViewBag.totalCantidad = sumaCantidad;
+            ViewBag.totalPrecioCantidad = sumaPrice;
+            ViewBag.totalventa = totalVentas;
 
             return View(rango);
         }
+        
 
         public ActionResult AgregarProducto()
         {
@@ -259,6 +322,39 @@ namespace WebMaxiFarmacia.Controllers
             sale.Detalles = db.SaleDetails.Where(sd => sd.SaleId == sale.SaleID).ToList();
 
             return View(sale);
+        }
+        public ActionResult DetallesPDF(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Sale sale = db.Sales.Where(s => s.SaleID == id).Include(s => s.SaleDetails).FirstOrDefault();
+            if (sale == null)
+            {
+                return HttpNotFound();
+            }
+
+            sale.Detalles = db.SaleDetails.Where(sd => sd.SaleId == sale.SaleID).ToList();
+
+            return View(sale);
+        }
+
+
+        public ActionResult exportPdf(int id)
+        {
+            Sale sale = db.Sales.Where(s => s.SaleID == id).Include(s => s.SaleDetails).FirstOrDefault();
+            if (sale == null)
+            {
+                return HttpNotFound();
+            }
+
+            sale.Detalles = db.SaleDetails.Where(sd => sd.SaleId == sale.SaleID).ToList();
+
+            return new ViewAsPdf("Details", sale)
+            {
+                FileName = Server.MapPath("~/Content/Venta.pdf")
+            };
         }
 
         // GET: Sales/Create

@@ -1,0 +1,56 @@
+﻿@model WebMaxiFarmacia.Models.Box
+
+@{
+    ViewBag.Title = "Eliminar-Caja";
+}
+
+<h2>Eliminar</h2>
+
+<h3>Esta seguro de Eliminar este Elmento?</h3>
+<div>
+    <h4>Caja</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Company.nombresuc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company.nombresuc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.valor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.valor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuario)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-danger btn-sm" /> |
+            @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default btn-sm"})
+        </div>
+    }
+</div>

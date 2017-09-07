@@ -45,7 +45,9 @@ namespace WebMaxiFarmacia.Models
 
         public System.Data.Entity.DbSet<WebMaxiFarmacia.Models.User> Users { get; set; }
 
-        
+        public System.Data.Entity.DbSet<WebMaxiFarmacia.Models.UnitMeasure> UnitMeasures { get; set; }
+
+        public System.Data.Entity.DbSet<WebMaxiFarmacia.Models.Box> Boxes { get; set; }
     }
 
     

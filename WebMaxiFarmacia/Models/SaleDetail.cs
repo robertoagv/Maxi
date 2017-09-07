@@ -35,10 +35,9 @@ namespace WebMaxiFarmacia.Models
         public int Cantidad { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
-        public decimal ValorU{ get { return Price * (decimal)Cantidad; } }
+        public decimal ValorU{ get { return Price * (decimal)Cantidad; } set { } }
 
         
-
         //relaciones
 
         public virtual Product Product { get; set; }

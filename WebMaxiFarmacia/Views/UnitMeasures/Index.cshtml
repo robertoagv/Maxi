@@ -1,0 +1,33 @@
+﻿@model IEnumerable<WebMaxiFarmacia.Models.UnitMeasure>
+
+@{
+    ViewBag.Title = "Unidad de Medida";
+}
+
+<h2>Unidad de Medida</h2>
+
+<p>
+    @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary"})
+</p>
+<table class="table table-bordered table-hover table-striped">
+    <tr>
+        <th class="text-center">
+            @Html.DisplayNameFor(model => model.Tipo)
+        </th>
+        <th class="text-center">Acciones</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td class="text-center">
+            @Html.DisplayFor(modelItem => item.Tipo)
+        </td>
+        <td class="text-center">
+            @Html.ActionLink("Editar", "Edit", new { id=item.UnitMeasureId }, new { @class = "btn btn-primary btn-xs"}) |
+            @Html.ActionLink("Detalles", "Details", new { id=item.UnitMeasureId }, new { @class = "btn btn-info btn-xs" }) |
+            @Html.ActionLink("Eliminar", "Delete", new { id=item.UnitMeasureId }, new { @class = "btn btn-danger btn-xs" })
+        </td>
+    </tr>
+}
+
+</table>

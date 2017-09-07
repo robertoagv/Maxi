@@ -1,10 +1,25 @@
-﻿@model IEnumerable<WebMaxiFarmacia.Models.Sale>
+﻿@model IEnumerable<WebMaxiFarmacia.Models.saledetailr>
 
 @{
-    ViewBag.Title = "rangoFecha";
+    ViewBag.Title = "Ventas por Fecha";
 }
 
-<h2>rangoFecha</h2>
+@if (Model.Select(s => s.fecha).FirstOrDefault() == DateTime.Today)
+{
+    <h2 class="text-center">@ViewBag.forma</h2>
+    <h3>@ViewBag.sucursal</h3>
+    
+        <h4>Caja del dia: Q.@ViewBag.valorinicialcaja</h4>
+    
+
+
+}
+else
+{
+    <h2 class="text-center">@ViewBag.forma @ViewBag.fini  @ViewBag.ffinal</h2>
+    <h3>@ViewBag.sucursal</h3>
+
+}
 
 @*<p>
     @Html.ActionLink("Create New", "Create")
@@ -18,7 +33,7 @@
 }))
 {
 
-    <div class="form-group form-inline">
+    <div class="form-group form-inline hidden-print">
         <div>
             <input type="date" name="d" id="d" class="form-control" required placeholder="Buscar" autofocus autocomplete="on" />
             <b>-</b>
@@ -28,59 +43,86 @@
     </div>
 }
 
-
+<div>
+    <input type="button" onclick="javascript:window.print()" value="Imprimir" class="btn btn-info hidden-print" />
+</div>
 <table class="table table-bordered table-hover table-striped">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Fechavta)
-        </th>
-        <th>
-           Codigo Barra
-        </th>
-        <th>
-            Producto
-        </th>
-        <th>
-            Precio
-        </th>
-        <th>
-            Cantidad
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Nombrecte)
-        </th>
-        <th></th>
-    </tr>
+    <thead>
+        <tr>
+            <th class="text-center">
+                Cliente
+            </th>
+            <th class="text-center">
+                Fecha
+            </th>
+            <th class="text-center">
+                Codigo
+            </th>
+            <th class="text-center">
+                Producto
+            </th>
+            <th class="text-center">
+                Precio
+            </th>
+            <th class="text-center">
+                Cantidad
+            </th>
 
-@foreach (var item in Model)
-{
+            <th class="text-center">Total</th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td class="text-center">
+                @item.cliente
+            </td>
+            <td class="text-center">
+                @item.fecha.ToString("d")
+            </td>
+            <td class="text-center">
+                @item.Codigo
+            </td>
+            <td class="text-center">
+                @item.descripcion
+            </td>
+            <td class="text-right">
+                Q.@item.precio
+            </td>
+            <td class="text-right">
+                @item.cantidad
+            </td>
+            <td class="text-right">
+                Q.@item.valortotal
+            </td>
+        </tr>
+    }
+
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Fechavta)
-        </td>
         <td></td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombrecte)
-        </td>
-        <td>@Html.ActionLink("Details", "Details", new { id = item.SaleID })</td>
-        @*<td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.SaleID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.SaleID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.SaleID })
-            </td>*@
+        <td class="text-center"><strong>Total Ventas</strong></td>
+        <td class="text-right"><strong>@ViewBag.totalventa</strong></td>
+        <td class="text-center"><strong>Totales</strong></td>
+        <td class="text-right"><strong>@ViewBag.totalCantidad</strong></td>
+        <td class="text-right"><strong>@ViewBag.totalPrecioCantidad.ToString("C")</strong></td>
     </tr>
     <tr>
+        
+        
+        @if (ViewBag.sumaTventasValorinicial != null)
+        {
         <td></td>
-        <td><b>Cantidad Vendida</b></td>
-        <td></td>
-        <td><b>Total Ventas</b></td>
         <td></td>
         <td></td>
         <td></td>
-    </tr>
-}
+        <td></td>
+            <td class="text-right"><strong>Caja y Venta del Dia</strong></td>
+            <td class="text-right"><strong>@ViewBag.sumaTventasValorinicial.ToString("C")</strong></td>
+        }
+        
+    </tr>    
+
 
 </table>

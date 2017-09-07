@@ -8,7 +8,7 @@
 
         <h2>Producto</h2>
 
-        @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+        @if (User.IsInRole("SuperAdmin"))
         {
             <p>
                 @Html.ActionLink("Nuevo", "Create", new { }, new { @class = "btn btn-primary" })
@@ -88,6 +88,7 @@
                         {
                             <td class="text-center danger">
                                 @Html.DisplayFor(modelItem => item.Existencia)
+                                <span class="glyphicon glyphicon-shopping-cart"></span>
                             </td>
 
                         }
@@ -95,6 +96,7 @@
                         {
                             <td class="text-center danger">
                                 @Html.DisplayFor(modelItem => item.Existencia)
+                                <span class="glyphicon glyphicon-shopping-cart"></span>
                             </td>
                         }
                         else
@@ -151,8 +153,16 @@
     currentFilter = ViewBag.CurrentFilter
 }))
         @Html.ActionLink("Ver Todo", "Index", new { }, new { @class = "btn btn-info btn-xs" })
+        
+@using (Html.BeginForm("fileCSV", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    if (User.IsInRole("SuperAdmin"))
+    {
+        <input type="file" name="file" />
+        <input type="submit" value="Importar Excel" />
+    }
 
-
+}
 
 
 @section Scripts{

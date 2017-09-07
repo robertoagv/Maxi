@@ -70,13 +70,17 @@
                         <td class="text-center">
                             @Html.ActionLink("Editar", "Edit", new { id = item.CompanyId }, new { @class = "btn btn-primary btn-xs" }) |
                             @Html.ActionLink("Detalles", "Details", new { id = item.CompanyId }, new { @class = "btn btn-info btn-xs" }) |
-                            @Html.ActionLink("eliminar", "Delete", new { id = item.CompanyId }, new { @class = "btn btn-danger btn-xs" })
-                            @Html.ActionLink("Actualizar", "Actualizar", new { id = item.CompanyId }, new { @class = "btn btn-danger btn-xs" })
+                            @Html.ActionLink("Eliminar", "Delete", new { id = item.CompanyId }, new { @class = "btn btn-danger btn-xs" })
+                            @*@Html.ActionLink("Actualizar", "Actualizar", new { id = item.CompanyId }, new { @class = "btn btn-success btn-xs" })*@
                           
-                            @*@Ajax.ActionLink("Actualizar", "Actualizar", new { id = item.CompanyId},new AjaxOptions
+                            @Ajax.ActionLink("Actualizar", "Actualizar", new { id = item.CompanyId},new AjaxOptions
                        {
-                           HttpMethod = "GET"
-                       })*@
+                           HttpMethod = "GET",
+                           LoadingElementId = "loading"
+
+                       }, new { @class = "btn btn-success btn-xs" })
+                           
+                            <img src="~/Content/imggif/load2.gif" style="display:none; width:50px;" id="loading"/>
                         </td>
                      
                     </tr>

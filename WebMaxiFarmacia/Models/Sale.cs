@@ -33,15 +33,19 @@ namespace WebMaxiFarmacia.Models
 
 
         public List<SaleDetail> Detalles { get; set; }
+        
 
         //[DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         [Display(Name = "Total Cantidad")]
         public int TotalCantidad { get { return Detalles == null ? 0 : Detalles.Sum(d => d.Cantidad); } }
 
+       
+
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = false)]
         [Display(Name = "Total Valor")]
         public decimal TotalValue { get { return Detalles == null ? 0 : Detalles.Sum(d => d.ValorU); } }
 
+        
         //Relaciones
 
         public virtual User  Users { get; set; }

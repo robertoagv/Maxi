@@ -15,35 +15,120 @@ namespace WebMaxiFarmacia.Controllers
     {
         private maxifarmaciabdContext db = new maxifarmaciabdContext();
 
+        public JsonResult buscarProductojq(string term)
+        {
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            var finded = db.Products.Where(p => p.CompanyId == usuario.CompanyId && p.Nombreproducto.StartsWith(term)).Select(p => p.Nombreproducto).ToList();
+
+            return Json(finded, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult movimientos()
+        {
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            var inventario = db.Inventories.Where(i => i.UltimoAdd < 0).ToList();
+            var ventasmas = db.SaleDetails.Where(v => v.SaleId < 0).FirstOrDefault();
+            ViewBag.mensaje = "Debe buscar por nombre o codigo de producto";
+            ViewBag.color = "azul";
+            ViewBag.sucursal = "Sucursal: " + usuario.Company.nombresuc;
+            return View(inventario);
+        }
+
+        [HttpPost]
+        public ActionResult movimientos(string term)
+        {
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+            var bodegafecha = db.Warehouses.Where(b => b.CompanyId == usuario.CompanyId).FirstOrDefault();
+
+
+            long codigo;
+            bool silong = long.TryParse(term, out codigo);
+            if (silong)
+            {
+                var inventoriesCodigo = db.Inventories.Where(i => i.WarehouseId == bodegafecha.WarehouseId && i.Product.Codigobarra == codigo).Include(i => i.Product).Include(i => i.User).ToList();
+                var ventasCodigo = (from s in db.Sales.ToList()
+                                                join sd in db.SaleDetails.ToList()
+                                                on s.SaleID equals sd.SaleId
+                                                where s.CompanyId == usuario.CompanyId && sd.Product.Codigobarra == codigo
+                                                orderby sd.SaleId descending
+                                                select new saledetailr
+                                                {
+                                                    Codigo = sd.Product.Codigobarra,
+                                                    descripcion = sd.Descriptionpro,
+                                                    cantidad = sd.Cantidad,
+                                                    fecha = s.Fechavta,
+                                                    usuario = s.Users.NombreUser
+                                                }).FirstOrDefault();
+
+                ViewBag.ventas= ventasCodigo;
+                ViewBag.sucursal = "Sucursal: " + usuario.Company.nombresuc;
+                return View(inventoriesCodigo);
+            }
+
+           
+
+            var ventafecha = (from s in db.Sales.ToList()
+                              join sd in db.SaleDetails.ToList()
+                              on s.SaleID equals sd.SaleId
+                              where s.CompanyId == usuario.CompanyId && sd.Descriptionpro == term
+                              orderby sd.SaleId descending
+                              select new saledetailr
+                              {
+                                  Codigo = sd.Product.Codigobarra,
+                                  descripcion = sd.Descriptionpro,
+                                  cantidad = sd.Cantidad,
+                                  fecha = s.Fechavta,
+                                  usuario = s.Users.NombreUser
+                              }).FirstOrDefault();
+            ViewBag.ventas = ventafecha;
+            if (ventafecha != null)
+            {
+                codigo = ventafecha.Codigo;
+                
+            }
+            else
+            {
+                codigo = 0;
+                ViewBag.color = "rojo";
+                ViewBag.mensaje = "El producto no tiene inventario o ninguna compra realizada.";
+            }
+
+            
+            var inventoriesfecha = db.Inventories.Where(i => i.WarehouseId == bodegafecha.WarehouseId && i.Product.Codigobarra == codigo).Include(i => i.Product).Include(i => i.User).ToList();
+            ViewBag.sucursal = "Sucursal: " + usuario.Company.nombresuc;
+            return View(inventoriesfecha);
+        }
+
         // GET: Inventories 
         public ActionResult Index()
         {
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
-            var bodega = db.Warehouses.Where(b => b.CompanyId == usuario.CompanyId).FirstOrDefault();
-            var inventories = db.Inventories.Where(i => i.WarehouseId == bodega.WarehouseId).Include(i => i.Product).Include(i => i.User).ToList();
+            //var bodega = db.Warehouses.Where(b => b.CompanyId == usuario.CompanyId).FirstOrDefault();
+            var inventories = db.Inventories.Where(i => /*i.WarehouseId == bodega.WarehouseId &&*/ i.inventoryId == 0).Include(i => i.Product).Include(i => i.User).ToList();
+            ViewBag.sucursal = "Sucursal: " + usuario.Company.nombresuc;
 
-            
 
             return View(inventories);
         }
         [HttpPost]
-        public ActionResult Index(string termino)
+        public ActionResult Index(string term)
         {
-            bool yesDate;
-            DateTime buscarfecha;
-            yesDate = DateTime.TryParse(termino, out buscarfecha);
+            bool yesLong;
+            long codigo; 
+            yesLong = long.TryParse(term, out codigo);
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
-            if (yesDate)
+            if (yesLong)
             {
                 var bodegafecha = db.Warehouses.Where(b => b.CompanyId == usuario.CompanyId).FirstOrDefault();
-                var inventoriesfecha = db.Inventories.Where(i => i.WarehouseId == bodegafecha.WarehouseId && i.FechaActualizada == buscarfecha).Include(i => i.Product).Include(i => i.User).ToList();
-
+                var inventoriesfecha = db.Inventories.Where(i => i.WarehouseId == bodegafecha.WarehouseId && i.Product.Codigobarra == codigo).Include(i => i.Product).Include(i => i.User).ToList();
+                ViewBag.sucursal = usuario.Company.nombresuc;
                 return View(inventoriesfecha);
             }
 
-           
+            
             var bodega = db.Warehouses.Where(b => b.CompanyId == usuario.CompanyId).FirstOrDefault();
-            var inventories = db.Inventories.Where(i => i.WarehouseId == bodega.WarehouseId && i.Product.Nombreproducto == termino).Include(i => i.Product).Include(i => i.User).ToList();
+            var inventories = db.Inventories.Where(i => i.WarehouseId == bodega.WarehouseId && i.Product.Nombreproducto.StartsWith(term)).Include(i => i.Product).Include(i => i.User).ToList();
+            ViewBag.sucursal = usuario.Company.nombresuc;
 
             return View(inventories);
         }

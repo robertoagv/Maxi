@@ -1,0 +1,26 @@
+﻿@model WebMaxiFarmacia.Models.UnitMeasure
+
+@{
+    ViewBag.Title = "Detalles";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>Unidad de Medida</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Tipo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tipo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.UnitMeasureId }, new { @class = "btn btn-primary"}) |
+    @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-primary" })
+</p>

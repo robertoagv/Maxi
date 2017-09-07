@@ -27,6 +27,21 @@ namespace WebMaxiFarmacia.classHelper
             }
         }
 
+        public List<UnitMeasure> getUnidad()
+        {
+            using (var db = new maxifarmaciabdContext())
+            {
+                var unidadCbo = db.UnitMeasures.ToList();
+                unidadCbo.Add(new UnitMeasure
+                {
+                    UnitMeasureId = 0,
+                    Tipo = "[Seleccione una Unidad]"
+                });
+
+                return unidadCbo.OrderBy(u => u.Tipo).ToList();
+            }
+        }
+
         public List<Category> getCategory()
         {
             using (var db = new maxifarmaciabdContext())
