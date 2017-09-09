@@ -31,7 +31,7 @@ namespace WebMaxiFarmacia.classHelper
                     db.SaveChanges();
 
                     var detalles = db.SaleDetailTmps.Where(sdt => sdt.NombreUsuario == nombreUsuario).ToList();
-
+                  
                     if (detalles.Count != 0)
                     {
                         foreach (var detalle in detalles)
@@ -65,6 +65,16 @@ namespace WebMaxiFarmacia.classHelper
                             #endregion
 
                             var oldExist = int.Parse(rest.ToString());
+                            if (oldExist < detalle.Cantidad)
+                            {
+                                transaccion.Rollback();
+                                return new Response
+                                {
+                                    Message = "La existencia es menor a la compra de algun producto de la lista, .",
+                                    Succeeded = false
+                                };
+                            }
+
                             var desc = oldExist - detalle.Cantidad;
 
                             var inventarioUpdate = db.Inventories.Find(restarp.inventoryId);
