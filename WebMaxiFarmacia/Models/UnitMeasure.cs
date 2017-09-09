@@ -12,6 +12,7 @@ namespace WebMaxiFarmacia.Models
         public int UnitMeasureId { get; set; }
 
         //[Required(ErrorMessage = "El campo {0} es obligatorio")]
+        [Display(Name = "Unidad Medida")]
         public string Tipo { get; set; }
 
     

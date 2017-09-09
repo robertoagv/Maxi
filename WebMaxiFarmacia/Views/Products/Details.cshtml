@@ -134,7 +134,11 @@
         @if (Model.Inventories.Count == 0)
         {
             <div class="alert alert-danger">No hay inventarios de este Producto.</div>
-            @Html.ActionLink("Comprar", "comprar", "Products", new { id = Model.ProductId }, new { @class = "dialog-window btn btn-info btn-xs" })
+            if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+	    {
+		     @Html.ActionLink("Comprar", "comprar", "Products", new { id = Model.ProductId }, new { @class = "dialog-window btn btn-info btn-xs" })
+            }
+
         }
         else
         {
@@ -170,12 +174,13 @@
                             </td>
                         }
 
-                       
-                        @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
+
+                        @if ((User.IsInRole("SuperAdmin") || User.IsInRole("Admin")))
                         {
 
                             <td>@Html.ActionLink("Comprar", "Comprar", "Products", new { id = item.ProductId }, new { @class = "dialog-window btn btn-info btn-xs" })</td>
                         }
+                        
                     </tr>
                 }
                 <tr>

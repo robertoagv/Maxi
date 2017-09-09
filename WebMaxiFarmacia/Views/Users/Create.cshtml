@@ -32,15 +32,25 @@
                         @Html.EditorFor(model => model.NombreUser, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.NombreUser, "", new { @class = "text-danger" })
                         <br />
-                        @if (User.IsInRole("SuperAdmin"))
+                        @if (User.IsInRole("SuperAdmin") && Model.UserId == 1)
                         {
                             <div class="form-group">
-                            <div class="col-md-10 radio">
-                                <label class="radio-inline">
-                                    <input type="radio" value="SuperAdmin" name="role" checked class="col-md-2">Super Administrador
-                                </label>
+                                <div class="col-md-10 radio">
+                                    <label class="radio-inline">
+                                        <input type="radio" value="SuperAdmin" name="role" checked class="col-md-2">Super Administrador
+                                    </label>
+                                </div>
                             </div>
-                            </div>
+                            @*<div class="form-group">
+                                <div class="col-md-10 radio">
+                                    <label class="radio-inline">
+                                        <input type="radio" value="Admin" name="role" checked class="col-md-2">Administrador
+                                    </label>
+                                </div>
+                            </div>*@
+                        }
+                        else if (User.IsInRole("SuperAdmin"))
+                        {
                             <div class="form-group">
                                 <div class="col-md-10 radio">
                                     <label class="radio-inline">
@@ -91,10 +101,10 @@
             </div>
         }
     </div>
-    </div>
+</div>
 
 
 
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

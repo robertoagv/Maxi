@@ -99,7 +99,25 @@ namespace WebMaxiFarmacia.Controllers
         // GET: Users/Create
         public ActionResult Create()
         {
-            if (User.IsInRole("SuperAdmin"))
+            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+
+            if (User.IsInRole("SuperAdmin") && usuario.UserId == 1)
+            {
+                var central = db.Companies.Where(c => c.CompanyId == 1).FirstOrDefault();
+                var empleado = db.Employees.Where(e => e.CompanyId == central.CompanyId).ToList();
+                empleado.Add(new Employee()
+                {
+                    EmployeeId = 0,
+                    Nombreemp = "[Seleccione un Empleado]"
+                });
+
+                ViewBag.EmployeeId = new SelectList(empleado.OrderBy(e => e.Nombreemp).ToList(), "EmployeeId", "Nombreemp");
+                var user = new User { UserId = usuario.UserId, CompanyId = central.CompanyId };
+                return View(user);
+                //
+                
+            }
+            else if(User.IsInRole("SuperAdmin"))
             {
                 var companyid = db.Companies.OrderByDescending(c => c.CompanyId).FirstOrDefault();
                 var empleado = db.Employees.Where(e => e.CompanyId == companyid.CompanyId).ToList();
@@ -116,7 +134,7 @@ namespace WebMaxiFarmacia.Controllers
             }
 
 
-            var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
+         
 
             var empleadoCbo = db.Employees.Where(e => e.CompanyId == usuario.CompanyId).ToList();
 

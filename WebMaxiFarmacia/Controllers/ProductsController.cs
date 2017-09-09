@@ -204,8 +204,8 @@ namespace WebMaxiFarmacia.Controllers
                             PrincipioActivo = row.Split(';')[8],
                             Porcentaje = 0,
                             UnitMeasureId = 1,
-                            CategoryId = 7, //modificar id
-                            SupplierId = 2, 
+                            CategoryId = 1, //modificar id
+                            SupplierId = 6 , 
                             CompanyId = 1
                         };
 

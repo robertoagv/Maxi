@@ -166,7 +166,7 @@ namespace WebMaxiFarmacia.classHelper
 
             var random = new Random();
 
-            var newPassword = random.Next(1000000).ToString();
+            var newPassword = random.Next(10000000).ToString();
 
             //var newPassword = string.Format("{0}{2:04}*",
 

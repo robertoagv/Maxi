@@ -22,9 +22,10 @@
             <div class="col-md-6">
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
+                        @Html.ActionLink("Agregar Producto", "AgregarProducto", "Sales", new { }, new { @class = "btn btn-info", autofocus = "autofocus" })
                         <input type="submit" value="Generar" class="btn btn-primary" />
                         @Html.ActionLink("Regresar", "Index", new { }, new { @class = "btn btn-default" })
-                        @Html.ActionLink("Agregar Producto", "AgregarProducto", "Sales", new { }, new { @class = "btn btn-info", autofocus = "autofocus" })
+                        
                         @*@Html.ActionLink("Comprar", "Comprar", "Products", new { id = item.inventoryId }, new { @class = "dialog-window btn btn-info btn-xs" })*@
                     </div>
                 </div>
