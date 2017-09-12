@@ -7,6 +7,7 @@ namespace WebMaxiFarmacia.Models
 {
     public class saledetailr
     {
+        public int saleId { get; set; }
         public string cliente { get; set; }
         public DateTime fecha { get; set; }
         public long Codigo { get; set; }
@@ -15,6 +16,6 @@ namespace WebMaxiFarmacia.Models
         public int cantidad { get; set; }
         public decimal valortotal { get; set; }
         public string  usuario { get; set; }
-         
+          
     } 
 }
