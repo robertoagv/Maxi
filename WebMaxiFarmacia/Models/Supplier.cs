@@ -30,6 +30,7 @@ namespace WebMaxiFarmacia.Models
 
         //Relaciones
         public virtual ICollection<Product> Products { get; set; }
-
+        public virtual ICollection<Purchase> Purcharses { get; set; }
+    
     }
 }

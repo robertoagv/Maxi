@@ -85,6 +85,9 @@
                 <dd>
                     @Html.DisplayFor(model => model.PrincipioActivo)
                 </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.FechaVencimiento)
+                </dd>
                 @if (User.IsInRole("SuperAdmin") || User.IsInRole("Admin"))
                 {
                     <dt>

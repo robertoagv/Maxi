@@ -61,6 +61,7 @@ namespace WebMaxiFarmacia.Controllers
             var users = db.Users.Where(ua => ua.CompanyId == usuario.CompanyId && ua.estado != 1).Include(u => u.Company).Include(u => u.Employee).OrderByDescending(u => u.NombreUser);
 
             return View(users.ToPagedList((int)page, 10));
+            //return Json(users, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         public ActionResult Index(string termino, int? page = null)

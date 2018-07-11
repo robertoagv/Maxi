@@ -28,16 +28,16 @@ namespace WebMaxiFarmacia.Models
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe Seleccionar una {0}")]
-        [Index("bodega_conpannyid_index", IsUnique =true)]
+        [Index("bodega_conpannyid_index", IsUnique = true)]
         [Display(Name = "Sucursal")]
         public int CompanyId { get; set; }
 
 
         //Relaciones
-        public virtual Company  Company { get; set; }
+        // public virtual Company Company { get; set; }
 
-        public virtual ICollection<Inventory> Inventories { get; set; }
-       
+        //public virtual ICollection<Inventory> Inventories { get; set; }
+
 
     }
 }

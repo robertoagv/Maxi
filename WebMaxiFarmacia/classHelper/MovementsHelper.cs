@@ -37,8 +37,8 @@ namespace WebMaxiFarmacia.classHelper
                         foreach (var detalle in detalles)
                         {
 
-                            var restarp = db.Inventories.Where(i => i.ProductId == detalle.ProductId).FirstOrDefault();
-                            var rest = db.Inventories.Where(i => i.ProductId == detalle.ProductId).Select(i => i.Existencia).FirstOrDefault();
+                            //var restarp = db.Inventories.Where(i => i.ProductId == detalle.ProductId).FirstOrDefault();
+                            //var rest = db.Inventories.Where(i => i.ProductId == detalle.ProductId).Select(i => i.Existencia).FirstOrDefault();
 
                             #region Para recorrer varias bodegas.
                             //if (restarp.Product.Inventories.Count > 1)
@@ -64,21 +64,21 @@ namespace WebMaxiFarmacia.classHelper
                             //} 
                             #endregion
 
-                            var oldExist = int.Parse(rest.ToString());
-                            if (oldExist < detalle.Cantidad)
-                            {
-                                transaccion.Rollback();
-                                return new Response
-                                {
-                                    Message = "La existencia es menor a la compra de algun producto de la lista, .",
-                                    Succeeded = false
-                                };
-                            }
+                            //var oldExist = int.Parse(rest.ToString());
+                            //if (oldExist < detalle.Cantidad)
+                            //{
+                            //    transaccion.Rollback();
+                            //    return new Response
+                            //    {
+                            //        Message = "La existencia es menor a la compra de algun producto de la lista, .",
+                            //        Succeeded = false
+                            //    };
+                            //}
 
-                            var desc = oldExist - detalle.Cantidad;
+                            //var desc = oldExist - detalle.Cantidad;
 
-                            var inventarioUpdate = db.Inventories.Find(restarp.inventoryId);
-                            inventarioUpdate.Existencia = desc;
+                            //var inventarioUpdate = db.Inventories.Find(restarp.inventoryId);
+                            //inventarioUpdate.Existencia = desc;
                             db.SaveChanges();
 
                             var ventaDetalle = new SaleDetail

@@ -10,6 +10,7 @@ using WebMaxiFarmacia.Models;
 using WebMaxiFarmacia.classHelper;
 using PagedList;
 using System.IO;
+using ExcelDataReader;
 
 namespace WebMaxiFarmacia.Controllers
 {
@@ -82,29 +83,29 @@ namespace WebMaxiFarmacia.Controllers
         {
 
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
-            var bodega = db.Warehouses.Where(b => b.CompanyId == usuario.CompanyId).FirstOrDefault();
+            //var bodega = db.Warehouses.Where(b => b.CompanyId == usuario.CompanyId).FirstOrDefault();
 
-            var inventario = db.Inventories.Where(i => i.ProductId == id && i.WarehouseId == bodega.WarehouseId).FirstOrDefault();
+            //var inventario = db.Inventories.Where(i => i.ProductId == id && i.WarehouseId == bodega.WarehouseId).FirstOrDefault();
 
-            if (inventario == null)
-            {
-                var inventarioget = new Inventory
-                {
-                    WarehouseId = bodega.WarehouseId,
-                    ProductId = id,
-                    Existencia = 0,
-                    UltimoAdd = 0,
-                    FechaCreada = DateTime.Today,
-                    FechaActualizada = DateTime.Today,
-                    UserId = usuario.UserId
-                };
-                //ViewBag.inventario = inventarioget;
-                return PartialView(inventarioget);
-            }
+            /* if (inventario == null)
+             {
+                 var inventarioget = new Purchase
+                 {
+                     WarehouseId = bodega.WarehouseId,
+                     ProductId = id,
+                     Existencia = 0,
+                     UltimoAdd = 0,
+                     FechaCreada = DateTime.Today,
+                     FechaActualizada = DateTime.Today,
+                     UserId = usuario.UserId
+                 };
+                 //ViewBag.inventario = inventarioget;
+                 return PartialView(inventarioget);
+             }
 
-            //ViewBag.inventario = inventario;
-           
-            return PartialView(inventario);
+             //ViewBag.inventario = inventario;*/
+
+            return View();
         }
 
         [HttpPost]
@@ -113,58 +114,58 @@ namespace WebMaxiFarmacia.Controllers
             var usuario = db.Users.Where(u => u.NombreUser == User.Identity.Name).FirstOrDefault();
             
 
-            if (newcant <= 0)
-            {
-                return RedirectToAction("Details/" + idproducto, "Products");
-            }
+            //if (newcant <= 0)
+            //{
+            //    return RedirectToAction("Details/" + idproducto, "Products");
+            //}
 
-            var inventario = db.Inventories.Find(idinventario);
-            if (inventario == null)
-            {
-               var  inventarionew = new Inventory {
-                        WarehouseId = idbodega,
-                        ProductId = idproducto,
-                        Existencia = newcant,
-                        UltimoAdd = newcant,
-                        FechaCreada = DateTime.Today,
-                        FechaActualizada = DateTime.Today,
-                        UserId = usuario.UserId
-                };
+            //var inventario = db.Inventories.Find(idinventario);
+            //if (inventario == null)
+            //{
+            //   var  inventarionew = new Purchase {
+            //            WarehouseId = idbodega,
+            //            ProductId = idproducto,
+            //            Existencia = newcant,
+            //            UltimoAdd = newcant,
+            //            FechaCreada = DateTime.Today,
+            //            FechaActualizada = DateTime.Today,
+            //            UserId = usuario.UserId
+            //    };
 
-                db.Inventories.Add(inventarionew);
-                var respuesta = ChangeValidationHelperDb.ChangeDb(db);
-                if (respuesta.Succeeded)
-                {
-                    return RedirectToAction("Details/" + idproducto, "Products");
-                }
-                ModelState.AddModelError(string.Empty, respuesta.Message);
-            }
+            //    db.Inventories.Add(inventarionew);
+            //    var respuesta = ChangeValidationHelperDb.ChangeDb(db);
+            //    if (respuesta.Succeeded)
+            //    {
+            //        return RedirectToAction("Details/" + idproducto, "Products");
+            //    }
+            //    ModelState.AddModelError(string.Empty, respuesta.Message);
+            //}
 
            
            
 
-            var catidad = (from i in db.Inventories
-                           where i.ProductId == idproducto
-                           select i.Existencia).FirstOrDefault();
+            //var catidad = (from i in db.Inventories
+            //               where i.ProductId == idproducto
+            //               select i.Existencia).FirstOrDefault();
 
-            var oldexist = int.Parse(catidad.ToString());
-            var newexist = oldexist + newcant;
+            //var oldexist = int.Parse(catidad.ToString());
+            //var newexist = oldexist + newcant;
 
-            inventario.Existencia = newexist;
-            inventario.UltimoAdd = newcant;
-            inventario.FechaActualizada = DateTime.Today;
-            inventario.UserId = usuario.UserId;
+            //inventario.Existencia = newexist;
+            //inventario.UltimoAdd = newcant;
+            //inventario.FechaActualizada = DateTime.Today;
+            //inventario.UserId = usuario.UserId;
 
-            var respueta = ChangeValidationHelperDb.ChangeDb(db);
-            if (respueta.Succeeded)
-            {
-                ViewBag.inventario = inventario;
+            //var respueta = ChangeValidationHelperDb.ChangeDb(db);
+            //if (respueta.Succeeded)
+            //{
+            //    ViewBag.inventario = inventario;
 
-                return RedirectToAction("Details/" + idproducto, "Products");
-            }
-            ModelState.AddModelError(string.Empty, respueta.Message);
+            //    return RedirectToAction("Details/" + idproducto, "Products");
+            //}
+            //ModelState.AddModelError(string.Empty, respueta.Message);
 
-            return View(inventario);
+            return View();
             
         }
 
@@ -175,25 +176,66 @@ namespace WebMaxiFarmacia.Controllers
 
             if (file != null)
             {
+                if (!file.FileName.EndsWith(".xls") && !file.FileName.EndsWith(".xlsx"))
+                {
+                    TempData["mensaje"] = "Debe seleccionar un archivo con extencion (.xls) o (xlsx).";
+                    return RedirectToAction("index");
+                }
+
                 string path = Server.MapPath("~/excel/");
                 if (!Directory.Exists(path))
-                { 
+                {
                     Directory.CreateDirectory(path);
                 }
 
                 filePath = path + Path.GetFileName(file.FileName);
                 string extension = Path.GetExtension(file.FileName);
-                file.SaveAs(filePath);
+                var fileName = filePath;
+                //DateTime.Now.ToString("yyyyMMddHHmm.") + file.FileName.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries).Last()
+                file.SaveAs(fileName);
 
-                string csv = System.IO.File.ReadAllText(filePath);
+                //string csv = System.IO.File.ReadAllText(filePath);
 
-                foreach (string row in csv.Split('\n'))
+                var records = new Product();
+
+                using (var stream = System.IO.File.Open(Path.Combine(Server.MapPath("~/excel/"), fileName), FileMode.Open, FileAccess.Read))
+                {
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    {
+                        while (reader.Read())
+                        {
+                            records = new Product
+                            {
+                                Codigobarra = Convert.ToInt64(reader.GetValue(0)),
+                                Nombreproducto = reader.GetString(1),
+                                Descripcion = reader.GetString(2),
+                                Preciocompra = Convert.ToDecimal(reader.GetValue(3)),
+                                Precioventa = Convert.ToDecimal(reader.GetValue(4)),
+                                PrecioCompraNew = 0,
+                                Uso = reader.GetString(5),
+                                Ubicacion = reader.GetString(6),
+                                PrincipioActivo = reader.GetString(7),
+                                Porcentaje = ((Convert.ToDecimal(reader.GetValue(3)) / Convert.ToDecimal(reader.GetValue(4))) - 1) / -1,
+                                UnitMeasureId = Convert.ToInt32(reader.GetValue(8)),
+                                CategoryId = Convert.ToInt32(reader.GetValue(9)), //modificar id
+                                SupplierId = Convert.ToInt32(reader.GetValue(10)),
+                                CompanyId = 1
+                         
+                            };
+
+                            db.Products.Add(records);
+                        }
+                    }
+                }
+
+                #region csv
+               /* foreach (string row in csv.Split('\n'))
                 {
                     if (!string.IsNullOrEmpty(row))
                     {
                         var productoExcel = new Product
                         {
-                            Codigobarra = Convert.ToInt64(row.Split(';')[0]), 
+                            Codigobarra = Convert.ToInt64(row.Split(';')[0]),
                             Nombreproducto = row.Split(';')[1],
                             Descripcion = row.Split(';')[2],
                             Preciocompra = Convert.ToDecimal(row.Split(';')[3]),
@@ -205,13 +247,14 @@ namespace WebMaxiFarmacia.Controllers
                             Porcentaje = 0,
                             UnitMeasureId = 1,
                             CategoryId = 1, //modificar id
-                            SupplierId = 6 , 
+                            SupplierId = 6,
                             CompanyId = 1
                         };
 
                         db.Products.Add(productoExcel);
                     }
-                }
+                }*/
+                #endregion
 
 
                 //db.SaveChanges();
@@ -223,10 +266,11 @@ namespace WebMaxiFarmacia.Controllers
                 }
 
 
-                TempData["mensaje"] = "Algunos codigos de producto que trae el archivo ya existen, puede tambien ingresar aqui los productos.";
+                TempData["mensaje"] = respuesta.Message;
                 return RedirectToAction("Create", "Products");
             }
 
+            TempData["mensaje"] = "El archivo seleccionado parece estar vacio.";
             return RedirectToAction("Create", "Products");
         }
 
