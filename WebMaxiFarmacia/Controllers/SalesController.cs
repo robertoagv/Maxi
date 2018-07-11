@@ -36,6 +36,7 @@ namespace WebMaxiFarmacia.Controllers
                         on s.SaleID equals sd.SaleId
                         where s.CompanyId == usuario.CompanyId && s.Fechavta == DateTime.Today
                         select new saledetailr{
+                            saleId = sd.SaleId,
                             cliente = s.Nombrecte,
                             fecha = s.Fechavta,
                             Codigo = sd.Product.Codigobarra,
@@ -82,13 +83,15 @@ namespace WebMaxiFarmacia.Controllers
                          where s.CompanyId == usuario.CompanyId && s.Fechavta >= d && s.Fechavta <= hasta
                          select new saledetailr
                          {
+                             saleId = sd.SaleId,
                              cliente = s.Nombrecte,
                              fecha = s.Fechavta,
                              Codigo = sd.Product.Codigobarra,
                              descripcion = sd.Descriptionpro,
                              precio = sd.Price,
                              cantidad = sd.Cantidad,
-                             valortotal = sd.ValorU
+                             valortotal = sd.ValorU,
+                             
                          }).ToList();
 
             var sumaCantidad = rango.Sum(x => x.cantidad);

@@ -62,6 +62,14 @@ namespace WebMaxiFarmacia.Models
         public decimal Porcentaje { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
+        public int Existencia { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = false)]
+        [Display(Name = "Fecha de Vencimiento")]
+        public DateTime FechaVencimiento { get; set; }
+
+        [Required(ErrorMessage = "El campo {0} es obligatorio")]
         [Range(1, double.MaxValue, ErrorMessage = "Debe Seleccionar un {0}")]
         [Display(Name = "Unidad de Medida")]
         public int UnitMeasureId  { get; set; }
@@ -85,7 +93,7 @@ namespace WebMaxiFarmacia.Models
 
         //propiedades solo de lectura, para el inventario.
         //[DisplayFormat(DataFormatString = "{0:N2}", ApplyFormatInEditMode = false)]
-        public int? Existencia { get { return Inventories.Sum(i => i.Existencia); } }
+        //public int? Existencia { get { return Inventories.Sum(i => i.Existencia); } }
 
 
 
@@ -97,7 +105,7 @@ namespace WebMaxiFarmacia.Models
         public virtual Company Company { get; set; }
       
 
-        public virtual ICollection<Inventory> Inventories { get; set; }
+        
         public virtual ICollection<SaleDetail> SaleDetails { get; set; }
 
         public virtual ICollection<SaleDatilsTmp>  SaleDatailTmps { get; set; }

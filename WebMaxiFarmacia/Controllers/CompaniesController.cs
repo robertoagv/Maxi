@@ -139,17 +139,17 @@ namespace WebMaxiFarmacia.Controllers
 
                     db.SaveChanges();
 
-                    var ultimocompany = db.Companies.OrderByDescending(o => o.CompanyId).FirstOrDefault();
-                    var nuevaBodega = new Warehouse
-                    {
-                        Nombre = ultimocompany.nombresuc,
-                        Telefono = ultimocompany.telefono,
-                        Direccion = ultimocompany.direccion,
-                        CompanyId = ultimocompany.CompanyId
-                    };
-                    db.Warehouses.Add(nuevaBodega);
+                    //var ultimocompany = db.Companies.OrderByDescending(o => o.CompanyId).FirstOrDefault();
+                    //var nuevaBodega = new PurchaseDetail
+                    //{
+                    //    Nombre = ultimocompany.nombresuc,
+                    //    Telefono = ultimocompany.telefono,
+                    //    Direccion = ultimocompany.direccion,
+                    //    CompanyId = ultimocompany.CompanyId
+                    //};
+                    //db.Warehouses.Add(nuevaBodega);
 
-                    db.SaveChanges();
+                    //db.SaveChanges();
 
                     return RedirectToAction("Index");
                 }

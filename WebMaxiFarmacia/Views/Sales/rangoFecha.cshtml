@@ -69,7 +69,9 @@ else
             </th>
 
             <th class="text-center">Total</th>
+            <th class="hidden-print">Accion</th>
         </tr>
+
     </thead>
 
     @foreach (var item in Model)
@@ -96,6 +98,8 @@ else
             <td class="text-right">
                 Q.@item.valortotal
             </td>
+           
+            <td class="hidden-print">@Html.ActionLink("Ver", "Details", new { id = item.saleId}, new { @class = "btn btn-link btn-sm", target = "_blank" }) </td>
         </tr>
     }
 
@@ -107,6 +111,7 @@ else
         <td class="text-center"><strong>Totales</strong></td>
         <td class="text-right"><strong>@ViewBag.totalCantidad</strong></td>
         <td class="text-right"><strong>@ViewBag.totalPrecioCantidad.ToString("C")</strong></td>
+       
     </tr>
     <tr>
         

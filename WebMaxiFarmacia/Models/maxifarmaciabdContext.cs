@@ -22,14 +22,18 @@ namespace WebMaxiFarmacia.Models
 
         public System.Data.Entity.DbSet<WebMaxiFarmacia.Models.Product> Products { get; set; }
 
-        public System.Data.Entity.DbSet<WebMaxiFarmacia.Models.Warehouse> Warehouses { get; set; }
-
-        public DbSet<Inventory> Inventories { get; set; }
+        //public System.Data.Entity.DbSet<WebMaxiFarmacia.Models.Warehouse> Warehouses { get; set; }
+    
+        //public DbSet<Inventory> Inventories { get; set; }
 
         public DbSet<Sale> Sales { get; set; }
 
         public DbSet<SaleDetail> SaleDetails { get; set; }
 
+        public DbSet<Purchase> Purcharses { get; set; }
+
+        public DbSet<PurcharseDetail> PurcharseDetails { get; set; }
+         
         public DbSet<SaleDatilsTmp> SaleDetailTmps { get; set; }
 
 

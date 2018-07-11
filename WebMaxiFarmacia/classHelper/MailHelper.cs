@@ -27,9 +27,12 @@ namespace WebMaxiFarmacia.Models
 
             message.IsBodyHtml = true;
 
+
             using (var smtp = new SmtpClient())
 
             {
+
+                smtp.UseDefaultCredentials = false;
 
                 var credential = new NetworkCredential
 
@@ -42,12 +45,12 @@ namespace WebMaxiFarmacia.Models
                 };
 
                 smtp.Credentials = credential;
-
-                smtp.Host = WebConfigurationManager.AppSettings["SMTPName"];
-
                 smtp.Port = int.Parse(WebConfigurationManager.AppSettings["SMTPPort"]);
-
+                smtp.Host = WebConfigurationManager.AppSettings["SMTPName"];
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtp.EnableSsl = true;
+
+                
 
                 await smtp.SendMailAsync(message);
 

@@ -43,10 +43,10 @@ namespace WebMaxiFarmacia.Models
         public long codigobarra { get; set; }
         [NotMapped]
         public string nombreu { get; set; }
-         
-        public virtual User User { get; set; }
-        public virtual Warehouse Warehouse { get; set; }
-        public virtual Product Product { get; set; }
 
-    } 
+        //public virtual User User { get; set; }
+        //public virtual Warehouse Warehouse { get; set; }
+        //public virtual Product Product { get; set; }
+
+    }
 }
