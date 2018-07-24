@@ -21,10 +21,12 @@ namespace WebMaxiFarmacia
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
+                       "~/Scripts/datatable/datatables.min.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrapverde.css",
+                      "~/Content/datatables.min.css",
                       "~/Content/site.css"));
         }
     }
