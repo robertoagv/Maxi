@@ -340,6 +340,8 @@
     <None Include="Properties\PublishProfiles\maxifarmacia - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\maxifarmacia - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
+    <Content Include="Scripts\helperviewsjs\categoria.js" />
+    <Content Include="Scripts\datatable\dtconfig.js" />
     <Content Include="Scripts\datatable\datatables.min.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />

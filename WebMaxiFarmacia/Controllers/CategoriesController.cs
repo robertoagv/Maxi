@@ -32,6 +32,15 @@ namespace WebMaxiFarmacia.Controllers
             return View(db.Categories.Where(c => c.Descripcion == termino).OrderByDescending(c => c.CategoryId).ToPagedList((int)page, 5));
         }
 
+        public ActionResult getCategory()
+        {
+             
+            var categorias = db.Categories.ToList();
+
+
+            return Json(new { data = categorias }, JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Categories/Details/5
         public ActionResult Details(int? id)
         {
